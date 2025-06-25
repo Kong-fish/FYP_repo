@@ -1,0 +1,110 @@
+/* DarkMode.css */
+:root {
+  --scheme-transition-duration: 500ms;
+}
+
+body {
+  transition-property: background-color, color;
+  transition-duration: var(--scheme-transition-duration);
+  background-color: #fff;
+  color: #35405a;
+}
+
+html.dark {
+  body {
+    background-color: #14171A;
+    color: #e2e8f0;
+  }
+  .main {
+    background-color: transparent;
+    color: #e2e8f0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.dark):not(.light) body {
+    background-color: #14171A;
+    color: #e2e8f0;
+  }
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  overflow: hidden;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+.switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.switch input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.switch .slider .toggle-icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  /* Center vertically and horizontally */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform .4s ease, fill .4s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Positioning for sun when in light mode (shifted left) */
+.switch input:not(:checked) + .slider .toggle-icon {
+  transform: translate(calc(-50% - 13px), -50%); /* Shift left by half the thumb's movement */
+  fill: #FFA500;
+}
+
+/* Positioning for moon when in dark mode (shifted right) */
+.switch input:checked + .slider .toggle-icon {
+  transform: translate(calc(-50% + 13px), -50%); /* Shift right by half the thumb's movement */
+  fill: #FFD700;
+}

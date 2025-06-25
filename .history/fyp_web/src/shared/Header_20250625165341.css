@@ -1,0 +1,98 @@
+/* Header.css */
+
+.header {
+  background-color: #fcf9f8; /* Light mode default */
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* This is key for spreading elements */
+  gap: 1rem; /* Space between logo, nav, and actions */
+}
+
+.header__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin: 0; /* Remove default margin */
+  white-space: nowrap; /* Prevent title from wrapping */
+}
+
+.header-nav {
+  display: flex; /* Display nav items in a row */
+  gap: 1.5rem; /* Space between nav links */
+  flex-grow: 1; /* Allow nav to take up available space */
+  justify-content: center; /* Center the nav items */
+}
+
+.header-nav-item {
+  background: none;
+  border: none;
+  color: var(--text); /* Nav item text color */
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.header-nav-item:hover {
+  background-color: rgba(56, 90, 147, 0.1);
+  color: var(--primary);
+}
+
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between toggle and sign out button */
+  flex-shrink: 0; /* Prevent actions from shrinking */
+}
+
+.sign-out-button {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.sign-out-button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Dark Mode styles for Header */
+html.dark .header {
+  background-color: #1e3a8a; /* Dark header background */
+  border-color: var(--border-dark);
+}
+
+html.dark .header__title {
+  color: white; /* Dark header title color */
+}
+
+html.dark .header-nav-item {
+  color: #cbd5e0; /* Dark nav item text color */
+}
+
+html.dark .header-nav-item:hover {
+  background-color: rgba(203, 213, 224, 0.1);
+  color: white;
+}
+
+html.dark .sign-out-button {
+  background-color: var(--secondary); /* Dark sign-out button background */
+  color: #1a202c; /* Dark sign-out button text color */
+}
+
+html.dark .sign-out-button:hover {
+  background-color: var(--secondary-dark);
+}

@@ -20,7 +20,7 @@ import CustomerAccSuccess from './Cust_Function/Cust_New_Acc_Success.tsx';
 import CustomerAccDetail from './Cust_Function/Cust_Acc_Detail.tsx';
 import CustomerLoanApply from './Cust_Function/Cust_Apply_Loan.tsx';
 import CustomerViewApproval from './Cust_Function/Cust_View_Approval.tsx';
-import CustomerTransactionsHistory from './Cust_Function/Cust_Transfer_Hist.tsx';
+import CustomerTransactionsHistory from './Cust_Function/Cust_Tran_Hist.tsx';
 import CustomerProfileEdit from './Cust_Function/Cust_Profile_Edit.tsx';
 import CustomerPassVer from './Cust_Function/Cust_Pass_Ver.tsx';
 
