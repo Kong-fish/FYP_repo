@@ -5,19 +5,32 @@ import '../shared/normalize.css';
 import './Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
+import { ArrowLeft } from "lucide-react";
 
-const Header = () => (
-  <header className="header">
-    <div className="header__content">
-      <div className="header__title">
-        <p>Eminent Western</p>
+const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/"); 
+  };
+
+  return (
+    <header className="header">
+      <div className="header__content">
+        <button onClick={handleBack} className="back-button" style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+          <ArrowLeft size={24} />
+          <span className="back-button-text" style={{ marginLeft: '8px' }}>Back</span>
+        </button>
+        <div className="header__title">
+          <p>Eminent Western</p>
+        </div>
+        <DarkModeToggle />
       </div>
-      <DarkModeToggle />
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
-const CustLoginForm: React.FC = () => {
+const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -106,7 +119,7 @@ const CustLoginForm: React.FC = () => {
       <div className="form-login__form button-group">
         <div className="imageContainer">
           <img
-            src="/eminent-western_bank-logo.png"
+            src="/blue.png"
             alt="Banking Dashboard"
             width={500}
             height={400}
@@ -169,15 +182,15 @@ const CustLoginForm: React.FC = () => {
   );
 };
 
-const CustomerLogin: React.FC = () => {
+const Login: React.FC = () => {
   return (
     <div className="landing-page-wrapper">
       <Header />
       <div className="landing-content-area">
-        <CustLoginForm />
+        <LoginForm />
       </div>
     </div>
   );
 };
 
-export default CustomerLogin;
+export default Login;

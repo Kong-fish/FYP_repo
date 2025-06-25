@@ -1,6 +1,6 @@
 :root {
   --font-inter: 'Inter', sans-serif;
-  --color-yellow-500: #fbd38d;
+  --color-yellow-500: #f4cd62;
   --color-yellow-600: #f6ad55;
 }
 
@@ -17,11 +17,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  padding-top: 100px;
-  padding-bottom: 20px;
+  margin: 10px;
 }
-
 .form-login {
   display: flex;
   flex-direction: column;
@@ -112,7 +109,6 @@ html.dark .welcome-title {
   line-height: 19px;
   outline: none;
   padding: 12px 16px;
-  width: 380px;
   height: 50px;
   margin-top: 0 !important;
 }
@@ -249,4 +245,14 @@ html.dark .welcome-title {
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
   }
+}
+
+html.dark .imageContainer {
+  /* If this background is meant for the dark mode card background, it belongs on .form-login-card */
+  /* If it's truly for the image container itself, keep it here. */
+  background-color: #dacecd;
+}
+
+.forgot-password-link {
+  color: #0000FF;
 }

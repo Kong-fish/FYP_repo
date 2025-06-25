@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import CustomerLanding from './Landing/Landing.tsx';
-import CustomerRegister from './Landing/Cust_Register.tsx';
-import CustomerLogin from './Landing/Login.tsx';
+import Landing from './Landing/Landing.tsx';
+import Register from './Landing/Register.tsx';
+import Login from './Landing/Login.tsx';
 import ForgotPassword from './Landing/Forgot_Password.tsx';
 // import UpdatePassword from './Landing/Update_Password.tsx';
 
@@ -29,36 +29,34 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Admin Routes */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/review-loan" element={<ReviewLoan />} />
-        <Route path="/admin/approve-account" element={<AdminApproveAcc />} />
-        <Route path="/admin/password-verification" element={<AdminPassVer />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-review-loan" element={<ReviewLoan />} />
+        <Route path="/admin-approve-account" element={<AdminApproveAcc />} />
+        <Route path="/admin-password-verification" element={<AdminPassVer />} />
 
         {/* Customer Login & Landing */}
-        <Route path="/" element={<CustomerLanding />} />
-        <Route path="/customer/register" element={<CustomerRegister />} />
-        <Route path="/customer/login" element={<CustomerLogin />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
         {/* Customer Dashboard & Functions */}
-        <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-        <Route path="/customer/transfer" element={<CustomerTransfer />} />
-        <Route path="/customer/transfer-confirmation" element={<CustomerTransferConfirmation />} />
-        <Route path="/customer/transfer-complete" element={<CustomerTransferComplete />} />
-        <Route path="/customer/new-bank-account" element={<CustomerNewBankAcc />} />
-        <Route path="/customer/new-account-success" element={<CustomerAccSuccess />} />
-        <Route path="/customer/account-detail" element={<CustomerAccDetail />} />
-        <Route path="/customer/apply-loan" element={<CustomerLoanApply />} />
-        <Route path="/customer/view-approval" element={<CustomerViewApproval />} />
-        <Route path="/customer/transactions-history" element={<CustomerTransactionsHistory />} />
-        <Route path="/customer/profile-edit" element={<CustomerProfileEdit />} />
-        <Route path="/customer/password-verification" element={<CustomerPassVer />} />
+        <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+        <Route path="/customer-transfer" element={<CustomerTransfer />} />
+        <Route path="/customer-transfer-confirmation" element={<CustomerTransferConfirmation />} />
+        <Route path="/customer-transfer-complete" element={<CustomerTransferComplete />} />
+        <Route path="/customer-new-bank-account" element={<CustomerNewBankAcc />} />
+        <Route path="/customer-new-account-success" element={<CustomerAccSuccess />} />
+        <Route path="/customer-account-detail" element={<CustomerAccDetail />} />
+        <Route path="/customer-apply-loan" element={<CustomerLoanApply />} />
+        <Route path="/customer-view-approval" element={<CustomerViewApproval />} />
+        <Route path="/customer-transactions-history" element={<CustomerTransactionsHistory />} />
+        <Route path="/customer-profile-edit" element={<CustomerProfileEdit />} />
+        <Route path="/customer-password-verification" element={<CustomerPassVer />} />
 
         {/* Password Reset */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route path="/update-password" element={<UpdatePassword />} /> */}
 
-        {/* Redirect unknown routes to landing */}
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

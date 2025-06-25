@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import supabase from '../supbaseClient.js';
 import { ArrowLeft } from "lucide-react"
 import DarkModeToggle from "../shared/DarkModeToggle.tsx"
-import Cust_Pass_Ver from './Cust_Pass_Ver.tsx';
+
 
 // IMPORT THE SHARED CSS FILES FOR CONSISTENCY
 import '../shared/Header.css';
@@ -280,13 +280,13 @@ export default function Cust_Tran_Confirmation() {
         </div>
       </div>
 
-      {/* Password Verification Modal */}
+      {/* Password Verification Modal
       <Cust_Pass_Ver
         isOpen={showPasswordModal}
         onClose={() => setShowPasswordModal(false)}
         onSuccess={handleConfirmTransformation} // Call the actual transfer logic on success
         userEmail={userEmail || ''} // Pass the fetched user email
-      />
+      /> */}
     </div>
   )
 }

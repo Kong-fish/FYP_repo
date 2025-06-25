@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import supabase from '../supbaseClient.js';
-import '../Dashboard/CustomerDashboard.css'; 
 import '../shared/normalize.css';
 import './Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
+import { ArrowLeft } from "lucide-react";
 
-// Reusing the Header component from your login page for consistency
-const Header = () => (
-  <header className="header">
-    <div className="header__content">
-      <div className="header__title">
-        <p>Eminent Western</p>
+const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/"); 
+  };
+
+  return (
+    <header className="header">
+      <div className="header__content">
+        <button onClick={handleBack} className="back-button" style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+          <ArrowLeft size={24} />
+          <span className="back-button-text" style={{ marginLeft: '8px' }}>Back</span>
+        </button>
+        <div className="header__title">
+          <p>Eminent Western</p>
+        </div>
+        <DarkModeToggle />
       </div>
-      {/* Assuming DarkModeToggle is not strictly needed on this page, or you'll add it */}
-      {/* <DarkModeToggle /> */}
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState<string>('');
