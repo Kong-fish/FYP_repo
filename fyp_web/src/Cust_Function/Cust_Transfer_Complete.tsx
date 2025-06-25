@@ -6,9 +6,8 @@ import { ArrowLeft, CheckCircle } from 'lucide-react'; // Import icons
 // Import shared CSS files
 import '../shared/Header.css';
 import '../shared/normalize.css';
-import './Cust_Function.css'; // Specific styles for customer functions
-
-import DarkModeToggle from '../shared/DarkModeToggle'; // Assuming this is a separate component
+import './CustFunction.css';
+import DarkModeToggle from '../shared/DarkModeToggle.tsx'; // Import DarkModeToggle component
 
 // Re-use the Header component for consistency across pages
 interface HeaderProps {

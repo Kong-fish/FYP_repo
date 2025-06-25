@@ -7,7 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import '../shared/Header.css';
 import '../shared/normalize.css';
-import './Cust_Function.css'; // For general styling of forms, cards, buttons
+import './CustFunction.css'; // For general styling of forms, cards, buttons
 import './CustomerDashboard.css'; // For overall layout like dashboard-container, dashboard-main etc.
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 

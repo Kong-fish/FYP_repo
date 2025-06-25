@@ -6,11 +6,9 @@ import { ArrowLeft } from 'lucide-react'; // For the back button icon
 // Import shared CSS files
 import '../shared/Header.css';
 import '../shared/normalize.css';
-import './Cust_Function.css'; // Specific styles for customer functions
+import './CustFunction.css'; // Specific styles for customer functions
+import DarkModeToggle from '../shared/DarkModeToggle.tsx'; // Reusable dark mode toggle component
 
-import DarkModeToggle from '../shared/DarkModeToggle'; // Assuming this is a separate component
-
-// Re-use the Header component for consistency across pages
 interface HeaderProps {
     showBackButton?: boolean;
     backPath?: string;

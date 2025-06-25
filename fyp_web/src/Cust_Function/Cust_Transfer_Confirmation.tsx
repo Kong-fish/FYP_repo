@@ -9,7 +9,7 @@ import DarkModeToggle from "../shared/DarkModeToggle.tsx"
 // IMPORT THE SHARED CSS FILES FOR CONSISTENCY
 import '../shared/Header.css';
 import '../shared/normalize.css';
-import './Cust_Function.css';
+import './CustFunction.css';
 
 // Re-use the Header component for consistency
 const Header = () => {

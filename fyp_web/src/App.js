@@ -29,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Admin Routes */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin-review-loan" element={<ReviewLoan />} />
         <Route path="/admin-approve-account" element={<AdminApproveAcc />} />
         <Route path="/admin-password-verification" element={<AdminPassVer />} />
