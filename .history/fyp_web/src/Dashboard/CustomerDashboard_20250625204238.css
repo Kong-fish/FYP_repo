@@ -1,0 +1,358 @@
+/* CustomerDashboard.css */
+
+/* General Layout */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.dashboard-main.container {
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+}
+
+.dashboard-layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 250px; /* Fixed width sidebar */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quick-actions-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.quick-actions-title {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.action-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.9em;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.action-icon {
+    margin-bottom: 5px;
+}
+
+.action-label {
+    text-align: center;
+}
+
+.sidebar-menu {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 10px 0;
+}
+
+.sidebar-menu-item {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-menu-item:hover {
+    background-color: #e9ecef;
+}
+
+.sidebar-menu-icon {
+    font-size: 1.2em;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+}
+
+.account-summary-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 10px;
+}
+
+.welcome-message {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.welcome-name {
+    font-size: 2em;
+    color: #333;
+    margin: 0;
+}
+
+.last-login {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.view-all-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.view-all-button:hover {
+    background-color: #0056b3;
+}
+
+.hide-show-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.account-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fdfdfd;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.account-type {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.account-number {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.account-icon {
+    font-size: 1.8em;
+}
+
+.account-balance-section {
+    text-align: right;
+}
+
+.account-balance {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.available-credit {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Footer */
+.dashboard-footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 10px;
+}
+
+.footer-copyright {
+    font-size: 0.9em;
+    color: #adb5bd;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: opacity 0.2s ease, text-decoration 0.2s ease;
+}
+
+.footer-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Mobile-specific styles */
+.action-button.mobile-only {
+    display: none; /* Hide by default on larger screens */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* More flexible grid for mobile */
+    }
+
+    .action-button {
+        padding: 10px 5px;
+    }
+
+    .action-button .large-icon {
+        size: 24px; /* Slightly smaller icons for mobile */
+    }
+
+    .action-button .action-label {
+        font-size: 0.8em;
+    }
+
+    .sidebar-menu {
+        display: none; /* Hide desktop sidebar menu on mobile */
+    }
+
+    .action-button.mobile-only {
+        display: flex; /* Show mobile-only buttons */
+    }
+
+    .account-summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .view-all-button-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    .view-all-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-main.container {
+        padding: 10px;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on very small screens */
+    }
+
+    .account-summary-card {
+        padding: 20px;
+    }
+
+    .welcome-name {
+        font-size: 1.5em;
+    }
+
+    .account-balance {
+        font-size: 1.4em;
+    }
+}
