@@ -45,16 +45,14 @@ function App() {
         <Route path="/customer-transfer-complete" element={<CustomerTransferComplete />} />
         <Route path="/customer-new-bank-account" element={<CustomerNewBankAcc />} />
         <Route path="/customer-new-account-success" element={<CustomerAccSuccess />} />
-        <Route path="/customer-account-detail" element={<CustomerAccDetail />} />
+        <Route path="/customer-account-details/:accountId" element={<CustomerAccDetail />} />
         <Route path="/customer-apply-loan" element={<CustomerLoanApply />} />
         <Route path="/customer-view-approval" element={<CustomerViewApproval />} />
         <Route path="/customer-transactions-history" element={<CustomerTransactionsHistory />} />
         <Route path="/customer-profile-edit" element={<CustomerProfileEdit />} />
         <Route path="/customer-password-verification" element={<CustomerPassVer />} />
 
-        {/* Password Reset */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        {/* <Route path="/update-password" element={<UpdatePassword />} /> */}
 
       </Routes>
     </BrowserRouter>
