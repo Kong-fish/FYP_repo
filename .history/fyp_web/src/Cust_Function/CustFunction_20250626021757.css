@@ -1,0 +1,704 @@
+/* src/Cust_Function/CustFunction.css */
+
+/* --- CSS Variables for Theming (consistent with CustomerDashboard.css) --- */
+/* These variables are included here for standalone functionality of customer functions. */
+/* Ideally, for a larger application, these would be in a single global file. */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #f8f9fa; /* Light background for forms/inputs within cards */
+    --bg-secondary: #fff;  /* White background for the main card container */
+    --text-primary: #333;  /* Dark text for headings and primary content */
+    --text-secondary: #666; /* Medium text for labels, descriptions */
+    --text-light: #888;    /* Lighter text (less used here) */
+    --card-border: #e0e0e0; /* Border color for inputs and confirmation sections */
+    --box-shadow-light: rgba(0, 0, 0, 0.05); /* Subtle shadow for elements */
+    --box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+
+    /* Accent Colors */
+    --blue-accent: #007bff; /* Primary blue for buttons, focus states */
+    --blue-accent-hover: #0056b3; /* Darker blue on hover */
+    --blue-accent-rgb: 0, 123, 255; /* RGB for rgba() usage */
+
+    --green-success: #28a745; /* Green for success messages */
+    --green-success-rgb: 40, 167, 69;
+
+    --red-error: #dc3545; /* Red for error messages */
+    --red-error-rgb: 220, 53, 69;
+
+    --disabled-input-bg: #e9ecef; /* Specific color for disabled inputs */
+
+    /* Modal Specific Colors (using existing theme variables where possible) */
+    --modal-overlay-bg: rgba(0, 0, 0, 0.6); /* Semi-transparent black for overlay */
+    --modal-bg: var(--bg-secondary); /* Modal background same as secondary background */
+    --modal-border: var(--card-border); /* Modal border same as card border */
+    --modal-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for modal */
+    --modal-text: var(--text-primary);
+    --modal-text-secondary: var(--text-secondary);
+}
+
+body.dark-mode {
+    /* Dark Mode Overrides for Customer Function specific elements */
+    --bg-primary: #2d2d2d;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-light: #999;
+    --card-border: #444;
+    --box-shadow-light: rgba(255, 255, 255, 0.05);
+    --box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    --blue-accent: #5b9bd5;
+    --blue-accent-hover: #3a7bbd;
+    --blue-accent-rgb: 91, 155, 213;
+
+    --green-success: #4CAF50;
+    --green-success-rgb: 76, 175, 80;
+
+    --red-error: #EF5350;
+    --red-error-rgb: 239, 83, 80;
+
+    --disabled-input-bg: #3c3c3c;
+
+    /* Dark Mode Modal Specific Colors */
+    --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --modal-bg: var(--bg-secondary);
+    --modal-border: var(--card-border);
+    --modal-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+    --modal-text: var(--text-primary);
+    --modal-text-secondary: var(--text-secondary);
+}
+
+/* Ensure html and body take full height for fixed positioning to work correctly */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; Removed from here, better to toggle this on body when modal is open using JS */
+}
+
+/* --- General App Wrapper (if it encapsulates everything, including Header, Main, Footer) --- */
+.main-app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+}
+
+/* --- General Container for Customer Function Pages (e.g., Transfer, Loan, New Account) --- */
+.customer-function-container {
+    flex-grow: 1; /* Allows it to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center;
+    padding: 20px;
+    background-color: var(--bg-primary); /* Uses themed primary background */
+    color: var(--text-primary); /* Uses themed primary text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* min-height: calc(100vh - 100px); Adjusted to be part of main-app-wrapper min-height */
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.customer-function-content {
+    width: 100%;
+    max-width: 800px; /* Increased max-width to allow customer-card to be wider */
+    margin: 0 auto;
+    padding-top: 20px; /* Space from header */
+    display: flex; /* Flex container for card */
+    justify-content: center; /* Center the customer-card horizontally */
+    align-items: flex-start; /* Align the customer-card to the top */
+    flex-direction: column; /* Allows content to stack if needed, though primarily holds one card */
+}
+
+/* --- Reusable Card Style for Customer Function Forms --- */
+.customer-card {
+    background-color: var(--bg-secondary); /* Uses themed secondary background (white/darker gray) */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--box-shadow-medium); /* Uses themed shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure the card takes full width of its content container */
+    max-width: 750px; /* Increased max-width for the customer card itself */
+    margin-bottom: 30px; /* Space below the card before any potential footer/next section */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.customer-card-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.customer-card-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--text-primary); /* Uses themed text color */
+    margin: 0;
+}
+
+/* --- Form Specific Styles (Applies to forms inside .customer-card) --- */
+.customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between form groups */
+    padding-top: 10px;
+}
+
+.customer-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Added spacing between form fields */
+}
+
+.customer-form-group:last-of-type {
+    margin-bottom: 0; /* Remove margin from the last form group */
+}
+
+.customer-form-label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-secondary); /* Uses themed text color */
+    font-size: 1em;
+}
+
+.customer-form-input {
+    padding: 12px;
+    border: 1px solid var(--card-border); /* Uses themed border color */
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--text-primary); /* Uses themed text color */
+    background-color: var(--bg-primary); /* Uses themed primary background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure inputs take full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.customer-form-input:focus {
+    border-color: var(--blue-accent); /* Uses themed accent color */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--blue-accent-rgb), 0.2); /* Uses themed RGB for glow */
+}
+
+.customer-form-input:disabled {
+    background-color: var(--disabled-input-bg) !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* --- Buttons --- */
+.customer-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: 25px; /* Space above button group */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.customer-primary-button,
+.customer-secondary-button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    min-width: 150px; /* Ensure buttons have a minimum width */
+    text-align: center;
+}
+
+.customer-primary-button {
+    background-color: var(--blue-accent); /* Uses themed accent color */
+    color: white;
+    box-shadow: 0 4px 10px rgba(var(--blue-accent-rgb), 0.2);
+}
+
+.customer-primary-button:hover {
+    background-color: var(--blue-accent-hover); /* Uses themed hover color */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(var(--blue-accent-rgb), 0.3);
+}
+
+.customer-primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(var(--blue-accent-rgb), 0.2);
+}
+
+.customer-primary-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
+.customer-secondary-button {
+    background-color: transparent;
+    color: var(--blue-accent); /* Uses themed accent color for text */
+    border: 1px solid var(--blue-accent); /* Uses themed accent color for border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.customer-secondary-button:hover {
+    background-color: rgba(var(--blue-accent-rgb), 0.05); /* Light transparent background */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.customer-secondary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Messages (Loading, Error, Success) --- */
+.customer-loading-message,
+.customer-error-message,
+.customer-success-message {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95em;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.customer-loading-message {
+    color: var(--text-primary);
+    background-color: rgba(var(--blue-accent-rgb), 0.1);
+    border: 1px solid var(--blue-accent);
+}
+
+.customer-error-message {
+    color: var(--red-error); /* Uses themed error color */
+    background-color: rgba(var(--red-error-rgb), 0.1);
+    border: 1px solid var(--red-error);
+}
+
+.customer-success-message {
+    color: var(--green-success); /* Uses themed success color */
+    background-color: rgba(var(--green-success-rgb), 0.1);
+    border: 1px solid var(--green-success);
+}
+
+/* --- Confirmation Section --- */
+.customer-confirmation-details { /* Used for both confirmation and account details display */
+    padding: 20px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background-color: var(--bg-primary); /* Slightly different background for confirmation pop-up */
+    text-align: left; /* Changed to left for details */
+    box-shadow: 0 2px 8px var(--box-shadow-light);
+    margin-top: 20px; /* Space from title if not part of main card */
+    box-sizing: border-box;
+}
+
+.customer-confirmation-details h3 {
+    font-size: 1.5em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.customer-confirmation-details p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: var(--text-secondary);
+    display: flex; /* Use flex for label-value alignment */
+    justify-content: space-between; /* Space out label and value */
+    align-items: center;
+}
+
+.customer-confirmation-details strong {
+    color: var(--text-primary);
+}
+
+.customer-warning-text {
+    color: var(--red-error);
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95em;
+}
+
+/* --- Account Details Section (specific to Cust_Account_Details.tsx) --- */
+.account-details-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+
+/* --- Transaction History Section (specific to Cust_Account_Details.tsx) --- */
+.transaction-history-section {
+    margin-top: 20px;
+}
+
+.transactions-history-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.no-transactions-message {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed var(--card-border);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between transaction items */
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-primary); /* Lighter background for each item */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--box-shadow-light);
+    transition: all 0.2s ease;
+    border: 1px solid var(--card-border);
+}
+
+.transaction-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.transaction-icon {
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px; /* Slightly larger icon container */
+    height: 35px; /* Slightly larger icon container */
+    border-radius: 50%; /* Make it circular */
+}
+
+.transaction-type-debit .transaction-icon {
+    color: white;
+    background-color: var(--red-error);
+}
+
+.transaction-type-credit .transaction-icon {
+    color: white;
+    background-color: var(--green-success);
+}
+
+.transaction-details {
+    flex-grow: 1; /* Take up available space */
+    display: flex;
+    flex-direction: column; /* Stack amount, info, purpose */
+    text-align: left;
+}
+
+.transaction-amount {
+    font-size: 1.2em; /* Slightly larger amount */
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 5px; /* Space below amount */
+}
+
+.transaction-info {
+    font-size: 0.95em; /* Slightly larger info */
+    color: var(--text-secondary);
+    margin-bottom: 3px; /* Space below info */
+}
+
+.transaction-purpose {
+    font-size: 0.85em;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 0; /* No top margin */
+}
+
+.transaction-meta {
+    flex-shrink: 0; /* Prevent meta info from shrinking */
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 15px;
+}
+
+.transaction-date {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin-bottom: 5px; /* Space below date */
+}
+
+.transaction-type {
+    font-size: 0.8em;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--blue-accent); /* General type background */
+}
+
+/* Specific styling for the status on the transaction history (using same classes as debit/credit) */
+.transaction-item.transaction-type-debit .transaction-type { /* Target the inner span for background */
+    background-color: var(--red-error); /* Use red for debits */
+}
+
+.transaction-item.transaction-type-credit .transaction-type { /* Target the inner span for background */
+    background-color: var(--green-success); /* Use green for credits */
+}
+
+
+/* --- Responsive Adjustments --- */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .customer-function-container {
+        padding: 15px;
+    }
+
+    .customer-card {
+        padding: 20px;
+    }
+
+    .customer-card-title {
+        font-size: 1.8em;
+    }
+
+    .customer-form-input,
+    .customer-primary-button,
+    .customer-secondary-button {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    .customer-button-group {
+        flex-direction: column; /* Stack buttons on small screens */
+        gap: 10px;
+    }
+
+    .customer-primary-button,
+    .customer-secondary-button {
+        width: 100%; /* Full width when stacked */
+    }
+
+    .customer-confirmation-details {
+        padding: 15px;
+    }
+
+    .transaction-item {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align contents to the start */
+        text-align: left;
+    }
+    .transaction-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .transaction-details {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .transaction-meta {
+        width: 100%;
+        margin-left: 0;
+        align-items: flex-start; /* Align meta items to the start */
+        padding-top: 10px;
+        border-top: 1px dashed var(--card-border);
+    }
+    .transaction-amount, .transaction-info, .transaction-purpose, .transaction-date, .transaction-type {
+        text-align: left; /* Ensure text alignment is consistent */
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .customer-function-container {
+        padding: 10px;
+    }
+
+    .customer-card {
+        padding: 15px;
+    }
+
+    .customer-card-title {
+        font-size: 1.5em;
+    }
+
+    .customer-form-input {
+        font-size: 0.9em;
+    }
+
+    .customer-loading-message,
+    .customer-error-message,
+    .customer-success-message {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+}
+
+/* --- Modal Styles (for Cust_Pass_Ver) --- */
+.modal-overlay {
+    position: fixed; /* Stays in place even when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay-bg); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other content */
+    backdrop-filter: blur(5px); /* Optional: blur background for better focus */
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    padding: 2.5rem; /* Adjusted from 30px */
+    border-radius: 12px;
+    box-shadow: var(--modal-shadow); /* Uses modal-shadow variable */
+    width: 90%; /* Responsive width */
+    max-width: 450px; /* Max width for larger screens */
+    text-align: center;
+    position: relative; /* For positioning close button */
+    box-sizing: border-box; /* Include padding in width */
+    color: var(--modal-text);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    animation: fadeInScale 0.3s ease-out forwards; /* Added animation */
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-title {
+    font-size: 1.8rem; /* Adjusted from 1.8em */
+    font-weight: bold;
+    margin-bottom: 1rem; /* Adjusted from 15px */
+    color: var(--modal-text);
+}
+
+.modal-description {
+    font-size: 1rem; /* Adjusted from 1em */
+    color: var(--modal-text-secondary);
+    margin-bottom: 1.5rem; /* Adjusted from 20px */
+}
+
+/* Specific styling for form elements within the modal */
+.modal-content .form-group { /* Target form-group inside modal-content */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem; /* Adjusted from 15px */
+    text-align: left; /* Aligns content to left within form group */
+}
+
+.modal-content .form-group label { /* Target label inside modal's form-group */
+    display: block; /* Ensure label takes full width */
+    margin-bottom: 0.6rem; /* Adjusted from 8px */
+    font-weight: 600;
+    color: var(--modal-text-secondary); /* Use modal-specific text color */
+}
+
+.modal-input {
+    width: 100%; /* Full width */
+    padding: 0.8rem 1rem; /* Adjusted from 12px */
+    border: 1px solid var(--modal-border);
+    border-radius: 8px;
+    font-size: 1rem; /* Adjusted from 1em */
+    color: var(--modal-text);
+    background-color: var(--bg-primary); /* Use primary background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Crucial for width: 100% with padding */
+}
+
+.modal-input:focus {
+    border-color: var(--blue-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--blue-accent-rgb), 0.2);
+}
+
+.modal-error {
+    color: var(--red-error); /* Using --red-error from root, which maps to --red-debit in user's previous code */
+    font-size: 0.9rem; /* Adjusted from 0.9em */
+    margin-top: 1rem; /* Adjusted from -0.8rem and 10px */
+    margin-bottom: 1rem; /* Added margin-bottom for consistency */
+    text-align: center; /* Ensure error message is centered */
+}
+
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Space between buttons, adjusted from 15px */
+    margin-top: 2rem; /* Adjusted from 20px */
+}
+
+.modal-button {
+    padding: 0.8rem 1.8rem; /* Adjusted from 12px 25px */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem; /* Adjusted from 1.05em */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    min-width: 100px;
+}
+
+.modal-button.primary {
+    background-color: var(--blue-accent);
+    color: white;
+}
+
+.modal-button.primary:hover {
+    background-color: var(--blue-accent-hover);
+    transform: translateY(-1px);
+}
+
+.modal-button.secondary {
+    background-color: transparent;
+    color: var(--blue-accent);
+    border: 1px solid var(--blue-accent);
+}
+
+.modal-button.secondary:hover {
+    background-color: rgba(var(--blue-accent-rgb), 0.1); /* Adjusted from 0.05 */
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+    .modal-title {
+        font-size: 1.5rem;
+    }
+    .modal-description {
+        font-size: 0.9rem;
+    }
+    .modal-button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+    }
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .modal-button {
+        width: 100%;
+    }
+}
