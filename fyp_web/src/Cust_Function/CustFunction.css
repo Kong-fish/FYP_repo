@@ -1,186 +1,352 @@
-/* src/Cust_Function/Cust_Function.css */
+/* src/Cust_Function/CustFunction.css */
 
-/* General dashboard container */
-.dashboard-container {
+/* --- CSS Variables for Theming (consistent with CustomerDashboard.css) --- */
+/* These variables are included here for standalone functionality of customer functions. */
+/* Ideally, for a larger application, these would be in a single global file. */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #f8f9fa; /* Light background for forms/inputs within cards */
+    --bg-secondary: #fff;  /* White background for the main card container */
+    --text-primary: #333;  /* Dark text for headings and primary content */
+    --text-secondary: #666; /* Medium text for labels, descriptions */
+    --text-light: #888;    /* Lighter text (less used here) */
+    --card-border: #e0e0e0; /* Border color for inputs and confirmation sections */
+    --box-shadow-light: rgba(0, 0, 0, 0.05); /* Subtle shadow for elements */
+    --box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+
+    /* Accent Colors */
+    --blue-accent: #007bff; /* Primary blue for buttons, focus states */
+    --blue-accent-hover: #0056b3; /* Darker blue on hover */
+    --blue-accent-rgb: 0, 123, 255; /* RGB for rgba() usage */
+
+    --green-success: #28a745; /* Green for success messages */
+    --green-success-rgb: 40, 167, 69;
+
+    --red-error: #dc3545; /* Red for error messages */
+    --red-error-rgb: 220, 53, 69;
+
+    --disabled-input-bg: #e9ecef; /* Specific color for disabled inputs */
+}
+
+body.dark-mode {
+    /* Dark Mode Overrides for Customer Function specific elements */
+    --bg-primary: #2d2d2d;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-light: #999;
+    --card-border: #444;
+    --box-shadow-light: rgba(255, 255, 255, 0.05);
+    --box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    --blue-accent: #5b9bd5;
+    --blue-accent-hover: #3a7bbd;
+    --blue-accent-rgb: 91, 155, 213;
+
+    --green-success: #4CAF50;
+    --green-success-rgb: 76, 175, 80;
+
+    --red-error: #EF5350;
+    --red-error-rgb: 239, 83, 80;
+
+    --disabled-input-bg: #3c3c3c;
+}
+
+
+/* --- General Container for Customer Function Pages (e.g., Transfer, Loan, New Account) --- */
+.customer-function-container {
     flex-grow: 1; /* Allows it to take available space */
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Align content to the top */
     align-items: center;
     padding: 20px;
-    background-color: var(--background-color-primary);
-    color: var(--text-color-primary);
+    background-color: var(--bg-primary); /* Uses themed primary background */
+    color: var(--text-primary); /* Uses themed primary text color */
     transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: calc(100vh - 100px); /* Adjust based on header height, for proper footer placement */
+    box-sizing: border-box; /* Include padding in height calculation */
 }
 
-.dashboard-main {
+.customer-function-content {
     width: 100%;
-    max-width: 1200px; /* Max width for the dashboard content */
+    max-width: 700px; /* Max width for the entire form area */
     margin: 0 auto;
     padding-top: 20px; /* Space from header */
+    display: flex; /* Flex container for card */
+    justify-content: center; /* Center the customer-card horizontally */
+    align-items: flex-start; /* Align the customer-card to the top */
+    flex-direction: column; /* Allows content to stack if needed, though primarily holds one card */
 }
 
-.dashboard-layout {
-    display: flex;
-    flex-direction: column; /* Stack main content and sidebar */
-    gap: 30px; /* Space between sections */
-}
-
-/* Reusing transactions-card for profile edit form */
-.transactions-card {
-    background-color: var(--card-background);
+/* --- Reusable Card Style for Customer Function Forms --- */
+.customer-card {
+    background-color: var(--bg-secondary); /* Uses themed secondary background (white/darker gray) */
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-medium);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--box-shadow-medium); /* Uses themed shadow */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure the card takes full width of its content container */
+    max-width: 600px; /* A consistent max width for the cards */
+    margin-bottom: 30px; /* Space below the card before any potential footer/next section */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.transactions-header {
+.customer-card-header {
     margin-bottom: 25px;
     text-align: center;
 }
 
-.transactions-title {
-    font-size: 2em;
+.customer-card-title {
+    font-size: 2.2em;
     font-weight: bold;
-    color: var(--text-color-dark);
+    color: var(--text-primary); /* Uses themed text color */
+    margin: 0;
 }
 
-/* Profile Edit Form Specific Styles */
-.profile-edit-form {
-    display: grid; /* Use CSS Grid for a robust two-column layout */
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 25px; /* Gap between grid items */
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .profile-edit-form {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
-    }
-}
-
-.profile-edit-form .form-group {
+/* --- Form Specific Styles (Applies to forms inside .customer-card) --- */
+.customer-form {
     display: flex;
     flex-direction: column;
+    gap: 20px; /* Space between form groups */
+    padding-top: 10px;
 }
 
-.profile-edit-form label {
+.customer-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Added spacing between form fields */
+}
+
+.customer-form-group:last-of-type {
+    margin-bottom: 0; /* Remove margin from the last form group */
+}
+
+.customer-form-label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--text-color-secondary);
+    color: var(--text-secondary); /* Uses themed text color */
+    font-size: 1em;
 }
 
-.profile-edit-form input[type="text"],
-.profile-edit-form input[type="email"],
-.profile-edit-form input[type="tel"],
-.profile-edit-form input[type="date"],
-.profile-edit-form textarea {
+.customer-form-input {
     padding: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--card-border); /* Uses themed border color */
     border-radius: 8px;
     font-size: 1em;
-    color: var(--text-color-primary);
-    background-color: var(--input-background);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    width: 100%; /* Ensure inputs take full width of their grid cell */
+    color: var(--text-primary); /* Uses themed text color */
+    background-color: var(--bg-primary); /* Uses themed primary background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure inputs take full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.profile-edit-form textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 80px; /* Minimum height for textarea */
+.customer-form-input:focus {
+    border-color: var(--blue-accent); /* Uses themed accent color */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--blue-accent-rgb), 0.2); /* Uses themed RGB for glow */
 }
 
-.profile-edit-form input[type="text"]:disabled,
-.profile-edit-form input[type="tel"]:disabled,
-.profile-edit-form input[type="date"]:disabled,
-.profile-edit-form textarea:disabled {
-    background-color: var(--disabled-input-bg) !important; /* Use !important if needed to override */
+.customer-form-input:disabled {
+    background-color: var(--disabled-input-bg) !important;
     cursor: not-allowed;
     opacity: 0.8;
 }
 
-
-.profile-edit-form input:focus,
-.profile-edit-form textarea:focus {
-    border-color: var(--accent-color);
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2); /* Assuming accent-rgb variable exists */
+/* --- Buttons --- */
+.customer-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: 25px; /* Space above button group */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
 }
 
-.profile-edit-form .primary-button {
-    grid-column: 1 / -1; /* Make button span all columns */
-    margin-top: 20px;
-    padding: 15px 25px;
+.customer-primary-button,
+.customer-secondary-button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
     font-size: 1.1em;
-    width: auto; /* Allow button to size based on padding/content */
-    justify-self: center; /* Center button horizontally in the grid */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    min-width: 150px; /* Ensure buttons have a minimum width */
+    text-align: center;
 }
 
-.loading-message, .error-message, .success-message {
+.customer-primary-button {
+    background-color: var(--blue-accent); /* Uses themed accent color */
+    color: white;
+    box-shadow: 0 4px 10px rgba(var(--blue-accent-rgb), 0.2);
+}
+
+.customer-primary-button:hover {
+    background-color: var(--blue-accent-hover); /* Uses themed hover color */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(var(--blue-accent-rgb), 0.3);
+}
+
+.customer-primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(var(--blue-accent-rgb), 0.2);
+}
+
+.customer-primary-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
+.customer-secondary-button {
+    background-color: transparent;
+    color: var(--blue-accent); /* Uses themed accent color for text */
+    border: 1px solid var(--blue-accent); /* Uses themed accent color for border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.customer-secondary-button:hover {
+    background-color: rgba(var(--blue-accent-rgb), 0.05); /* Light transparent background */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.customer-secondary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Messages (Loading, Error, Success) --- */
+.customer-loading-message,
+.customer-error-message,
+.customer-success-message {
     text-align: center;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
     border-radius: 8px;
     font-weight: bold;
-}
-
-.loading-message {
-    color: var(--text-color-primary);
-    background-color: var(--background-color-secondary);
-}
-
-.error-message {
-    color: var(--error-color);
-    background-color: rgba(var(--error-color-rgb), 0.1); /* Assuming error-color-rgb exists */
-    border: 1px solid var(--error-color);
-}
-
-.success-message {
-    color: var(--success-color);
-    background-color: rgba(var(--success-color-rgb), 0.1); /* Assuming success-color-rgb exists */
-    border: 1px solid var(--success-color);
-}
-
-/* Dashboard Footer */
-.dashboard-footer {
+    font-size: 0.95em;
     width: 100%;
-    background-color: var(--background-color-secondary); /* A slightly darker background than primary */
-    color: var(--text-color-secondary);
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.customer-loading-message {
+    color: var(--text-primary);
+    background-color: rgba(var(--blue-accent-rgb), 0.1);
+    border: 1px solid var(--blue-accent);
+}
+
+.customer-error-message {
+    color: var(--red-error); /* Uses themed error color */
+    background-color: rgba(var(--red-error-rgb), 0.1);
+    border: 1px solid var(--red-error);
+}
+
+.customer-success-message {
+    color: var(--green-success); /* Uses themed success color */
+    background-color: rgba(var(--green-success-rgb), 0.1);
+    border: 1px solid var(--green-success);
+}
+
+/* --- Confirmation Section --- */
+.customer-confirmation-section {
     padding: 20px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background-color: var(--bg-primary); /* Slightly different background for confirmation pop-up */
     text-align: center;
-    margin-top: auto; /* Pushes footer to the bottom */
-    box-shadow: var(--shadow-small);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 8px var(--box-shadow-light);
+    margin-top: 20px; /* Space from title if not part of main card */
+    box-sizing: border-box;
 }
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+.customer-confirmation-section h3 {
+    font-size: 1.5em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
 }
 
-.footer-copyright {
-    font-size: 0.9em;
+.customer-confirmation-details p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: var(--text-secondary);
 }
 
-.footer-links {
-    display: flex;
-    gap: 15px;
+.customer-confirmation-details strong {
+    color: var(--text-primary);
 }
 
-.footer-link {
-    color: var(--text-color-secondary);
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: color 0.2s ease;
+.customer-warning-text {
+    color: var(--red-error);
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95em;
 }
 
-.footer-link:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
+/* --- Responsive Adjustments --- */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .customer-function-container {
+        padding: 15px;
+    }
+
+    .customer-card {
+        padding: 20px;
+    }
+
+    .customer-card-title {
+        font-size: 1.8em;
+    }
+
+    .customer-form-input,
+    .customer-primary-button,
+    .customer-secondary-button {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    .customer-button-group {
+        flex-direction: column; /* Stack buttons on small screens */
+        gap: 10px;
+    }
+
+    .customer-primary-button,
+    .customer-secondary-button {
+        width: 100%; /* Full width when stacked */
+    }
+
+    .customer-confirmation-section {
+        padding: 15px;
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .customer-function-container {
+        padding: 10px;
+    }
+
+    .customer-card {
+        padding: 15px;
+    }
+
+    .customer-card-title {
+        font-size: 1.5em;
+    }
+
+    .customer-form-input {
+        font-size: 0.9em;
+    }
+
+    .customer-loading-message,
+    .customer-error-message,
+    .customer-success-message {
+        padding: 8px;
+        font-size: 0.85em;
+    }
 }

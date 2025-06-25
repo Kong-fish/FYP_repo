@@ -48,7 +48,7 @@ body {
 .hero {
   background-color: #e2e0df; /* Light mode hero background */
   color: #161616; /* Light mode hero text color */
-  padding: 4rem 0;
+  padding-bottom: 4rem;
   text-align: center;
 }
 

@@ -11,15 +11,15 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
     <header className="header">
       <div className="header__content">
-        <button onClick={handleBack} className="back-button" style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+        <button onClick={handleBack} className="back-button">
           <ArrowLeft size={24} />
-          <span className="back-button-text" style={{ marginLeft: '8px' }}>Back</span>
+          <span className="back-button-text">Back</span>
         </button>
         <div className="header__title">
           <p>Eminent Western</p>

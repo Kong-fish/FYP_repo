@@ -3,7 +3,6 @@ import Landing from './Landing/Landing.tsx';
 import Register from './Landing/Register.tsx';
 import Login from './Landing/Login.tsx';
 import ForgotPassword from './Landing/Forgot_Password.tsx';
-// import UpdatePassword from './Landing/Update_Password.tsx';
 
 import AdminDashboard from './Dashboard/Admin_Dashboard.tsx';
 import CustomerDashboard from './Dashboard/Customer_Dashboard.tsx';

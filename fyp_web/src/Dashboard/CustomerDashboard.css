@@ -1,10 +1,49 @@
 /* CustomerDashboard.css */
 
+/* --- CSS Variables for Theming --- */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #f8f9fa; /* Light background for general page/container */
+    --bg-secondary: #fff;  /* White background for main content/summary card and sidebar */
+    --text-primary: #333;  /* Dark text for headings */
+    --text-secondary: #666; /* Medium text for paragraphs, smaller headings */
+    --text-light: #888;    /* Lighter text for details like account numbers, last login */
+    --card-border: #e0e0e0; /* Border color for account cards */
+    --box-shadow-light: rgba(0, 0, 0, 0.05); /* Lighter shadow for general use */
+    --box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+
+    /* Accent Colors */
+    --blue-accent: #007bff; /* Primary blue for buttons, balances */
+    --blue-accent-hover: #0056b3; /* Darker blue on hover */
+    --green-credit: #28a745; /* Green for credit transactions */
+    --red-debit: #dc3545; /* Red for debit transactions */
+}
+
+body.dark-mode {
+    /* Dark Mode Colors */
+    --bg-primary: #2d2d2d; /* Dark background for general page/container */
+    --bg-secondary: #1a1a1a; /* Darker background for main content/summary card and sidebar */
+    --text-primary: #e0e0e0; /* Light text for headings */
+    --text-secondary: #b0b0b0; /* Medium light text for paragraphs */
+    --text-light: #999;     /* Lighter text for details */
+    --card-border: #444;    /* Darker border for cards */
+    --box-shadow-light: rgba(255, 255, 255, 0.05); /* Lighter shadow for dark mode */
+    --box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    /* Accent Colors (adjusted for dark mode visibility) */
+    --blue-accent: #5b9bd5;
+    --blue-accent-hover: #3a7bbd;
+    --green-credit: #4CAF50; /* Slightly different green */
+    --red-debit: #EF5350;   /* Slightly different red */
+}
+
 /* General Layout */
 .dashboard-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: var(--bg-primary); /* Consistent background */
+    color: var(--text-primary); /* Default text color */
 }
 
 .dashboard-main.container {
@@ -16,7 +55,10 @@
 
 .dashboard-layout {
     display: flex;
+    flex-direction: row; /* Explicitly define for larger screens (default desktop layout) */
     gap: 20px;
+    align-items: flex-start;
+    flex-direction: row; 
 }
 
 /* Sidebar */
@@ -25,30 +67,35 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: var(--bg-secondary); /* Background for the overall sidebar section */
+    border-radius: 8px; /* Apply border-radius to the whole sidebar */
+    box-shadow: 0 2px 4px var(--box-shadow-light); /* Apply shadow to the whole sidebar */
+    padding: 20px; /* Add padding inside the sidebar */
+    height: auto; /* Allow content to dictate height, but stretches via parent flex */
 }
 
 .quick-actions-card {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: transparent; /* Make inner cards transparent as sidebar has background */
+    box-shadow: none; /* Remove shadow if applied to sidebar */
+    padding: 0; /* Remove padding if sidebar already has it, or adjust as needed */
 }
 
 .quick-actions-title {
     font-size: 1.2em;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--text-primary); /* Themed text color */
 }
 
 .quick-actions-grid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
 
 .action-button {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--blue-accent); /* Themed accent color */
+    color: white; /* Button text always white for contrast */
     border: none;
     border-radius: 5px;
     padding: 15px 10px;
@@ -63,7 +110,7 @@
 }
 
 .action-button:hover {
-    background-color: #0056b3;
+    background-color: var(--blue-accent-hover); /* Themed hover color */
 }
 
 .action-icon {
@@ -75,10 +122,9 @@
 }
 
 .sidebar-menu {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    padding: 10px 0;
+    background-color: transparent; /* Make inner cards transparent */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove padding or adjust as needed */
 }
 
 .sidebar-menu-item {
@@ -92,28 +138,28 @@
     gap: 10px;
     cursor: pointer;
     font-size: 1em;
-    color: #333;
+    color: var(--text-primary); /* Themed text color */
     transition: background-color 0.2s ease;
 }
 
 .sidebar-menu-item:hover {
-    background-color: #e9ecef;
+    background-color: var(--card-border); /* Slightly lighter/darker on hover, using card-border for subtle contrast */
 }
 
 .sidebar-menu-icon {
-    font-size: 1.2em;
+    color: var(--text-secondary); /* Subtle color for icons */
 }
 
 /* Main Content */
 .main-content {
-    flex: 1;
+    flex: 1; /* Takes remaining space beside the sidebar */
 }
 
 .account-summary-card {
-    background-color: #fff;
+    background-color: var(--bg-secondary); /* Themed background */
     border-radius: 8px;
     padding: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px var(--box-shadow-medium); /* Themed shadow */
 }
 
 .account-summary-header {
@@ -127,25 +173,32 @@
 
 .welcome-message {
     font-size: 1.1em;
-    color: #666;
+    color: var(--text-secondary); /* Themed text color */
     margin-bottom: 5px;
 }
 
 .welcome-name {
     font-size: 2em;
-    color: #333;
+    color: var(--text-primary); /* Themed text color */
     margin: 0;
 }
 
 .last-login {
     font-size: 0.9em;
-    color: #888;
+    color: var(--text-light); /* Themed text color */
     margin-bottom: 20px;
 }
 
+.view-all-button-container {
+    display: flex; /* Arrange buttons side-by-side */
+    gap: 10px; /* Space between buttons */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: flex-end; /* Align to the right */
+}
+
 .view-all-button {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--blue-accent); /* Themed accent color */
+    color: white; /* Button text always white for contrast */
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
@@ -157,7 +210,7 @@
 }
 
 .view-all-button:hover {
-    background-color: #0056b3;
+    background-color: var(--blue-accent-hover); /* Themed hover color */
 }
 
 .hide-show-btn {
@@ -176,19 +229,19 @@
 }
 
 .account-card {
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--card-border); /* Themed border */
     border-radius: 8px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #fdfdfd;
+    background-color: var(--bg-primary); /* Themed background, slightly different from summary */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .account-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--box-shadow-medium); /* Themed shadow */
 }
 
 .account-header {
@@ -200,17 +253,17 @@
 
 .account-type {
     font-size: 1.1em;
-    color: #555;
+    color: var(--text-secondary); /* Themed text color */
     margin-bottom: 5px;
 }
 
 .account-number {
     font-size: 0.9em;
-    color: #888;
+    color: var(--text-light); /* Themed text color */
 }
 
 .account-icon {
-    font-size: 1.8em;
+    color: var(--blue-accent); /* Example color for icons, adjust as needed */
 }
 
 .account-balance-section {
@@ -220,19 +273,144 @@
 .account-balance {
     font-size: 1.6em;
     font-weight: bold;
-    color: #007bff;
+    color: var(--blue-accent); /* Themed accent color */
     margin-bottom: 5px;
 }
 
-.available-credit {
+/* Recent Transactions Card */
+.transactions-card {
+    background-color: var(--bg-secondary); /* Themed background */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px var(--box-shadow-medium); /* Themed shadow */
+    margin-top: 20px; /* Space from account summary card */
+}
+
+.transactions-content {
+    /* flex, padding etc. */
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.transactions-title {
+    font-size: 1.2em;
+    color: var(--text-primary); /* Themed text color */
+    margin: 0;
+}
+
+.view-all-transactions {
+    background-color: var(--blue-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
     font-size: 0.9em;
-    color: #666;
+    /* Hidden by default on larger screens, shown on mobile */
+    display: none; /* This will be overridden by media query for mobile */
+}
+
+.view-all-transactions:hover {
+    background-color: var(--blue-accent-hover);
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--card-border); /* Subtle separator */
+}
+
+.transaction-item:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Allows it to take available space */
+}
+
+/* Styling for transaction type indicator (+/- circle) */
+.transaction-type-indicator {
+    width: 28px; /* Slightly larger size */
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 12px; /* More space */
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
+    color: white; /* Color of the plus/minus sign */
+}
+
+.transaction-type-indicator.debit {
+    background-color: var(--red-debit); /* Red from themed variables */
+}
+.transaction-type-indicator.debit::before {
+    content: '-';
+}
+
+.transaction-type-indicator.credit {
+    background-color: var(--green-credit); /* Green from themed variables */
+}
+.transaction-type-indicator.credit::before {
+    content: '+';
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-description {
+    font-size: 1em;
+    color: var(--text-primary); /* Themed text color */
+    margin: 0;
+}
+
+.transaction-date {
+    font-size: 0.85em;
+    color: var(--text-light); /* Themed text color */
+    margin-top: 5px;
+}
+
+.transaction-amount {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: right;
+    flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+/* Themed colors for transaction amounts */
+.transaction-amount.debit {
+    color: var(--red-debit);
+}
+
+.transaction-amount.credit {
+    color: var(--green-credit);
 }
 
 /* Footer */
 .dashboard-footer {
-    background-color: #343a40;
-    color: white;
+    background-color: var(--footer-bg); /* Themed footer background */
+    color: var(--footer-text); /* Themed footer text */
     padding: 20px;
     margin-top: 30px;
 }
@@ -249,7 +427,7 @@
 
 .footer-copyright {
     font-size: 0.9em;
-    color: #adb5bd;
+    color: var(--footer-link); /* Themed link color */
 }
 
 .footer-links {
@@ -258,55 +436,91 @@
 }
 
 .footer-link {
-    color: white;
+    color: var(--footer-text); /* Themed text color */
     text-decoration: none;
     font-size: 0.9em;
-    transition: opacity 0.2s ease, text-decoration 0.2s ease;
+    transition: color 0.2s ease, text-decoration 0.2s ease; /* Transition 'color' instead of 'opacity' */
 }
 
 .footer-link:hover {
-    opacity: 1;
+    color: var(--footer-link); /* Slightly different color for hover if desired, or just underline */
     text-decoration: underline;
 }
 
-/* Mobile-specific styles */
+
+/* Mobile-specific styles (retained and adjusted for consistency) */
 .action-button.mobile-only {
     display: none; /* Hide by default on larger screens */
 }
 
+/* Loading and Error States */
+.loading-state, .error-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.2em;
+    color: var(--text-primary);
+}
+.error-state .error-message {
+    color: var(--red-debit); /* Use themed red for error messages */
+}
+.reload-button {
+    background-color: var(--blue-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.reload-button:hover {
+    background-color: var(--blue-accent-hover);
+}
+
+
 /* Responsive Design */
-@media (max-width: 768px) {
+/* Adjusted breakpoint for dashboard-layout to ensure side-by-side on most laptops */
+@media (max-width: 1200px) { /* Changed from 992px to 1200px */
     .dashboard-layout {
-        flex-direction: column;
+        flex-direction: column; /* Stack columns on screens <= 1200px (tablets and smaller laptops) */
+        align-items: stretch; /* Ensure stacked items stretch horizontally */
     }
 
     .sidebar {
         flex: none;
         width: 100%;
+        padding: 20px; /* Adjust padding for stacked layout */
+    }
+
+    .quick-actions-card {
+        padding: 0; /* Inner card padding might need adjustment if sidebar has padding */
     }
 
     .quick-actions-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* More flexible grid for mobile */
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
 
     .action-button {
-        padding: 10px 5px;
+        padding: 12px 5px;
     }
 
     .action-button .large-icon {
-        size: 24px; /* Slightly smaller icons for mobile */
+        size: 24px;
     }
 
     .action-button .action-label {
-        font-size: 0.8em;
+        font-size: 0.85em;
     }
 
     .sidebar-menu {
-        display: none; /* Hide desktop sidebar menu on mobile */
+        display: none; /* Hide desktop sidebar menu on tablets and smaller laptops */
     }
 
     .action-button.mobile-only {
-        display: flex; /* Show mobile-only buttons */
+        display: flex; /* Show mobile-only buttons on tablets and smaller laptops */
     }
 
     .account-summary-header {
@@ -317,10 +531,12 @@
     .view-all-button-container {
         width: 100%;
         text-align: center;
+        justify-content: center;
     }
 
     .view-all-button {
-        width: 100%;
+        width: auto;
+        flex-grow: 1;
         justify-content: center;
     }
 
@@ -333,6 +549,10 @@
         justify-content: center;
         width: 100%;
     }
+
+    .view-all-transactions {
+        display: block; /* Show the "View All" button when layout stacks */
+    }
 }
 
 @media (max-width: 480px) {
@@ -341,7 +561,7 @@
     }
 
     .quick-actions-grid {
-        grid-template-columns: repeat(2, 1fr); /* Two columns on very small screens */
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .account-summary-card {
@@ -354,5 +574,21 @@
 
     .account-balance {
         font-size: 1.4em;
+    }
+
+    .transactions-card {
+        padding: 20px;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .transaction-amount {
+        width: 100%;
+        text-align: left;
+        padding-left: 40px;
     }
 }

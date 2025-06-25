@@ -1,57 +1,30 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import supabase from '../supbaseClient.js';
-import { ArrowLeft, CheckCircle } from 'lucide-react'; // Import icons
+import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react'; // Import CheckCircle for success, XCircle for failure
 
 // Import shared CSS files
 import '../shared/Header.css';
 import '../shared/normalize.css';
-import './CustFunction.css';
+import './CustFunction.css'; // For general customer function styling
 import DarkModeToggle from '../shared/DarkModeToggle.tsx'; // Import DarkModeToggle component
 
-// Re-use the Header component for consistency across pages
+// Re-use the Header component for consistency
 interface HeaderProps {
     showBackButton?: boolean;
     backPath?: string;
-    showSignOut?: boolean; // Added prop for sign out button
+    showSignOut?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ showBackButton = false, backPath = '/', showSignOut = true }) => {
-    const [isDarkMode, setIsDarkMode] = React.useState<boolean>(false);
     const navigate = useNavigate();
-
-    React.useEffect(() => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-            setIsDarkMode(true);
-        } else if (savedTheme === 'light') {
-            document.documentElement.classList.remove('dark');
-            setIsDarkMode(false);
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-            setIsDarkMode(true);
-        }
-    }, []);
-
-    const toggleDarkMode = () => {
-        const newMode = !isDarkMode;
-        setIsDarkMode(newMode);
-        if (newMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    };
 
     const handleSignOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error('Error signing out:', error.message);
         } else {
-            navigate('/customer-landing'); // Redirect to customer landing after sign out
+            navigate('/'); // Redirect to customer landing after sign out
         }
     };
 
@@ -91,14 +64,17 @@ export default function Cust_Transfer_Complete() {
     const navigate = useNavigate();
     const location = useLocation();
     // Retrieve state passed from the previous page (e.g., Transfer page)
-    // This is an example, you might pass real transaction data here
     const {
         amount = 'N/A',
-        recipientName = 'N/A',
-        transactionId = 'N/A',
+        recipientName = 'N/A', // This should likely be recipientAccountNo or a formatted name
+        transactionId = 'N/A', // Only available on success
         timestamp = new Date().toLocaleString(),
-        status = 'Completed'
+        status = 'failure', // Default to failure if status is not explicitly passed
+        message = 'An unexpected error occurred.', // Message for failure
+        typeOfTransfer = 'General Transfer' // Type of transfer, for context
     } = location.state || {};
+
+    const isSuccess = status === 'success';
 
     const handleGoToDashboard = () => {
         navigate('/customer-dashboard');
@@ -111,29 +87,38 @@ export default function Cust_Transfer_Complete() {
     return (
         <div className="main-app-wrapper">
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            {/* Header: Show back button to dashboard, hide sign out for confirmation page clarity */}
+            {/* Header: Always show back button to dashboard from this page */}
             <Header showBackButton={true} backPath="/customer-dashboard" showSignOut={true} />
 
-            <div className="dashboard-container">
-                <div className="dashboard-main container">
-                    <div className="dashboard-layout">
-                        <div className="main-content" style={{ maxWidth: '600px', margin: '0 auto', width: '95%' }}>
-                            <div className="transactions-card success-card"> {/* Added success-card class */}
-                                <div className="transactions-content" style={{ textAlign: 'center' }}>
-                                    <CheckCircle size={80} className="success-icon" />
-                                    <h2 className="transactions-title" style={{ color: 'var(--success-color)', marginBottom: '15px' }}>
-                                        Transfer Successful!
-                                    </h2>
-                                    <p className="success-message" style={{ marginBottom: '30px', fontSize: '1.1em' }}>
-                                        Your transaction has been processed successfully.
-                                    </p>
+            <div className="customer-function-container"> {/* Reusing customer-function-container */}
+                <div className="customer-function-content"> {/* Reusing customer-function-content */}
+                    <div className={`customer-card ${isSuccess ? 'success-card' : 'failure-card'}`}> {/* Dynamic class for card */}
+                        <div className="customer-card-content" style={{ textAlign: 'center' }}>
+                            {isSuccess ? (
+                                <CheckCircle size={80} className="success-icon" />
+                            ) : (
+                                <XCircle size={80} className="failure-icon" />
+                            )}
+                            <h2 className="customer-card-title" style={{ color: isSuccess ? 'var(--green-success)' : 'var(--red-error)', marginBottom: '15px' }}>
+                                {isSuccess ? 'Transfer Successful!' : 'Transfer Failed!'}
+                            </h2>
+                            <p className={isSuccess ? 'customer-success-message' : 'customer-error-message'} style={{ marginBottom: '30px', fontSize: '1.1em' }}>
+                                {isSuccess ? 'Your transaction has been processed successfully.' : message}
+                            </p>
 
-                                    <div className="transaction-details">
-                                        <h3>Transaction Summary</h3>
-                                        <div className="detail-item">
-                                            <span>Amount:</span>
-                                            <span className="detail-value">$ {parseFloat(amount).toFixed(2)}</span>
-                                        </div>
+                            <div className="transaction-details customer-confirmation-details"> {/* Reusing confirmation details styles */}
+                                <h3>Transaction Summary</h3>
+                                <div className="detail-item">
+                                    <span>Amount:</span>
+                                    <span className="detail-value">$ {parseFloat(amount).toFixed(2)}</span>
+                                </div>
+                                <div className="detail-item">
+                                    <span>Type of Transfer:</span>
+                                    <span className="detail-value">{typeOfTransfer}</span>
+                                </div>
+                                {/* Only show these details if the transfer was successful */}
+                                {isSuccess && (
+                                    <>
                                         <div className="detail-item">
                                             <span>Recipient:</span>
                                             <span className="detail-value">{recipientName}</span>
@@ -146,28 +131,29 @@ export default function Cust_Transfer_Complete() {
                                             <span>Date & Time:</span>
                                             <span className="detail-value">{timestamp}</span>
                                         </div>
-                                        <div className="detail-item">
-                                            <span>Status:</span>
-                                            <span className="detail-value status-completed">{status}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="action-buttons-group">
-                                        <button
-                                            onClick={handleGoToDashboard}
-                                            className="primary-button"
-                                        >
-                                            Go to Dashboard
-                                        </button>
-                                        <button
-                                            onClick={handleAnotherTransfer}
-                                            className="secondary-button"
-                                            style={{ marginLeft: '15px' }}
-                                        >
-                                            Make Another Transfer
-                                        </button>
-                                    </div>
+                                    </>
+                                )}
+                                <div className="detail-item">
+                                    <span>Status:</span>
+                                    <span className={`detail-value ${isSuccess ? 'status-completed' : 'status-failed'}`}>
+                                        {isSuccess ? 'Completed' : 'Failed'}
+                                    </span>
                                 </div>
+                            </div>
+
+                            <div className="customer-button-group"> {/* Reusing customer-button-group */}
+                                <button
+                                    onClick={handleGoToDashboard}
+                                    className="customer-primary-button"
+                                >
+                                    Go to Dashboard
+                                </button>
+                                <button
+                                    onClick={handleAnotherTransfer}
+                                    className="customer-secondary-button"
+                                >
+                                    Make Another Transfer
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -176,7 +162,7 @@ export default function Cust_Transfer_Complete() {
                 {/* Footer */}
                 <footer className="dashboard-footer">
                     <div className="footer-content">
-                        <p className="footer-copyright">© 2025 Eminent Western. All rights reserved.</p>
+                        <p className="footer-copyright">© {new Date().getFullYear()} Eminent Western. All rights reserved.</p>
                         <div className="footer-links">
                             <a href="#" className="footer-link">Privacy</a>
                             <a href="#" className="footer-link">Terms</a>

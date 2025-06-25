@@ -1,14 +1,48 @@
+// Customer_Dashboard.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../shared/Header.css';
-import '../shared/normalize.css';
 import supabase from '../supbaseClient.js';
-import './CustomerDashboard.css';
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';  
-import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx';
-import { DollarSign, Banknote, PlusCircle, BarChart, History, Settings, Eye, EyeOff } from 'lucide-react';
+import './CustomerDashboard.css'; // Main dashboard specific styles
+import '../shared/normalize.css'; // Global normalize styles
+import '../shared/Header.css'; // Import Header specific styles
 
-// Define types for your data based on the provided Supabase schema for better type safety
+// Import the DarkModeToggle, as it's now used directly within this file's Header
+import DarkModeToggle from '../shared/DarkModeToggle.tsx';
+
+// Import Lucide icons for consistency and better styling
+import { DollarSign, Banknote, PlusCircle, BarChart, History, Settings, Eye, EyeOff, CreditCard, Landmark, PiggyBank } from 'lucide-react';
+import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; // Assuming this component exists
+
+// The Header component as provided by the user, now with sign-out functionality
+const Header = () => {
+    const navigate = useNavigate(); // useNavigate hook must be inside a component
+
+    const handleSignOut = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Error signing out:', error.message);
+        } else {
+            navigate('/customer-landing'); // Redirect to landing page after sign out
+        }
+    };
+
+    return (
+        <header className="header">
+            <div className="header__content">
+                <div className="logo-section">
+                    <span className="logo-text header__title">Eminent Western</span>
+                </div>
+                <div className="header-actions"> {/* This div groups DarkModeToggle and Sign Out */}
+                    <DarkModeToggle />
+                    <button onClick={handleSignOut} className="sign-out-button header-sign-out-btn">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </header>
+    );
+};
+
 interface CustomerInfo {
     id: string | null; // Corresponds to customer_id
     firstName: string;
@@ -22,8 +56,6 @@ interface Account {
     number: string; // Corresponds to account_no
     balance: number;
     nickname: string | null; // Corresponds to nickname
-    // Removed 'limit' as it's not in the provided Account table schema.
-    // If credit limits are needed, they should be added to the database schema.
 }
 
 interface Transaction {
@@ -44,8 +76,7 @@ export default function CustomerDashboard() {
         lastLogin: 'N/A',
     });
     const [accounts, setAccounts] = useState<Account[]>([]);
-    const [recentTransactions, setRecentTransactions] = useState<Transaction[]>([]);
-    const [showBalances, setShowBalances] = useState(true);
+    const [showBalances, setShowBalances] = useState(false); // Balances hidden by default
     const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
     const [actionToPerform, setActionToPerform] = useState<(() => void) | null>(null);
     const [verificationError, setVerificationError] = useState('');
@@ -117,7 +148,6 @@ export default function CustomerDashboard() {
                 // Clear customer data if logged out
                 setCustomerInfo({ id: null, firstName: '', lastName: '', lastLogin: 'N/A' });
                 setAccounts([]);
-                setRecentTransactions([]);
                 navigate('/customer-landing'); // Redirect on logout
             } else {
                 getCustomerSessionAndProfile(); // Re-fetch on login
@@ -131,13 +161,13 @@ export default function CustomerDashboard() {
     }, [navigate]); // Dependency array includes navigate to avoid linting warnings
 
 
-    // --- Function to fetch accounts and transactions once customerInfo.id is available ---
+    // --- Function to fetch accounts once customerInfo.id is available ---
+    // This useEffect was commented out and is now restored.
     useEffect(() => {
-        const fetchAccountsAndTransactions = async () => {
+        const fetchAccounts = async () => {
             if (!customerInfo.id) {
                 // Do not fetch if customer ID is not yet available
                 setAccounts([]);
-                setRecentTransactions([]);
                 return;
             }
             setIsLoading(true);
@@ -162,92 +192,15 @@ export default function CustomerDashboard() {
                     number: acc.account_no,
                     balance: acc.balance,
                     nickname: acc.nickname,
-                    // No 'limit' in schema, so it's not included here.
                 }));
                 setAccounts(formattedAccounts);
             }
-
-            // Fetch all account_ids belonging to the current customer for transaction fetching
-            const { data: customerAccountIds, error: accountIdError } = await supabase
-                .from('Account')
-                .select('account_id, account_no') // Also get account_no for receiver_account_no check
-                .eq('customer_id', customerInfo.id);
-
-            if (accountIdError) {
-                console.error('Error fetching customer account IDs for transactions:', accountIdError.message);
-                setDataError('Failed to load transaction history.');
-                setRecentTransactions([]);
-                setIsLoading(false);
-                return;
-            }
-
-            const relevantAccountIds = customerAccountIds.map(acc => acc.account_id);
-            const relevantAccountNumbers = customerAccountIds.map(acc => acc.account_no);
-
-            if (relevantAccountIds.length === 0) {
-                // If no accounts, no transactions to fetch
-                setRecentTransactions([]);
-                setIsLoading(false);
-                return;
-            }
-
-            // Fetch recent transactions initiated by customer's accounts (Debits)
-            const { data: debitTransactions, error: debitError } = await supabase
-                .from('Transaction')
-                .select('transaction_id, initiator_account_id, receiver_account_no, amount, purpose, transfer_datetime')
-                .in('initiator_account_id', relevantAccountIds)
-                .order('transfer_datetime', { ascending: false })
-                .limit(4);
-
-            if (debitError) {
-                console.error('Error fetching debit transactions:', debitError.message);
-                setDataError('Failed to load recent transactions.');
-                setRecentTransactions([]);
-                setIsLoading(false);
-                return;
-            }
-
-            // Fetch recent transactions received by customer's accounts (Credits)
-            const { data: creditTransactions, error: creditError } = await supabase
-                .from('Transaction')
-                .select('transaction_id, initiator_account_id, receiver_account_no, amount, purpose, transfer_datetime')
-                .in('receiver_account_no', relevantAccountNumbers)
-                .order('transfer_datetime', { ascending: false })
-                .limit(4);
-
-            if (creditError) {
-                console.error('Error fetching credit transactions:', creditError.message);
-                setDataError('Failed to load recent transactions.');
-                setRecentTransactions([]);
-                setIsLoading(false);
-                return;
-            }
-
-            // Combine and format transactions
-            const combinedTransactions = [...debitTransactions, ...creditTransactions];
-
-            // Sort by transfer_datetime (newest first)
-            combinedTransactions.sort((a, b) => new Date(b.transfer_datetime).getTime() - new Date(a.transfer_datetime).getTime());
-
-            const formattedTransactions: Transaction[] = combinedTransactions.map(trans => {
-                // Determine if it's a debit (from user's account) or credit (to user's account)
-                const isDebit = relevantAccountIds.includes(trans.initiator_account_id);
-
-                return {
-                    id: trans.transaction_id,
-                    description: trans.purpose || 'N/A',
-                    amount: Math.abs(trans.amount), // Always display amount as positive
-                    date: trans.transfer_datetime ? new Date(trans.transfer_datetime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A',
-                    type: isDebit ? 'debit' : 'credit', // Set type for styling
-                };
-            }).slice(0, 4); // Take only the top 4 after sorting
-
-            setRecentTransactions(formattedTransactions);
             setIsLoading(false);
         };
 
-        fetchAccountsAndTransactions();
+        fetchAccounts();
     }, [customerInfo.id]); // Rerun effect when customerInfo.id changes
+
 
     // Toggles the visibility of financial balances
     const toggleShowBalances = () => {
@@ -344,7 +297,7 @@ export default function CustomerDashboard() {
 
     if (isLoading) {
         return (
-            <div className="dashboard-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+            <div className="dashboard-container loading-state"> {/* Added loading-state class for dedicated styling */}
                 <p>Loading dashboard data...</p>
             </div>
         );
@@ -352,9 +305,9 @@ export default function CustomerDashboard() {
 
     if (dataError) {
         return (
-            <div className="dashboard-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', color: 'red' }}>
-                <p>Error: {dataError}</p>
-                <button onClick={() => window.location.reload()} style={{ padding: '10px 20px', marginTop: '10px' }}>Reload</button>
+            <div className="dashboard-container error-state"> {/* Added error-state class for dedicated styling */}
+                <p className="error-message">{dataError}</p>
+                <button onClick={() => window.location.reload()} className="reload-button">Reload</button>
             </div>
         );
     }
@@ -363,39 +316,41 @@ export default function CustomerDashboard() {
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+            {/* The Header component is now defined directly in this file */}
             <Header />
 
             <div className="dashboard-container">
                 <div className="dashboard-main container">
+                    {/* The dashboard-layout manages the left/right sections */}
                     <div className="dashboard-layout">
-                        {/* Sidebar for Quick Actions and Menu */}
+                        {/* Sidebar for Quick Actions and Menu (Left Side) */}
                         <div className="sidebar">
                             <div className="quick-actions-card quick-actions-content">
                                 <h2 className="quick-actions-title">Quick Actions</h2>
                                 <div className="quick-actions-grid">
                                     <button onClick={handleTransferClick} className="action-button">
-                                        <DollarSign className="action-icon large-icon" size={30} />
+                                        <DollarSign className="action-icon" size={30} />
                                         <span className="action-label">Transfer</span>
                                     </button>
                                     <button onClick={handleLoanApplyClick} className="action-button">
-                                        <Banknote className="action-icon large-icon" size={30} />
+                                        <Banknote className="action-icon" size={30} />
                                         <span className="action-label">Loans</span>
                                     </button>
                                     <button onClick={handleCreateAccountClick} className="action-button">
-                                        <PlusCircle className="action-icon large-icon" size={30} />
+                                        <PlusCircle className="action-icon" size={30} />
                                         <span className="action-label">Create Account</span>
                                     </button>
                                     {/* These mobile-only buttons now also trigger verification */}
                                     <button onClick={handleReportsClick} className="action-button mobile-only">
-                                        <BarChart className="action-icon large-icon" size={30} />
+                                        <BarChart className="action-icon" size={30} />
                                         <span className="action-label">Reports</span>
                                     </button>
                                     <button onClick={handleHistoryMobileClick} className="action-button mobile-only">
-                                        <History className="action-icon large-icon" size={30} />
+                                        <History className="action-icon" size={30} />
                                         <span className="action-label">History</span>
                                     </button>
                                     <button onClick={handleSettingsMobileClick} className="action-button mobile-only">
-                                        <Settings className="action-icon large-icon" size={30} />
+                                        <Settings className="action-icon" size={30} />
                                         <span className="action-label">Settings</span>
                                     </button>
                                 </div>
@@ -403,21 +358,21 @@ export default function CustomerDashboard() {
 
                             <div className="sidebar-menu">
                                 <button onClick={handleViewApplicationsClick} className="sidebar-menu-item">
-                                    <BarChart className="sidebar-menu-icon" />
+                                    <BarChart className="sidebar-menu-icon" size={20} /> {/* Added size for consistency */}
                                     <span>View Applications</span>
                                 </button>
                                 <button onClick={handleTransactionHistoryClick} className="sidebar-menu-item">
-                                    <History className="sidebar-menu-icon" />
+                                    <History className="sidebar-menu-icon" size={20} />
                                     <span>Transaction History</span>
                                 </button>
                                 <button onClick={handleAccountSettingsClick} className="sidebar-menu-item">
-                                    <Settings className="sidebar-menu-icon" />
+                                    <Settings className="sidebar-menu-icon" size={20} />
                                     <span>Account Settings</span>
                                 </button>
                             </div>
                         </div>
 
-                        {/* Main Content Area */}
+                        {/* Main Content Area (Right Side) */}
                         <div className="main-content">
                             <div className="account-summary-card">
                                 <div className="account-summary-content">
@@ -449,7 +404,6 @@ export default function CustomerDashboard() {
                                                     key={account.id}
                                                     className="account-card"
                                                     onClick={() => handleViewAccountDetails(account.id)}
-                                                    style={{ cursor: 'pointer' }}
                                                 >
                                                     <div className="account-header">
                                                         <div>
@@ -460,9 +414,10 @@ export default function CustomerDashboard() {
                                                             </p>
                                                         </div>
                                                         <span className="account-icon">
-                                                            {account.type === "Credit Card" && "�"}
-                                                            {account.type === "Checking Account" && "💰"}
-                                                            {account.type === "Savings Account" && "🏦"}
+                                                            {/* Replaced emojis with Lucide icons */}
+                                                            {account.type === "Credit Card" && <CreditCard size={28} />}
+                                                            {account.type === "Checking Account" && <Landmark size={28} />} {/* Changed to Landmark for checking */}
+                                                            {account.type === "Savings Account" && <PiggyBank size={28} />} {/* Changed to PiggyBank for savings */}
                                                         </span>
                                                     </div>
                                                     <div className="account-balance-section">
@@ -477,49 +432,11 @@ export default function CustomerDashboard() {
                                                                 '********'
                                                             )}
                                                         </p>
-                                                        {/* Removed 'Available Credit' as 'limit' is not in schema */}
                                                     </div>
                                                 </div>
                                             ))
                                         ) : (
-                                            <p style={{ color: 'white', opacity: 0.8 }}>No accounts found. Create one to get started!</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Recent Transactions Card */}
-                            <div className="transactions-card">
-                                <div className="transactions-content">
-                                    <div className="transactions-header">
-                                        <h3 className="transactions-title">Recent Transactions</h3>
-                                        <button
-                                            className="view-all-transactions" // This button is hidden by CSS
-                                            onClick={handleTransactionHistoryClick} // Navigate to full history
-                                        >
-                                            View All
-                                        </button>
-                                    </div>
-                                    <div className="transactions-list">
-                                        {recentTransactions.length > 0 ? (
-                                            recentTransactions.map(transaction => (
-                                                <div key={transaction.id} className="transaction-item">
-                                                    <div className="transaction-info">
-                                                        <div className={`transaction-type-indicator ${transaction.type}`}>
-                                                            {/* Plus/minus signs handled by CSS pseudo-elements */}
-                                                        </div>
-                                                        <div className="transaction-details">
-                                                            <p className="transaction-description">{transaction.description}</p>
-                                                            <p className="transaction-date">{transaction.date}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className={`transaction-amount ${transaction.type}`}>
-                                                        {transaction.type === 'debit' ? '-' : '+'}${transaction.amount.toFixed(2)}
-                                                    </div>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <p style={{ textAlign: 'center', color: 'var(--text-color-light)' }}>No recent transactions.</p>
+                                            <p className="no-accounts-message">No accounts found. Create one to get started!</p>
                                         )}
                                     </div>
                                 </div>

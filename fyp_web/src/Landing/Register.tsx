@@ -8,21 +8,24 @@ import { ArrowLeft } from "lucide-react";
 
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 
-const Header = () => {
-    const navigate = useNavigate();
+const Header: React.FC = () => {
+  const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate('/');
-    };
+  const handleBack = () => {
+    navigate("/");
+  };
 
   return (
     <header className="header">
       <div className="header__content">
-              <button onClick={handleBack} className="back-button">
-                    <ArrowLeft size={24} />
-                    <span className="back-button-text">Back</span>
-                </button>
-        <span className="header__title">Eminent Western</span>
+        <button onClick={handleBack} className="back-button">
+          <ArrowLeft size={24} />
+          <span className="back-button-text">Back</span>
+        </button>
+        <div className="header__title">
+          <p>Eminent Western</p>
+        </div>
+        <DarkModeToggle />
       </div>
     </header>
   );
