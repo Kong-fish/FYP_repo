@@ -1,0 +1,488 @@
+html {
+  word-spacing: 1px;
+  text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #35405a;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+  text-rendering: optimizelegibility;
+  font-weight: 300;
+}
+
+:root {
+  --sun-path: path("M55 27.5C55 42.6878 42.6878 55 27.5 55C12.3122 55 0 42.6878 0 27.5C0 12.3122 12.3122 0 27.5 0C42.6878 0 55 12.3122 55 27.5Z");
+  --moon-path: path("M17.5 28C17.5 43.1878 28.5681 55.5 27.5 55.5C12.3122 55.5 0 43.1878 0 28C0 12.8122 12.3122 0.5 27.5 0.5C27.5 0.5 17.5 12.8122 17.5 28Z");
+  --scheme-transition-duration: 500ms;
+  --toggle-size: 55px; /* Default size for larger screens */
+}
+
+/* Adjust toggle size for smaller screens (e.g., tablets) */
+@media (max-width: 768px) {
+  :root {
+    --toggle-size: 40px;
+  }
+}
+
+/* Adjust toggle size for very small screens (e.g., mobile phones) */
+@media (max-width: 480px) {
+  :root {
+    --toggle-size: 35px;
+  }
+}
+
+/* --- Base Body Styles (Default Light Mode) --- */
+body {
+  transition-property: background-color, color; /* Smooth transition for background and text */
+  transition-duration: var(--scheme-transition-duration);
+  background-color: #fff; /* Default light background */
+  color: #35405a; /* Default light text color */
+}
+
+/* --- Styles for the Switch Element (New Toggle) --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider track itself */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Light mode default */
+  -webkit-transition: .4s; /* For Safari */
+  transition: .4s; /* Smooth transition for background color */
+  border-radius: 34px; /* Rounded corners for the slider track */
+}
+
+/* The slider knob (the circular element that moves) */
+.slider:before {
+  position: absolute;
+  content: ""; /* Required for pseudo-elements */
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white; /* Color of the knob */
+  -webkit-transition: .4s; /* For Safari */
+  transition: .4s; /* Smooth transition for knob movement */
+  border-radius: 50%; /* Make the knob circular */
+}
+
+/* When the checkbox is checked (i.e., dark mode is active),
+   change slider background and move the knob */
+.switch input:checked + .slider {
+  background-color: #2196F3; /* Blue background for dark mode */
+}
+
+.switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px); /* For Safari */
+  -ms-transform: translateX(26px); /* For IE 9+ */
+  transform: translateX(26px); /* Move the knob */
+}
+
+/* Focus style for accessibility when the input is focused */
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3; /* Blue glow on focus */
+}
+
+/* --- Dark Mode Styles (when html has 'dark' class) --- */
+html.dark {
+  /* Body styles in Dark Mode */
+  body {
+    background-color: #1a202c; /* Example dark background */
+    color: #e2e8f0; /* Example light text color */
+  }
+  /* The toggle's appearance is now handled by input:checked + .slider */
+}
+
+/* --- System Preference Dark Mode (Initial Load if no 'dark' class explicitly set) --- */
+/* This ensures the page *starts* in dark mode if the system prefers it,
+    before the user interacts with the toggle. */
+@media (prefers-color-scheme: dark) {
+  html:not(.dark):not(.light) body {
+    background-color: #1a202c; /* System prefers dark */
+    color: #e2e8f0;
+  }
+  /* The toggle's appearance is now handled by input:checked + .slider */
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  display: block;
+  margin: 1em 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+
+.link {
+  font-size: 16px;
+  color: #35405a;
+  text-decoration: underline;
+}
+
+.header {
+  height: 100px;
+  box-shadow: 0 1px 6px 0 rgb(0 0 0 / 8%);
+  width: 100vw;
+  background-color: #385A93;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.header__content {
+  width: 100%;
+  max-width: 1200px;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.title-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.title {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #fff;
+  font-size: 28px;
+  white-space: nowrap;
+}
+
+.header__nav,
+.header_title {
+  height: 48px;
+}
+
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.nav__item {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 24px;
+  height: 100%;
+}
+
+.nav__item:not(:last-child) {
+  border-right: 1px solid #f7f7f7;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: #fff;
+  height: 100%;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media screen and (width <= 960px) {
+  .header__content {
+    width: 90%;
+  }
+  .nav {
+    display:none;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding-top:50px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.main {
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  padding-top: 85px;
+}
+
+@media screen and (width >= 960px) {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:70px;
+  }
+}
+
+/* Input container */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login__inner {
+  width: 100%;
+  margin-top: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login__logo {
+  height: 120px;
+  margin-bottom: 10px;
+  animation: logo-fade-in 2s ease-out forwards;
+  opacity:0;
+}
+
+.form-login__title {
+  font-size: 25px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.form-login__subtitle {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.form-login__form {
+  opacity: 0;
+  transform: translateY(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fade-up 0.5s ease-out forwards;
+}
+
+.form-login__button {
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.field:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.field__group {
+  position: relative;
+}
+
+.field__input {
+  background-color: #fff;
+  border: 2px solid #c6cbda;
+  border-radius: 8px;
+  color: #8a93a7;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  outline: none;
+  padding: 12px 16px;
+  width: 380px;
+  height: 50px;
+  margin-top: 0 !important;
+  box-sizing: border-box;
+}
+
+@media screen and (width <= 900px) {
+  .form-login__logo {
+  height: 100px;
+  margin-bottom: 10px;
+  }
+  .form-login__title {
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .form-login__subtitle {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .field__input {
+    background-color: #fff;
+    border: 1px solid #c6cbda;
+    border-radius: 4px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19px;
+    outline: none;
+    padding: 12px 16px;
+    width: 250px;
+    height: 40px;
+    margin-top: 0 !important;
+    box-sizing: border-box;
+  }
+  .form-login__button {
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  }
+  .link {
+  font-size: 15px;
+  }
+}
+
+@media screen and (width <= 500px) {
+  .title {
+  font-size: 20px;
+  }
+  .form-login__logo {
+  height: 80px;
+  margin-bottom: 8px;
+  }
+  .form-login__title {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .form-login__subtitle {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  .field__input {
+    background-color: #fff;
+    border: 1px solid #c6cbda;
+    border-radius: 4px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19px;
+    outline: none;
+    padding: 12px 16px;
+    width: 100%;
+    height: 55px;
+    margin-top: 0 !important;
+    box-sizing: border-box;
+  }
+  .form-login__button {
+  width: 70%;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  }
+  .link {
+  font-size: 16px;
+  }
+}
+
+.button {
+  border-radius: 24px;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  outline: none;
+  padding: 12px 64px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none !important;
+  box-sizing: border-box;
+
+  /* Add animation properties */
+  transition: background-color 0.3s ease;
+}
+
+.button--yellow {
+  background-color: #fdcb04;
+  color: #385A93;
+}
+
+.button--yellow:hover {
+  background-color: #e0b300; /* Darker shade on hover */
+}
+
+/* animation */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.main__content {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  transition: max-width 0.3s ease-in-out; /* Transition in CSS */
+  max-width: var(--main-content-max-width); /* Use a CSS variable */
+}
