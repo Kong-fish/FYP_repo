@@ -1,0 +1,169 @@
+.header {
+  height: 100px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+  width: 100vw;
+  background-color: #385A93;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  position: sticky;
+  width: 100%;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.header__content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 20px;
+}
+
+.header__title {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #fff;
+  font-size: 30px;
+  white-space: nowrap;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+/* Back button styling */
+.back-button {
+  color: #fff; /* Make the button text and icon white */
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline if it's a link */
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.back-button-text {
+  margin-left: 8px;
+  color: #fff; /* Ensure the "Back" text is white */
+}
+
+/* Styling for the ArrowLeft icon (assuming it's an SVG or similar) */
+.back-button svg {
+  fill: #fff; /* Make the icon white */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.switch input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.toggle-icon {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform .4s, background-color .4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.toggle-icon path {
+  fill: #385A93;
+  transition: fill .4s;
+}
+
+.switch input:checked + .slider .toggle-icon {
+  transform: translateX(26px);
+  background-color: #f0f0f0;
+}
+
+.switch input:checked + .slider .toggle-icon path {
+  fill: #fbbd08;
+}
+
+@media (max-width: 768px) {
+  .switch {
+    width: 48px;
+    height: 28px;
+  }
+  .toggle-icon {
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    padding: 1px;
+  }
+  .switch input:checked + .slider .toggle-icon {
+    transform: translateX(18px);
+  }
+  .header__title {
+    font-size: 23px;
+    margin-left: 10px;
+  }
+  .back-button {
+    font-size: 16px; /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .switch {
+    width: 42px;
+    height: 24px;
+  }
+  .toggle-icon {
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    padding: 0px;
+  }
+  .switch input:checked + .slider .toggle-icon {
+    transform: translateX(14px);
+  }
+  .header__title {
+    font-size: 20px;
+  }
+  .back-button {
+    font-size: 14px; /* Adjust font size for even smaller screens */
+  }
+}

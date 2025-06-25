@@ -1,0 +1,43 @@
+/* Header.css - Add this new class */
+
+.sign-out-button {
+    background-color: #FBB03B; /* A vibrant yellow for the button background */
+    color: #385A93; /* Dark blue text from your header for good contrast */
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 8px 15px; /* Sufficient padding for a good touch target */
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease; /* Smooth transitions for hover/active */
+    white-space: nowrap; /* Prevent text from wrapping */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.sign-out-button:hover {
+    background-color: #FFAA00; /* Slightly darker yellow on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+
+.sign-out-button:active {
+    background-color: #E69D00; /* Even darker yellow when clicked */
+    transform: translateY(0); /* Return to original position */
+}
+
+/* Adjustments for responsiveness of the sign-out button */
+@media (max-width: 768px) {
+    .sign-out-button {
+        font-size: 14px; /* Smaller font for tablet */
+        padding: 7px 12px; /* Slightly smaller padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .sign-out-button {
+        font-size: 12px; /* Even smaller font for mobile */
+        padding: 6px 10px; /* Further reduce padding */
+        /* If space is very tight, you might consider hiding the text and only showing an icon for sign out,
+           but for now, we'll just shrink the text. */
+    }
+}

@@ -1,0 +1,181 @@
+/* src/Cust_Function/Cust_Function.css */
+
+/* General dashboard container */
+.dashboard-container {
+    flex-grow: 1; /* Allows it to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center;
+    padding: 20px;
+    background-color: var(--background-color-primary);
+    color: var(--text-color-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard-main {
+    width: 100%;
+    max-width: 1200px; /* Max width for the dashboard content */
+    margin: 0 auto;
+    padding-top: 20px; /* Space from header */
+}
+
+
+/* Reusing transactions-card for profile edit form */
+.transactions-card {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transactions-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.transactions-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--text-color-dark);
+}
+
+/* Profile Edit Form Specific Styles */
+.profile-edit-form {
+    display: grid; /* Use CSS Grid for a robust two-column layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 25px; /* Gap between grid items */
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .profile-edit-form {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+}
+
+.profile-edit-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-edit-form label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+}
+
+.profile-edit-form input[type="text"],
+.profile-edit-form input[type="email"],
+.profile-edit-form input[type="tel"],
+.profile-edit-form input[type="date"],
+.profile-edit-form textarea {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--text-color-primary);
+    background-color: var(--input-background);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    width: 100%; /* Ensure inputs take full width of their grid cell */
+}
+
+.profile-edit-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px; /* Minimum height for textarea */
+}
+
+.profile-edit-form input[type="text"]:disabled,
+.profile-edit-form input[type="tel"]:disabled,
+.profile-edit-form input[type="date"]:disabled,
+.profile-edit-form textarea:disabled {
+    background-color: var(--disabled-input-bg) !important; /* Use !important if needed to override */
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+
+.profile-edit-form input:focus,
+.profile-edit-form textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2); /* Assuming accent-rgb variable exists */
+}
+
+.profile-edit-form .primary-button {
+    grid-column: 1 / -1; /* Make button span all columns */
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    width: auto; /* Allow button to size based on padding/content */
+    justify-self: center; /* Center button horizontally in the grid */
+}
+
+.loading-message, .error-message, .success-message {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.loading-message {
+    color: var(--text-color-primary);
+    background-color: var(--background-color-secondary);
+}
+
+.error-message {
+    color: var(--error-color);
+    background-color: rgba(var(--error-color-rgb), 0.1); /* Assuming error-color-rgb exists */
+    border: 1px solid var(--error-color);
+}
+
+.success-message {
+    color: var(--success-color);
+    background-color: rgba(var(--success-color-rgb), 0.1); /* Assuming success-color-rgb exists */
+    border: 1px solid var(--success-color);
+}
+
+/* Dashboard Footer */
+.dashboard-footer {
+    width: 100%;
+    background-color: var(--background-color-secondary); /* A slightly darker background than primary */
+    color: var(--text-color-secondary);
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Pushes footer to the bottom */
+    box-shadow: var(--shadow-small);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-copyright {
+    font-size: 0.9em;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-link {
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}

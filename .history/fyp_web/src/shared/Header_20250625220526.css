@@ -1,0 +1,253 @@
+/* Header.css */
+
+.header {
+    height: 100px; /* Fixed height for the header */
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+    width: 100%; /* Use 100% instead of 100vw for better consistency with body/html width */
+    background-color: #385A93;
+    display: flex;
+    justify-content: center; /* Center the header__content horizontally */
+    position: sticky; /* Make the header stick to the top when scrolled */
+    top: 0; /* Stick to the top edge */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    /* Remove redundant 'position: fixed' and 'width: 100vw' from original */
+}
+
+.header__content {
+    width: 100%;
+    max-width: 1200px; /* Max width for content within the header */
+    display: flex;
+    margin: 0 auto; /* Center content horizontally within max-width */
+    align-items: center; /* Vertically align items in the middle */
+    justify-content: space-between; /* Space out back button, title, and dark mode toggle */
+    position: relative;
+    padding: 0 20px; /* Horizontal padding for content */
+}
+
+.header__title {
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #fff;
+    font-size: 30px; /* Default for laptop/desktop */
+    white-space: nowrap;
+    /* justify-content: center; /* This property is for flex containers, not individual items */
+    margin-left: 10px; /* Space from the back button */
+    flex-grow: 1; /* Allows title to take up available space, pushing toggle right */
+    text-align: center; /* Center the text within its flex item space */
+}
+
+/* Back button styling */
+.back-button {
+    color: #fff; /* Make the button text and icon white */
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 18px; /* Default for laptop/desktop */
+    text-decoration: none; /* Remove underline if it's a link */
+    display: flex;
+    align-items: center; /* Align icon and text vertically */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.back-button-text {
+    margin-left: 8px;
+    color: #fff; /* Ensure the "Back" text is white */
+}
+
+/* Styling for the ArrowLeft icon (assuming it's an SVG or similar) */
+.back-button svg {
+    fill: #fff; /* Make the icon white */
+}
+
+/* Dark Mode Toggle Styling (no changes needed based on requirements) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.switch input:checked + .slider {
+    background-color: #2196F3;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.toggle-icon {
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform .4s, background-color .4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.toggle-icon path {
+    fill: #385A93;
+    transition: fill .4s;
+}
+
+.switch input:checked + .slider .toggle-icon {
+    transform: translateX(26px);
+    background-color: #f0f0f0;
+}
+
+.switch input:checked + .slider .toggle-icon path {
+    fill: #fbbd08;
+}
+
+/* Tablet (e.g., max-width: 768px - common breakpoint for tablets in portrait) */
+@media (max-width: 768px) {
+    .header {
+        height: 80px; /* Slightly smaller header for tablets */
+    }
+
+    .header__content {
+        padding: 0 15px; /* Reduce horizontal padding */
+    }
+
+    .header__title {
+        font-size: 24px; /* Smaller font for tablet */
+        margin-left: 5px; /* Adjust margin for smaller screens */
+    }
+
+    .back-button {
+        font-size: 16px; /* Adjust font size for tablet */
+    }
+
+    .switch {
+        width: 48px;
+        height: 28px;
+    }
+    .toggle-icon {
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        padding: 1px;
+    }
+    .switch input:checked + .slider .toggle-icon {
+        transform: translateX(18px);
+    }
+}
+
+/* Mobile (e.g., max-width: 480px - common breakpoint for phones) */
+@media (max-width: 480px) {
+    .header {
+        height: 60px; /* Even smaller header for mobile */
+    }
+
+    .header__content {
+        padding: 0 10px; /* Further reduce horizontal padding */
+        justify-content: space-between; /* Keep space-between for back button and toggle */
+    }
+
+    .header__title {
+        display: none; /* Hide the title on mobile */
+    }
+
+    .back-button {
+        font-size: 14px; /* Adjust font size for even smaller screens */
+    }
+
+    /* When title is hidden, ensure the back button aligns well with the toggle */
+    .header__content {
+        /* If you want the back button and toggle to be truly at the ends,
+           and nothing in the middle, space-between works well.
+           If you want them closer to center when title is gone, you might
+           adjust justify-content here, e.g., 'space-around' or 'center'
+           with gaps. For now, space-between is fine.
+        */
+    }
+
+    .switch {
+        width: 42px;
+        height: 24px;
+    }
+    .toggle-icon {
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        padding: 0px;
+    }
+    .switch input:checked + .slider .toggle-icon {
+        transform: translateX(14px);
+    }
+}
+
+/* Header.css - Add this new class */
+
+.sign-out-button {
+    background-color: #FBB03B; /* A vibrant yellow for the button background */
+    color: black; /* Dark blue text from your header for good contrast */
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 8px 15px; /* Sufficient padding for a good touch target */
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease; /* Smooth transitions for hover/active */
+    white-space: nowrap; /* Prevent text from wrapping */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.sign-out-button:hover {
+    background-color: #FFAA00; /* Slightly darker yellow on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+
+.sign-out-button:active {
+    background-color: #E69D00; /* Even darker yellow when clicked */
+    transform: translateY(0); /* Return to original position */
+}
+
+/* Adjustments for responsiveness of the sign-out button */
+@media (max-width: 768px) {
+    .sign-out-button {
+        font-size: 14px; /* Smaller font for tablet */
+        padding: 7px 12px; /* Slightly smaller padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .sign-out-button {
+        font-size: 12px; /* Even smaller font for mobile */
+        padding: 6px 10px; /* Further reduce padding */
+        /* If space is very tight, you might consider hiding the text and only showing an icon for sign out,
+           but for now, we'll just shrink the text. */
+    }
+}
+
+.header-actions {
+    display: flex;
+    align-items: center; 
+    gap: 15px;
+}
