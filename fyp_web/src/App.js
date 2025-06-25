@@ -9,6 +9,7 @@ import CustomerDashboard from './Dashboard/Customer_Dashboard.tsx';
 
 import ReviewLoan from './Admin_Function/ReviewLoan.tsx';
 import AdminApproveAcc from './Admin_Function/Admin_View_Cus_Acc.tsx';
+import AdminTransferDetail from './Admin_Function/Admin_Transfer_Detail.tsx';
 import AdminPassVer from './Admin_Function/Admin_Pass_Ver.tsx';
 
 import CustomerTransfer from './Cust_Function/Cust_Transfer.tsx';
@@ -28,9 +29,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Admin Routes */}
-        <Route path="/admindashboard" element={<AdminDashboard />} />
-        <Route path="/admin-review-loan" element={<ReviewLoan />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+         <Route path="/admin/loan/:loanId" element={<ReviewLoan />} />
+        <Route path="/admin-approve-account/:customerId" element={<AdminApproveAcc />} />
+        <Route path="/admin/transfer/:transferId" element={<AdminTransferDetail />} />
         <Route path="/admin-approve-account" element={<AdminApproveAcc />} />
+        <Route path="/admin-review-loan" element={<ReviewLoan />} />
         <Route path="/admin-password-verification" element={<AdminPassVer />} />
 
         {/* Customer Login & Landing */}

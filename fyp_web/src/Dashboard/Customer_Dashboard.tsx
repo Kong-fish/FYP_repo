@@ -5,8 +5,6 @@ import supabase from '../supbaseClient.js';
 import './CustomerDashboard.css'; // Main dashboard specific styles
 import '../shared/normalize.css'; // Global normalize styles
 import '../shared/Header.css'; // Import Header specific styles
-
-// Import the DarkModeToggle, as it's now used directly within this file's Header
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 
 // Import Lucide icons for consistency and better styling
@@ -22,7 +20,7 @@ const Header = () => {
         if (error) {
             console.error('Error signing out:', error.message);
         } else {
-            navigate('/customer-landing'); // Redirect to landing page after sign out
+            navigate('/'); 
         }
     };
 

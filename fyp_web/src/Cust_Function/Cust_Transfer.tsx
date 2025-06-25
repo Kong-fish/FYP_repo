@@ -40,8 +40,6 @@ const Header = () => {
                 </button>
 
                 <div className="logo-section">
-                    {/* Using an emoji as a simple icon. Consider using Lucide for consistency or SVG if more complex. */}
-                    <span className="logo-icon">🏦</span>
                     <h1 className="logo-text">Eminent Western</h1>
                 </div>
                 <nav className="header-nav"></nav>
