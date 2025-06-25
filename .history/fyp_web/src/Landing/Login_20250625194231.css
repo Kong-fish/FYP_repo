@@ -1,0 +1,262 @@
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --color-yellow-500: #f4cd62;
+  --color-yellow-600: #f6ad55;
+}
+
+.landing-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-inter, sans-serif);
+}
+
+.landing-content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 28rem;
+  text-align: center;
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+}
+
+html.dark .form-login-card {
+  background-color: #2d3748;
+}
+
+.form-login__inner {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login__logo {
+  height: 120px;
+  margin-bottom: 10px;
+  animation: logo-fade-in 2s ease-out forwards;
+  opacity: 0;
+}
+
+.welcome-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #1a202c;
+}
+
+html.dark .welcome-title {
+  color: #fff;
+}
+
+.form-login__title {
+  font-size: 25px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-login__subtitle {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.form-login__form {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fade-up 0.5s ease-out forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.field:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.field__group {
+  position: relative;
+}
+
+.field__input {
+  background-color: #fff;
+  border: 2px solid #c6cbda;
+  border-radius: 8px;
+  color: #8a93a7;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  outline: none;
+  padding: 12px 16px;
+  width: 380px;
+  height: 50px;
+  margin-top: 0 !important;
+}
+
+.button {
+  border-radius: 24px;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  outline: none;
+  padding: 12px 64px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none !important;
+  transition: background-color 0.3s ease;
+  /* Added to remove underline from default <a> tag styles */
+  text-decoration: none;
+}
+
+.button--yellow {
+  background-color: #fdcb04;
+  color: #385A93;
+}
+
+.button--yellow:hover {
+  background-color: #e0b300;
+}
+
+.form-login__button.button--yellow {
+  width: 100%;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition-property: all;
+  transition-duration: 300ms;
+  background-color: var(--color-yellow-500);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none; /* Already present here, but added to .button for robustness */
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.form-login__button.button--yellow:hover {
+  background-color: var(--color-yellow-600);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-login__logo {
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  .form-login__title {
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .form-login__subtitle {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .field__input {
+    border: 1px solid #c6cbda;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 40px;
+    width: 250px;
+  }
+  .form-login-card {
+    padding: 1.5rem;
+  }
+  .welcome-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form-login__logo {
+    height: 80px;
+    margin-bottom: 8px;
+  }
+  .form-login__title {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .form-login__subtitle {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  .field__input {
+    height: 55px;
+    width: 100%;
+  }
+  .form-login-card {
+    padding: 1rem;
+  }
+  .welcome-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .form-login__button.button--yellow {
+    font-size: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+}
+
+html.dark .imageContainer {
+  /* If this background is meant for the dark mode card background, it belongs on .form-login-card */
+  /* If it's truly for the image container itself, keep it here. */
+  background-color: #dacecd;
+}
+
+.forgot-password-link {
+  color: #0000FF;
+}

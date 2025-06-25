@@ -1,0 +1,370 @@
+/* normalize.css - Global Styles */
+
+/*
+  1. Use a more intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin and padding for common elements.
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/*
+  3. Set base font size and line height.
+*/
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/*
+  4. Correct the font size and margin of h1 in all browsers.
+*/
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/*
+  5. Add the correct display in IE 10+.
+*/
+template {
+  display: none;
+}
+
+/*
+  6. Correct the inheritance and scaling of font size in all browsers.
+*/
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/*
+  7. Correct the odd `em` font sizing in all browsers.
+*/
+code, kbd, samp {
+  font-family: monospace, monospace;
+}
+
+/*
+  8. Remove the gray background on active links in IE 10.
+*/
+a {
+  background-color: transparent;
+  /* Ensure default user agent underline is removed for all links */
+  text-decoration: none;
+}
+
+/*
+  9. Add the correct text decoration in Edge, IE, and Firefox.
+*/
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/*
+  10. Add the correct font weight in Chrome, Edge, and Safari.
+*/
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+  11. Add the correct font size in all browsers.
+*/
+small {
+  font-size: 80%;
+}
+
+/*
+  12. Prevent `sub` and `sup` elements from affecting the line height in
+      all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+  13. Add the correct display in IE 10+.
+*/
+details {
+  display: block;
+}
+
+/*
+  14. Add the correct display in Edge, IE, and Firefox.
+*/
+summary {
+  display: list-item;
+}
+
+/*
+  15. Add the correct display in all browsers.
+*/
+audio,
+video {
+  display: inline-block;
+}
+
+/*
+  16. Add the correct display in all browsers.
+*/
+[hidden] {
+  display: none;
+}
+
+/*
+  17. Correct the inability to style clickable types in iOS and Safari.
+*/
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/*
+  18. Remove the inner border and padding in Firefox.
+*/
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/*
+  19. Restore the focus styles unset by the previous rule.
+*/
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/*
+  20. Correct the padding in Firefox.
+*/
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/*
+  21. Correct the line height in all browsers.
+*/
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 3 */
+  max-width: 100%; /* 4 */
+  padding: 0; /* 5 */
+  white-space: normal; /* 6 */
+}
+
+/*
+  22. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+*/
+progress {
+  vertical-align: baseline;
+}
+
+/*
+  23. Remove the default vertical scrollbar in IE 10+.
+*/
+textarea {
+  overflow: auto;
+}
+
+/*
+  24. Correct the cursor style of increment and decrement buttons in Chrome.
+*/
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+  25. Add the correct box sizing in IE 10.
+*/
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+  26. Remove the inner padding and cancel button in Chrome and Safari on macOS.
+*/
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+  27. Correct the text style and font property in Edge, Firefox, and IE.
+*/
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+  28. Interactive elements
+*/
+/*
+ * Add the correct display in IE 10+.
+ */
+main {
+  display: block;
+}
+
+/*
+  29. Reset image defaults
+*/
+img {
+  border-style: none;
+  max-width: 100%; /* Make images responsive by default */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/*
+  30. Forms
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/*
+  GLOBAL THEME STYLES (FROM PREVIOUS DISCUSSION)
+  -----------------------------------------------
+  These styles define the overall page background based on the light/dark mode.
+  These are truly global and belong here or in a dedicated 'theme.css'.
+*/
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --color-yellow-500: #fbd38d;
+  --color-yellow-600: #f6ad55;
+  /* Add other global variables here if needed */
+}
+
+body {
+  font-family: var(--font-inter, sans-serif);
+  /* Default (Light Mode) background for the entire page */
+  background-color: #383853; /* Dark blue from your image */
+  min-height: 100vh; /* Ensure body always fills the viewport height */
+  display: flex; /* Helps ensure content flows correctly within min-height */
+  flex-direction: column; /* For vertical stacking, especially with header/footer */
+}
+
+html.dark body {
+  /* Dark Mode background for the entire page */
+  background-color: #1a202c; /* A common dark background color */
+}
+
+
+/*
+  RESPONSIVE STYLING BREAKPOINTS
+  ---------------------------------
+  These are examples of common breakpoints. You would place styles within
+  these media queries to adjust layout, font sizes, padding, etc., for
+  different screen sizes.
+*/
+
+/* Default styles apply to larger screens (Desktops/Laptops)
+   You can also add a specific media query for very large desktops:
+   @media (min-width: 1200px) {
+       /* Styles for large desktops */
+   }
+*/
+
+
+/* Laptop / Medium Desktop devices (max-width typically 1024px or 992px) */
+@media (max-width: 1024px) {
+  /* Styles for laptop screens or smaller desktops */
+  /* Example:
+  .some-container {
+    max-width: 900px;
+  }
+  .field__input {
+    width: 350px;
+  }
+  */
+}
+
+/* Tablet devices (max-width typically 768px or 767px) */
+@media (max-width: 768px) {
+  /* Styles for tablet screens */
+  body {
+    font-size: 15px; /* Slightly smaller base font */
+  }
+
+}
+
+/* Phone devices (max-width typically 480px or 576px for smaller phones) */
+@media (max-width: 480px) {
+  /* Styles for phone screens */
+  body {
+    font-size: 14px; /* Even smaller base font */
+  }
+  .form-login__button.button--yellow {
+    font-size: 1rem;
+  }
+}
+
+/* You can also use a common breakpoint for mobile landscape and small tablets */
+@media (max-width: 576px) {
+  /* Styles for smaller tablets and mobile landscape */
+  /* Example:
+  .header__title p {
+    font-size: 1.2rem;
+  }
+  */
+}
