@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
-
-import supabase from '../../supbaseClient.js';
-
-
+import supabase from '../supbaseClient.js';
 import '../shared/Header.css';
-
-import '../Login/Login.css'; // Assuming this now includes shared form styles
-
-import '../Login/Register.css'; // Register-specific styles
-
+import './Login.css'; 
+import './Register.css'; 
 import '../shared/normalize.css';
 
 

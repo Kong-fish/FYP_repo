@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 import '../Dashboard/CustomerDashboard.css'; 
 import '../shared/normalize.css';
-import '../Login/Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
+import '../shared/Header.css';
 
 function Cust_New_Bank_Acc() {
     const navigate = useNavigate();
@@ -142,7 +142,12 @@ function Cust_New_Bank_Acc() {
         return (
             <div className="main-app-wrapper">
                 {/* Use the new Header component with a back button */}
-                <Header showBackButton={true} backPath="/customer-dashboard" />
+                <div className="header">
+                    <button className="back-button" onClick={() => navigate('/customer-dashboard')}>
+                        Back
+                    </button>
+                    <h1 className="logo-text">Eminent Western</h1>
+                </div>
                 <div className="container" style={{ padding: '2rem', textAlign: 'center' }}>
                     <p>Loading user data...</p>
                 </div>
@@ -152,8 +157,12 @@ function Cust_New_Bank_Acc() {
 
     return (
         <div className="main-app-wrapper">
-            {/* Use the new Header component with a back button */}
-            <Header showBackButton={true} backPath="/customer-dashboard" />
+            <div className="header">
+                <button className="back-button" onClick={() => navigate('/customer-dashboard')}>
+                    Back
+                </button>
+                <h1 className="logo-text">Eminent Western</h1>
+            </div>
 
             <div className="container transactions-card"> {/* Using transactions-card for the main form container */}
                 <div className="transactions-header"> {/* Use common header style */}

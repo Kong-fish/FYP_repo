@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Users, FileText, ArrowRightLeft, Eye, ArrowLeft } from "lucide-react";
 import "./AdminDashboard.css";
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 

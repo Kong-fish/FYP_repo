@@ -1,12 +1,10 @@
-"use client"
-
 import type React from "react"
 import { useState, useEffect } from "react" // Import useEffect
 import { useNavigate, useLocation } from "react-router-dom"
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 import { ArrowLeft } from "lucide-react"
 import DarkModeToggle from "../shared/DarkModeToggle.tsx"
-import Cust_Pass_Ver from '../Cust_Pass_Ver.tsx';
+import Cust_Pass_Ver from './Cust_Pass_Ver.tsx';
 
 // IMPORT THE SHARED CSS FILES FOR CONSISTENCY
 import '../shared/Header.css';
@@ -104,7 +102,7 @@ export default function Cust_Tran_Confirmation() {
         console.error("Error fetching user:", error.message);
         setError("Failed to get user information for verification.");
       } else if (data?.user) {
-        setUserEmail(data.user.email);
+        setUserEmail(data.user.email ?? null);
       } else {
         setError("User email not found. Please log in again.");
       }

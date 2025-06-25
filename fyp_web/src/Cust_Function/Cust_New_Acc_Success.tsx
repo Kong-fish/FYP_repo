@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supbaseClient.js';
-import '../Dashboard/CustomerDashboard.css'; 
+import '../Dashboard/CustomerDashboard.css';
 import '../shared/normalize.css';
-import '../Login/Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import { CheckCircle } from 'react-icons/fa'; // or use 'react-icons/md' for Material icons
+import { FaCheckCircle } from 'react-icons/fa'; // or use 'react-icons/md' for Material icons
 
 
 function Cust_New_Acc_Success() {
@@ -18,13 +17,17 @@ function Cust_New_Acc_Success() {
 
     return (
         <div className="main-app-wrapper">
-            {/* Use the new Header component with a back button */}
-            <Header showBackButton={true} backPath="/customer-dashboard" />
+            <div className="header">
+                <button className="back-button" onClick={() => navigate('/customer-dashboard')}>
+                    Back
+                </button>
+                <h1 className="logo-text">Eminent Western</h1>
+            </div>
 
             <div className="container transactions-card status-success">
                 <div className="completion-content">
                     <div className="completion-icon">
-                        <CheckCircle size={80} color="#28a745" />
+                        <FaCheckCircle size={80} color="#28a745" />
                     </div>
                     <h2 className="transactions-title">Credit Card Application Submitted!</h2>
                     <p className="completion-text">

@@ -1,8 +1,5 @@
 import { Shield, CreditCard, Smartphone, TrendingUp, Users, Lock, CheckCircle, Star, Menu, Phone } from "lucide-react"
-
-import "../Login/Cus_Landing.css"
-
-
+import "./Landing.css"
 
 export default function BankLandingPage() {
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 import '../shared/normalize.css';
-import '../Login/Login.css';
+import './Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 

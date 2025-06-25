@@ -8,7 +8,7 @@ import '../shared/Header.css';
 import '../shared/normalize.css';
 import './CustomerDashboard.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 
 // Header Component (consistent with other customer function pages)
 const Header = () => {

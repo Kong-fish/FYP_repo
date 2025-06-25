@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import supabase from '../../supbaseClient.js';
+import supabase from '../supbaseClient.js';
 import '../Dashboard/CustomerDashboard.css'; 
 import '../shared/normalize.css';
-import '../Login/Login.css';
+import './Login.css';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 
