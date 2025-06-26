@@ -3,13 +3,14 @@
 /* --- CSS Variables for Header Theming (STATIC - will not change with dark mode) --- */
 :root {
     --header-bg: #385A93;
-    --header-text: #fff;
+    --header-text: #fff; /* This variable ensures the header text (including title) is white */
     --back-button-color: #fff;
     --sign-out-bg: #FBB03B;
     --sign-out-text: #385A93;
     --sign-out-hover-bg: #FFAA00;
     --sign-out-active-bg: #E69D00;
-    --header-shadow: rgba(0, 0, 0, 0.08);
+    /* Made the shadow deeper */
+    --header-shadow: rgba(0, 0, 0, 0.4); /* Increased opacity and potentially blur/spread */
 }
 
 /*
@@ -20,7 +21,8 @@
 
 .header {
     height: 100px;
-    box-shadow: 0 1px 6px 0 var(--header-shadow); /* Uses static header shadow */
+    /* Updated box-shadow to use a deeper shadow variable */
+    box-shadow: 0 4px 12px 0 var(--header-shadow); /* Deeper shadow */
     width: 100%;
     background-color: var(--header-bg); /* Uses static header background */
     display: flex;
@@ -46,9 +48,15 @@
     align-items: center;
 }
 
-.logo-text {
+/*
+ * This rule is designed to be as specific and forceful as possible
+ * to ensure the "Eminent Western" title is always white.
+ * By using the direct color value and !important, it should override
+ * any conflicting inherited or less specific rules.
+ */
+.header .logo-text {
     font-family: 'Trebuchet MS', sans-serif;
-    color: var(--header-text); /* Uses static header text color */
+    color: #fff !important; /* Direct white color with !important */
     font-size: 30px;
     white-space: nowrap;
     margin: 0; /* Remove default margin */

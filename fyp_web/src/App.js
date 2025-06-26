@@ -1,4 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'; 
+import "./shared/Header.css" 
+import Header from './shared/Header.tsx';
+
 import Landing from './Landing/Landing.tsx';
 import Register from './Landing/Register.tsx';
 import Login from './Landing/Login.tsx';
@@ -24,40 +28,70 @@ import CustomerTransactionsHistory from './Cust_Function/Cust_Transfer_History.t
 import CustomerProfileEdit from './Cust_Function/Cust_Profile_Edit.tsx';
 import CustomerPassVer from './Cust_Function/Cust_Pass_Ver.tsx';
 
+// A Layout component to wrap pages that should have the global Header
+const AppLayout = ({ children }) => {
+  const location = useLocation();
+
+  const showBackButton = ![
+    '/', // Landing page
+    '/admin-dashboard',
+    '/customer-dashboard',
+    '/customer-new-account-success'
+  ].includes(location.pathname);
+
+  const backPath = showBackButton ? '/' : ''; // Default to home, refine as needed for specific routes
+
+  const showSignOutButton = ![
+    '/', // Landing
+    '/register',
+    '/login',
+    '/forgot-password',
+  ].includes(location.pathname);
+
+
+  return (
+    <>
+      <Header showBackButton={showBackButton} backPath={backPath} showSignOutButton={showSignOutButton} />
+      {children}
+    </>
+  );
+};
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Admin Routes */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-         <Route path="/admin/loan/:loanId" element={<ReviewLoan />} />
-        <Route path="/admin-approve-account/:customerId" element={<AdminApproveAcc />} />
-        <Route path="/admin/transfer/:transferId" element={<AdminTransferDetail />} />
-        <Route path="/admin-approve-account" element={<AdminApproveAcc />} />
-        <Route path="/admin-review-loan" element={<ReviewLoan />} />
-        <Route path="/admin-password-verification" element={<AdminPassVer />} />
-
-        {/* Customer Login & Landing */}
+        {/* Routes that should NOT have the Header (e.g., pure landing/auth pages) */}
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-
-        {/* Customer Dashboard & Functions */}
-        <Route path="/customer-dashboard" element={<CustomerDashboard />} />
-        <Route path="/customer-transfer" element={<CustomerTransfer />} />
-        <Route path="/customer-transfer-confirmation" element={<CustomerTransferConfirmation />} />
-        <Route path="/customer-transfer-complete" element={<CustomerTransferComplete />} />
-        <Route path="/customer-new-bank-account" element={<CustomerNewBankAcc />} />
-        <Route path="/customer-new-account-success" element={<CustomerAccSuccess />} />
-        <Route path="/customer-account-details/:accountId" element={<CustomerAccDetail />} />
-        <Route path="/customer-apply-loan" element={<CustomerLoanApply />} />
-        <Route path="/customer-view-approval" element={<CustomerViewApproval />} />
-        <Route path="/customer-transactions-history" element={<CustomerTransactionsHistory />} />
-        <Route path="/customer-profile-edit" element={<CustomerProfileEdit />} />
-        <Route path="/customer-password-verification" element={<CustomerPassVer />} />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
+        {/* Wrap all other routes with AppLayout to include the global Header */}
+        <Route element={<AppLayout />}>
+          {/* Admin Routes */}
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/loan/:loanId" element={<ReviewLoan />} />
+          <Route path="/admin-approve-account/:customerId" element={<AdminApproveAcc />} />
+          <Route path="/admin/transfer/:transferId" element={<AdminTransferDetail />} />
+          <Route path="/admin-approve-account" element={<AdminApproveAcc />} />
+          <Route path="/admin-review-loan" element={<ReviewLoan />} />
+          <Route path="/admin-password-verification" element={<AdminPassVer />} />
+
+          {/* Customer Dashboard & Functions */}
+          <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+          <Route path="/customer-transfer" element={<CustomerTransfer />} />
+          <Route path="/customer-transfer-confirmation" element={<CustomerTransferConfirmation />} />
+          <Route path="/customer-transfer-complete" element={<CustomerTransferComplete />} />
+          <Route path="/customer-new-bank-account" element={<CustomerNewBankAcc />} />
+          <Route path="/customer-new-account-success" element={<CustomerAccSuccess />} />
+          <Route path="/customer-account-details/:accountId" element={<CustomerAccDetail />} />
+          <Route path="/customer-apply-loan" element={<CustomerLoanApply />} />
+          <Route path="/customer-view-approval" element={<CustomerViewApproval />} />
+          <Route path="/customer-transactions-history" element={<CustomerTransactionsHistory />} />
+          <Route path="/customer-profile-edit" element={<CustomerProfileEdit />} />
+          <Route path="/customer-password-verification" element={<CustomerPassVer />} />
+        </Route> {/* End of AppLayout wrapped routes */}
       </Routes>
     </BrowserRouter>
   );

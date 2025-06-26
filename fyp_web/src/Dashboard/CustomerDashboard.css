@@ -17,6 +17,11 @@
     --blue-accent-hover: #0056b3; /* Darker blue on hover */
     --green-credit: #28a745; /* Green for credit transactions */
     --red-debit: #dc3545; /* Red for debit transactions */
+
+    /* Footer Colors (added for completeness as used in the footer section) */
+    --footer-bg: #2d3748; /* Light mode footer background - using a dark shade as often seen */
+    --footer-text: #fff; /* Light mode footer text */
+    --footer-link: #a0aec0; /* Light mode footer link color */
 }
 
 body.dark-mode {
@@ -35,29 +40,65 @@ body.dark-mode {
     --blue-accent-hover: #3a7bbd;
     --green-credit: #4CAF50; /* Slightly different green */
     --red-debit: #EF5350;   /* Slightly different red */
+
+    /* Footer Colors for dark mode */
+    --footer-bg: #1a202c;
+    --footer-text: #e0e0e0;
+    --footer-link: #a0aec0;
 }
 
-/* General Layout */
+/*
+  GLOBAL LAYOUT FIX FOR STICKY HEADER AND FULL HEIGHT CONTENT
+  These rules are critical for ensuring the content is visible below a sticky header
+  and for pushing the footer to the bottom of the page.
+  These should be placed as early as possible in your CSS cascade.
+*/
+html, body, #root { /* Target html, body, and your React app's root div (usually in index.html) */
+    height: 100%; /* Ensure they take full height of their parent/viewport */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding/border is included in element's total width/height */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Make the body a flex container, stacking its direct children vertically */
+    min-height: 100vh; /* Ensures the body is at least the full viewport height */
+    /* Remove any background-color here if it conflicts with --bg-primary on dashboard-container */
+    /* background-color: var(--bg-primary); */ /* This should be on dashboard-container */
+}
+
+/*
+  Since the Header is sticky and rendered as a direct sibling to the main content in App.js's AppLayout,
+  the dashboard-container needs to explicitly account for the header's height.
+*/
 .dashboard-container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    flex-direction: column; /* Stack main content and footer vertically */
+    flex-grow: 1; /* Allows the dashboard container to take all remaining height */
+    /* THIS IS THE CRITICAL ADDITION: Space for the sticky header */
+    padding-top: 100px; /* IMPORTANT: Must match your Header's height from Header.css */
     background-color: var(--bg-primary); /* Consistent background */
     color: var(--text-primary); /* Default text color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth dark mode transition */
+    box-sizing: border-box; /* Crucial for padding-top to behave as expected */
 }
 
 .dashboard-main.container {
-    flex: 1;
+    flex: 1; /* Allows the main content area (within dashboard-container) to take up all available space */
     padding: 20px;
     max-width: 1200px; /* Adjust as needed */
     margin: 0 auto;
+    min-height: 0; /* Allow flex item to shrink below content size if needed */
 }
 
 .dashboard-layout {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    flex-direction: row; 
+    flex-direction: row;
+    flex-grow: 1; /* Allow this layout section to grow and push the footer down */
+    min-height: 0; /* Important for nested flex containers */
 }
 
 /* Sidebar */
@@ -71,6 +112,7 @@ body.dark-mode {
     box-shadow: 0 2px 4px var(--box-shadow-light); /* Apply shadow to the whole sidebar */
     padding: 20px; /* Add padding inside the sidebar */
     height: auto; /* Allow content to dictate height, but stretches via parent flex */
+    min-height: 0; /* Allow flex item to shrink if needed */
 }
 
 .quick-actions-card {
@@ -86,9 +128,8 @@ body.dark-mode {
 }
 
 .quick-actions-grid {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: repeat(2, 1fr);
+    display: grid; /* Changed to grid for better control over action buttons */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive grid */
     gap: 10px;
 }
 
@@ -152,6 +193,8 @@ body.dark-mode {
 /* Main Content */
 .main-content {
     flex: 1; /* Takes remaining space beside the sidebar */
+    min-width: 0; /* Allow content to shrink if needed without overflow */
+    min-height: 0; /* Important for nested flex containers to allow shrinking */
 }
 
 .account-summary-card {

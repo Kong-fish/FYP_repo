@@ -1,47 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Users, FileText, ArrowRightLeft, Eye, ArrowLeft } from "lucide-react";
-import "./AdminDashboard.css";
+import "./AdminDashboard.module.css";
+import { Search, Users, FileText, ArrowRightLeft, Eye } from "lucide-react";
 import supabase from '../supbaseClient.js';
-import '../shared/Header.css';
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-
-const Header = () => {
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Error signing out:', error.message);
-    } else {
-      navigate('/landing');
-    }
-  };
-
-  const handleBack = () => {
-    navigate("/customer-dashboard");
-  };
-
-  return (
-    <header className="header">
-      <div className="header__content">
-        <button onClick={handleBack} className="back-button">
-          <ArrowLeft size={24} />
-          <span className="back-button-text">Back</span>
-        </button>
-        <h1 className="header__title">Eminent Western</h1>
-        <nav className="header-nav">
-        </nav>
-        <div className="header-actions">
-          <DarkModeToggle />
-          <button onClick={handleSignOut} className="sign-out-button">
-            Sign Out
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-};
 
 interface Customer {
   customer_id: string;
@@ -91,23 +52,23 @@ export default function AdminDashboard() {
 
   const getStatusClass = (status: string | boolean | null) => {
     if (typeof status === "boolean") {
-      return status ? "badge-success" : "badge-error";
+      return status ? "admin-smt-badge-success" : "admin-smt-badge-error";
     }
     switch (status?.toLowerCase()) {
       case "active":
       case "completed":
       case "approved":
-        return "badge-success";
+        return "admin-smt-badge-success";
       case "pending":
       case "under review":
       case "null":
-        return "badge-warning";
+        return "admin-smt-badge-warning";
       case "inactive":
       case "rejected":
       case "failed":
-        return "badge-error";
+        return "admin-smt-badge-error";
       default:
-        return "badge-default";
+        return "admin-smt-badge-default";
     }
   };
 
@@ -138,7 +99,7 @@ export default function AdminDashboard() {
           .limit(10)
           .order("created_at", { ascending: false });
 
-        const { count: totalCount, error: countError } = await supabase
+        const { count: totalCount } = await supabase
           .from("Customer")
           .select("*", { count: "exact", head: true });
 
@@ -196,7 +157,7 @@ export default function AdminDashboard() {
           .limit(10)
           .order("application_date", { ascending: false });
 
-        const { count: totalCount, error: countError } = await supabase
+        const { count: totalCount } = await supabase
           .from("Loan")
           .select("*", { count: "exact", head: true });
 
@@ -266,7 +227,7 @@ export default function AdminDashboard() {
           .limit(10)
           .order("transfer_datetime", { ascending: false });
 
-        const { count: dailyTransfersCount, error: dailyCountError } =
+        const { count: dailyTransfersCount } =
           await supabase
             .from("Transaction")
             .select("*", { count: "exact", head: true })
@@ -310,330 +271,324 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="admin-container">
-      <Header />
-
-      <main className="main-content">
+    <div className="admin-smt-container">
+      <main className="admin-smt-main-content">
         <header className="admin-header">
-          <div className="header-content">
-            <div className="header-left">
-              <div className="brand-section">
-                <div className="brand-logo"></div>
-                <h1 className="brand-title">Admin Dashboard</h1>
+          <div className="header-content admin-smt-header-layout">
+            <div className="admin-smt-header-left">
+              <div className="admin-smt-brand-section">
+                <div className="admin-smt-brand-logo"></div>
+                <h1 className="admin-smt-brand-title">Admin Dashboard</h1>
               </div>
             </div>
-            <div className="header-right">
-              <div className="search-container">
-                <Search className="search-icon" />
+            <div className="admin-smt-header-right">
+              <div className="admin-smt-search-container">
+                <Search className="admin-smt-search-icon" />
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="search-input"
+                  className="admin-smt-search-input"
                 />
               </div>
-              <button className="btn btn-primary">New Entry</button>
+              <button className="admin-smt-btn admin-smt-btn-primary">New Entry</button>
             </div>
           </div>
         </header>
 
-        <div className="stats-grid">
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Total Customers</h3>
-              <Users className="stat-icon" />
+        <div className="admin-smt-stats-grid">
+          <div className="admin-smt-card">
+            <div className="admin-smt-card-header">
+              <h3 className="admin-smt-card-title">Total Customers</h3>
+              <Users className="admin-smt-stat-icon" />
             </div>
-            <div className="card-content">
-              <div className="stat-number">
+            <div className="admin-smt-card-content">
+              <div className="admin-smt-stat-number">
                 {totalCustomers.toLocaleString()}
               </div>
-              <p className="stat-description">
+              <p className="admin-smt-stat-description">
                 +12% from last month
               </p>
             </div>
           </div>
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Total Loan Applications</h3>
-              <FileText className="stat-icon" />
+          <div className="admin-smt-card">
+            <div className="admin-smt-card-header">
+              <h3 className="admin-smt-card-title">Total Loan Applications</h3>
+              <FileText className="admin-smt-stat-icon" />
             </div>
-            <div className="card-content">
-              <div className="stat-number">
+            <div className="admin-smt-card-content">
+              <div className="admin-smt-stat-number">
                 {totalLoanApplications.toLocaleString()}
               </div>
-              <p className="stat-description">
+              <p className="admin-smt-stat-description">
                 +5% from last month
               </p>
             </div>
           </div>
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Daily Transfers</h3>
-              <ArrowRightLeft className="stat-icon" />
+          <div className="admin-smt-card">
+            <div className="admin-smt-card-header">
+              <h3 className="admin-smt-card-title">Daily Transfers</h3>
+              <ArrowRightLeft className="admin-smt-stat-icon" />
             </div>
-            <div className="card-content">
-              <div className="stat-number">
+            <div className="admin-smt-card-content">
+              <div className="admin-smt-stat-number">
                 {totalDailyTransfers.toLocaleString()}
               </div>
-              <p className="stat-description">
+              <p className="admin-smt-stat-description">
                 +8% from yesterday
               </p>
             </div>
           </div>
         </div>
 
-<div className="tabs-container">
-  <div className="tabs-list">
-    <button
-      className={`tab-trigger ${
-        activeTab === "customers" ? "active" : ""
-      }`}
-      onClick={() => setActiveTab("customers")}
-    >
-      Customer Accounts
-    </button>
-    <button
-      className={`tab-trigger ${
-        activeTab === "loans" ? "active" : ""
-      }`}
-      onClick={() => setActiveTab("loans")}
-    >
-      Loan Applications
-    </button>
-    <button
-      className={`tab-trigger ${
-        activeTab === "transfers" ? "active" : ""
-      }`}
-      onClick={() => setActiveTab("transfers")}
-    >
-      Transfers
-    </button>
-  </div>
+        <div className="admin-smt-tabs-container">
+          <div className="admin-smt-tabs-list">
+            <button
+              className={`admin-smt-tab-trigger ${activeTab === "customers" ? "active" : ""}`}
+              onClick={() => setActiveTab("customers")}
+            >
+              Customer Accounts
+            </button>
+            <button
+              className={`admin-smt-tab-trigger ${activeTab === "loans" ? "active" : ""}`}
+              onClick={() => setActiveTab("loans")}
+            >
+              Loan Applications
+            </button>
+            <button
+              className={`admin-smt-tab-trigger ${activeTab === "transfers" ? "active" : ""}`}
+              onClick={() => setActiveTab("transfers")}
+            >
+              Transfers
+            </button>
+          </div>
 
-  {activeTab === "customers" && (
-    <div className="tab-content">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">Customer Accounts</h3>
-          <p className="card-description">
-            Manage and view all customer accounts
-          </p>
-        </div>
-        <div className="card-content">
-          {loadingCustomers ? (
-            <p>Loading customers...</p>
-          ) : customers.length === 0 ? (
-            <p>No customer accounts found.</p>
-          ) : (
-            <div className="table-container">
-              <table className="table">
-                <thead className="table-header">
-                  <tr>
-                    <th className="table-head">Customer ID</th>
-                    <th className="table-head">Name</th>
-                    <th className="table-head">Email/Username</th>
-                    <th className="table-head">Phone</th>
-                    <th className="table-head">Status</th>
-                    <th className="table-head">Balance</th>
-                    <th className="table-head">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="table-body">
-                  {customers.map((customer) => (
-                    <tr key={customer.customer_id} className="table-row">
-                      <td className="table-cell table-cell-bold">
-                        {customer.customer_id.substring(0, 8)}...
-                      </td>
-                      <td className="table-cell">
-                        {customer.first_name} {customer.last_name}
-                      </td>
-                      <td className="table-cell">{customer.username}</td>
-                      <td className="table-cell">{customer.phone_no}</td>
-                      <td className="table-cell">
-                        <span
-                          className={`badge ${getStatusClass(
-                            customer.account_status
-                          )}`}
-                        >
-                          {customer.account_status}
-                        </span>
-                      </td>
-                      <td className="table-cell table-cell-bold">
-                        ${customer.balance?.toLocaleString()}
-                      </td>
-                      <td className="table-cell">
-                        <button
-                          className="btn btn-ghost action-button"
-                          onClick={() => handleViewDetails('customer', customer.customer_id)}
-                        >
-                          <Eye className="action-icon" />
-                          <span className="sr-only">View Details</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {activeTab === "customers" && (
+            <div className="admin-smt-tab-content">
+              <div className="admin-smt-card">
+                <div className="admin-smt-card-header">
+                  <h3 className="admin-smt-card-title">Customer Accounts</h3>
+                  <p className="admin-smt-card-description">
+                    Manage and view all customer accounts
+                  </p>
+                </div>
+                <div className="admin-smt-card-content">
+                  {loadingCustomers ? (
+                    <p>Loading customers...</p>
+                  ) : customers.length === 0 ? (
+                    <p>No customer accounts found.</p>
+                  ) : (
+                    <div className="admin-smt-table-container">
+                      <table className="admin-smt-table">
+                        <thead className="admin-smt-table-header">
+                          <tr>
+                            <th className="admin-smt-table-head">Customer ID</th>
+                            <th className="admin-smt-table-head">Name</th>
+                            <th className="admin-smt-table-head">Email/Username</th>
+                            <th className="admin-smt-table-head">Phone</th>
+                            <th className="admin-smt-table-head">Status</th>
+                            <th className="admin-smt-table-head">Balance</th>
+                            <th className="admin-smt-table-head">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="admin-smt-table-body">
+                          {customers.map((customer) => (
+                            <tr key={customer.customer_id} className="admin-smt-table-row">
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                {customer.customer_id.substring(0, 8)}...
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {customer.first_name} {customer.last_name}
+                              </td>
+                              <td className="admin-smt-table-cell">{customer.username}</td>
+                              <td className="admin-smt-table-cell">{customer.phone_no}</td>
+                              <td className="admin-smt-table-cell">
+                                <span
+                                  className={`admin-smt-badge ${getStatusClass(
+                                    customer.account_status
+                                  )}`}
+                                >
+                                  {customer.account_status}
+                                </span>
+                              </td>
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                ${customer.balance?.toLocaleString()}
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                <button
+                                  className="admin-smt-btn admin-smt-btn-ghost admin-smt-action-button"
+                                  onClick={() => handleViewDetails('customer', customer.customer_id)}
+                                >
+                                  <Eye className="admin-smt-action-icon" />
+                                  <span className="sr-only">View Details</span>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "loans" && (
+            <div className="admin-smt-tab-content">
+              <div className="admin-smt-card">
+                <div className="admin-smt-card-header">
+                  <h3 className="admin-smt-card-title">Loan Applications</h3>
+                  <p className="admin-smt-card-description">
+                    Review and manage loan applications
+                  </p>
+                </div>
+                <div className="admin-smt-card-content">
+                  {loadingLoanApplications ? (
+                    <p>Loading loan applications...</p>
+                  ) : loanApplications.length === 0 ? (
+                    <p>No loan applications found.</p>
+                  ) : (
+                    <div className="admin-smt-table-container">
+                      <table className="admin-smt-table">
+                        <thead className="admin-smt-table-header">
+                          <tr>
+                            <th className="admin-smt-table-head">Application ID</th>
+                            <th className="admin-smt-table-head">Customer</th>
+                            <th className="admin-smt-table-head">Amount</th>
+                            <th className="admin-smt-table-head">Intent</th>
+                            <th className="admin-smt-table-head">Approval</th>
+                            <th className="admin-smt-table-head">Date</th>
+                            <th className="admin-smt-table-head">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="admin-smt-table-body">
+                          {loanApplications.map((loan) => (
+                            <tr key={loan.loan_id} className="admin-smt-table-row">
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                {String(loan.loan_id).substring(0, 8)}...
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {loan.customer_first_name} {loan.customer_last_name}
+                              </td>
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                ${loan.loan_amount?.toLocaleString()}
+                              </td>
+                              <td className="admin-smt-table-cell">{loan.loan_intent}</td>
+                              <td className="admin-smt-table-cell">
+                                <span
+                                  className={`admin-smt-badge ${getStatusClass(
+                                    loan.final_approval
+                                  )}`}
+                                >
+                                  {loan.final_approval === true
+                                    ? "Approved"
+                                    : loan.final_approval === false
+                                    ? "Rejected"
+                                    : "Pending"}
+                                </span>
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {loan.application_date}
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                <button
+                                  className="admin-smt-btn admin-smt-btn-ghost admin-smt-action-button"
+                                  onClick={() => handleViewDetails('loan', loan.loan_id)}
+                                >
+                                  <Eye className="admin-smt-action-icon" />
+                                  <span className="sr-only">Review Application</span>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "transfers" && (
+            <div className="admin-smt-tab-content">
+              <div className="admin-smt-card">
+                <div className="admin-smt-card-header">
+                  <h3 className="admin-smt-card-title">Transfers</h3>
+                  <p className="admin-smt-card-description">
+                    Monitor all transfer transactions
+                  </p>
+                </div>
+                <div className="admin-smt-card-content">
+                  {loadingTransfers ? (
+                    <p>Loading transfers...</p>
+                  ) : transfers.length === 0 ? (
+                    <p>No transfers found.</p>
+                  ) : (
+                    <div className="admin-smt-table-container">
+                      <table className="admin-smt-table">
+                        <thead className="admin-smt-table-header">
+                          <tr>
+                            <th className="admin-smt-table-head">Transfer ID</th>
+                            <th className="admin-smt-table-head">From Account</th>
+                            <th className="admin-smt-table-head">To Account</th>
+                            <th className="admin-smt-table-head">Amount</th>
+                            <th className="admin-smt-table-head">Type</th>
+                            <th className="admin-smt-table-head">Date & Time</th>
+                            <th className="admin-smt-table-head">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="admin-smt-table-body">
+                          {transfers.map((transfer) => (
+                            <tr key={transfer.transaction_id} className="admin-smt-table-row">
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                {transfer.transaction_id.substring(0, 8)}...
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {transfer.initiator_account_no}
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {transfer.receiver_account_no}
+                              </td>
+                              <td className="admin-smt-table-cell admin-smt-table-cell-bold">
+                                ${transfer.amount?.toLocaleString()}
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                <span
+                                  className={`admin-smt-badge ${getStatusClass(
+                                    transfer.type_of_transfer
+                                  )}`}
+                                >
+                                  {transfer.type_of_transfer}
+                                </span>
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                {transfer.transfer_datetime}
+                              </td>
+                              <td className="admin-smt-table-cell">
+                                <button
+                                  className="admin-smt-btn admin-smt-btn-ghost admin-smt-action-button"
+                                  onClick={() => handleViewDetails('transfer', transfer.transaction_id)}
+                                >
+                                  <Eye className="admin-smt-action-icon" />
+                                  <span className="sr-only">View Details</span>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
-  )}
+  );
+}
 
-  {activeTab === "loans" && (
-    <div className="tab-content">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">Loan Applications</h3>
-          <p className="card-description">
-            Review and manage loan applications
-          </p>
-        </div>
-        <div className="card-content">
-          {loadingLoanApplications ? (
-            <p>Loading loan applications...</p>
-          ) : loanApplications.length === 0 ? (
-            <p>No loan applications found.</p>
-          ) : (
-            <div className="table-container">
-              <table className="table">
-                <thead className="table-header">
-                  <tr>
-                    <th className="table-head">Application ID</th>
-                    <th className="table-head">Customer</th>
-                    <th className="table-head">Amount</th>
-                    <th className="table-head">Intent</th>
-                    <th className="table-head">Approval</th>
-                    <th className="table-head">Date</th>
-                    <th className="table-head">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="table-body">
-                  {loanApplications.map((loan) => (
-                    <tr key={loan.loan_id} className="table-row">
-                      <td className="table-cell table-cell-bold">
-                        {String(loan.loan_id).substring(0, 8)}...
-                      </td>
-                      <td className="table-cell">
-                        {loan.customer_first_name}{" "}
-                        {loan.customer_last_name}
-                      </td>
-                      <td className="table-cell table-cell-bold">
-                        ${loan.loan_amount?.toLocaleString()}
-                      </td>
-                      <td className="table-cell">{loan.loan_intent}</td>
-                      <td className="table-cell">
-                        <span
-                          className={`badge ${getStatusClass(
-                            loan.final_approval
-                          )}`}
-                        >
-                          {loan.final_approval === true
-                            ? "Approved"
-                            : loan.final_approval === false
-                            ? "Rejected"
-                            : "Pending"}
-                        </span>
-                      </td>
-                      <td className="table-cell">
-                        {loan.application_date}
-                      </td>
-                      <td className="table-cell">
-                        <button
-                          className="btn btn-ghost action-button"
-                          onClick={() => handleViewDetails('loan', loan.loan_id)}
-                        >
-                          <Eye className="action-icon" />
-                          <span className="sr-only">Review Application</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )}
-
-  {activeTab === "transfers" && (
-    <div className="tab-content">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">Transfers</h3>
-          <p className="card-description">
-            Monitor all transfer transactions
-          </p>
-        </div>
-        <div className="card-content">
-          {loadingTransfers ? (
-            <p>Loading transfers...</p>
-          ) : transfers.length === 0 ? (
-            <p>No transfers found.</p>
-          ) : (
-            <div className="table-container">
-              <table className="table">
-                <thead className="table-header">
-                  <tr>
-                    <th className="table-head">Transfer ID</th>
-                    <th className="table-head">From Account</th>
-                    <th className="table-head">To Account</th>
-                    <th className="table-head">Amount</th>
-                    <th className="table-head">Type</th>
-                    <th className="table-head">Date & Time</th>
-                    <th className="table-head">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="table-body">
-                  {transfers.map((transfer) => (
-                    <tr key={transfer.transaction_id} className="table-row">
-                      <td className="table-cell table-cell-bold">
-                        {transfer.transaction_id.substring(0, 8)}...
-                      </td>
-                      <td className="table-cell">
-                        {transfer.initiator_account_no}
-                      </td>
-                      <td className="table-cell">
-                        {transfer.receiver_account_no}
-                      </td>
-                      <td className="table-cell table-cell-bold">
-                        ${transfer.amount?.toLocaleString()}
-                      </td>
-                      <td className="table-cell">
-                        <span
-                          className={`badge ${getStatusClass(
-                            transfer.type_of_transfer
-                          )}`}
-                        >
-                          {transfer.type_of_transfer}
-                        </span>
-                      </td>
-                      <td className="table-cell">
-                        {transfer.transfer_datetime}
-                      </td>
-                      <td className="table-cell">
-                        <button
-                          className="btn btn-ghost action-button"
-                          onClick={() => handleViewDetails('transfer', transfer.transaction_id)}
-                        >
-                          <Eye className="action-icon" />
-                          <span className="sr-only">View Details</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )}
-</div> 
-</main> 
-</div> )}

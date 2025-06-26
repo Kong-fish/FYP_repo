@@ -1,45 +1,10 @@
-// Customer_Dashboard.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supbaseClient.js';
-import './CustomerDashboard.css'; // Main dashboard specific styles
-import '../shared/normalize.css'; // Global normalize styles
-import '../shared/Header.css'; // Import Header specific styles
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-
-// Import Lucide icons for consistency and better styling
+import './CustomerDashboard.css';
+import '../shared/normalize.css';
 import { DollarSign, Banknote, PlusCircle, BarChart, History, Settings, Eye, EyeOff, CreditCard, Landmark, PiggyBank } from 'lucide-react';
 import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; // Assuming this component exists
-
-// The Header component as provided by the user, now with sign-out functionality
-const Header = () => {
-    const navigate = useNavigate(); // useNavigate hook must be inside a component
-
-    const handleSignOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error('Error signing out:', error.message);
-        } else {
-            navigate('/'); 
-        }
-    };
-
-    return (
-        <header className="header">
-            <div className="header__content">
-                <div className="logo-section">
-                    <span className="logo-text header__title">Eminent Western</span>
-                </div>
-                <div className="header-actions"> {/* This div groups DarkModeToggle and Sign Out */}
-                    <DarkModeToggle />
-                    <button onClick={handleSignOut} className="sign-out-button header-sign-out-btn">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-        </header>
-    );
-};
 
 interface CustomerInfo {
     id: string | null; // Corresponds to customer_id
@@ -160,7 +125,6 @@ export default function CustomerDashboard() {
 
 
     // --- Function to fetch accounts once customerInfo.id is available ---
-    // This useEffect was commented out and is now restored.
     useEffect(() => {
         const fetchAccounts = async () => {
             if (!customerInfo.id) {
@@ -295,7 +259,7 @@ export default function CustomerDashboard() {
 
     if (isLoading) {
         return (
-            <div className="dashboard-container loading-state"> {/* Added loading-state class for dedicated styling */}
+            <div className="dashboard-container loading-state">
                 <p>Loading dashboard data...</p>
             </div>
         );
@@ -303,7 +267,7 @@ export default function CustomerDashboard() {
 
     if (dataError) {
         return (
-            <div className="dashboard-container error-state"> {/* Added error-state class for dedicated styling */}
+            <div className="dashboard-container error-state">
                 <p className="error-message">{dataError}</p>
                 <button onClick={() => window.location.reload()} className="reload-button">Reload</button>
             </div>
@@ -314,8 +278,8 @@ export default function CustomerDashboard() {
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-            {/* The Header component is now defined directly in this file */}
-            <Header />
+            {/* REMOVED: The Header component is now handled by AppLayout/App.js */}
+            {/* <Header showBackButton={false} backPath="/" showSignOutButton={true} /> */}
 
             <div className="dashboard-container">
                 <div className="dashboard-main container">
