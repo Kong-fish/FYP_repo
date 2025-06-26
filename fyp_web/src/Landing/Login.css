@@ -70,7 +70,7 @@ html.dark .welcome-title {
 }
 
 .form-login__title {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 300;
   text-align: center;
   margin-bottom: 30px;
@@ -78,7 +78,7 @@ html.dark .welcome-title {
 
 .form-login__subtitle {
   margin-bottom: 30px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .form-login__form {
@@ -250,7 +250,7 @@ html.dark .welcome-title {
 html.dark .imageContainer {
   /* If this background is meant for the dark mode card background, it belongs on .form-login-card */
   /* If it's truly for the image container itself, keep it here. */
-  background-color: #dacecd;
+  background-color: #dacecd !important;
 }
 
 .forgot-password-link {

@@ -1,26 +1,12 @@
 import { Link } from "react-router-dom";
 import { Shield, Smartphone, TrendingUp, Users, Lock, CheckCircle, Star, Menu, Phone, CreditCard } from "lucide-react";
 import '../shared/normalize.css';
-import '../shared/Header.css';
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 import "./Landing.css";
 
-const Header = () => (
-  <header className="header">
-    <div className="header__content">
-      <div className="logo">
-        <span className="logoText header__title">Eminent Western</span>
-      </div>
-      <DarkModeToggle />
-    </div>
-  </header>
-);
 
 export default function CustomerLandingPage() {
   return (
     <>
-      <Header />
-
       <div className="app" style={{ display: 'none' }}>
         <div className="customerLanding"></div> {/* This inner div was empty */}
       </div>
@@ -31,7 +17,7 @@ export default function CustomerLandingPage() {
           <div className="heroGrid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
             
 
-            <div className="heroContent" style={{ marginTop: '20px' }}> {/* Added margin for spacing */}
+            <div className="heroContent"> {/* Added margin for spacing */}
               <div className="heroText">
 
                 <h1 className="heroTitle">

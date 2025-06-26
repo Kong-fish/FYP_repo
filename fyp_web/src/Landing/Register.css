@@ -1,134 +1,174 @@
 /* Register.css */
 
-/* It's good to define variables at a higher level (like :root or App.css)
-   but for component-specific overrides or if this is the only place defining them,
-   it can be here. Assuming global variables for theming are in Login.css or shared.css. */
+/* Define CSS Variables for Theming - Consistent with Landing.css */
+:root {
+    --primary-bg-color: #fcf9f8; /* Light background from Landing.css body */
+    --secondary-bg-color: white; /* Card background */
+    --text-color: #1a202c; /* Dark text color */
+    --light-text-color: #718096; /* Lighter text for descriptions */
+    --input-border-color: #c6cbda;
+    --input-bg-color: #fff;
+    --error-color: #e53e3e; /* Red for errors */
+    
+    /* Button colors, aligned with Landing page buttons */
+    --button-primary-bg: #385A93;
+    --button-primary-text: white;
+    --button-primary-hover-bg: #2b4a7d;
+
+    --button-yellow-bg: #f6ad55; /* Orange from Landing openAccountButton */
+    --button-yellow-text: white; /* Text color for yellow button */
+    --button-yellow-hover-bg: #ed8936; /* Darker orange on hover */
+
+    --form-shadow: rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for form card */
+    --header-height: 100px; /* From Header.css */
+}
+
+/* Dark Mode Variables - Match existing dark mode in Landing.css/Header.css */
+html.dark {
+    --primary-bg-color: #1a202c; /* Dark background */
+    --secondary-bg-color: #2d3748; /* Darker card background */
+    --text-color: white; /* Light text color for dark mode */
+    --light-text-color: #a0aec0; /* Lighter text for dark mode */
+    --input-border-color: #4a5568;
+    --input-bg-color: #2d3748; /* Input background in dark mode */
+    --error-color: #fc8181; /* Lighter red for errors in dark mode */
+    
+    --button-primary-bg: #2c5282; /* Darker blue primary button for dark mode */
+    --button-primary-hover-bg: #1e3a8a;
+
+    --button-yellow-bg: #ed8936; /* Dark mode yellow/orange button */
+    --button-yellow-hover-bg: #dd6b20;
+
+    --form-shadow: rgba(0, 0, 0, 0.4);
+}
+
 
 .register-page {
-    /* The core layout for the registration page content */
-    flex-grow: 1; /* Allows the content to take available vertical space */
+    flex-grow: 1;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding: 2rem; /* Add some padding around the form */
-    background-color: var(--primary-bg-color); /* Use theme variable for background */
-    min-height: calc(100vh - var(--header-height, 70px)); /* Ensure it fills remaining viewport height, adjust --header-height if different */
-    box-sizing: border-box; /* Include padding in element's total width and height */
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--primary-bg-color);
+    /* Account for fixed header height, assuming 100px from Header.css */
+    min-height: calc(100vh - var(--header-height)); 
+    box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Smooth transition for background on theme change */
 }
 
 .register_form_container {
-    background-color: var(--secondary-bg-color); /* Use theme variable for card background */
-    padding: 3rem 2.5rem; /* Generous padding inside the form card */
-    border-radius: 12px; /* Softly rounded corners */
-    box-shadow: 0 8px 25px var(--form-shadow); /* Subtle, themed shadow */
-    max-width: 900px; /* Optimal width for a two-column form */
-    width: 100%; /* Ensure it's responsive */
+    background-color: var(--secondary-bg-color);
+    padding: 2.5rem 2rem; /* Adjusted padding */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px var(--form-shadow); /* More prominent shadow */
+    max-width: 750px; /* Adjusted for a slightly smaller container, was 900px */
+    width: 100%;
     display: flex;
-    flex-wrap: wrap; /* Allows columns to wrap below each other on smaller screens */
-    gap: 2.5rem; /* Space between the two columns */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions for theme changes */
+    flex-wrap: wrap;
+    gap: 2rem; /* Adjusted space between columns */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; /* Ensures padding is included in width */
 }
 
 .register_form_title {
-    font-size: 2.5rem; /* Larger, more prominent title */
-    color: var(--text-color); /* Use theme variable for text color */
-    margin-bottom: 2rem; /* Space below the title */
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem; /* Reduced margin slightly */
     text-align: center;
-    width: 100%; /* Ensures title spans the full width of the form container */
-    font-weight: 700; /* Bolder title */
+    width: 100%;
+    font-weight: 700;
 }
 
 .register_form_column {
-    flex: 1; /* Each column takes equal space, distributing available width */
-    min-width: 320px; /* Minimum width before columns start wrapping */
+    flex: 1;
+    min-width: 280px; /* Slightly reduced min-width to allow more flexibility */
     display: flex;
-    flex-direction: column; /* Stack fields vertically within the column */
-    gap: 1.2rem; /* Space between form fields within a column */
-    /* Remove padding-top: 100px; - this was likely causing a large gap and should be handled by form container padding/centering */
-    /* Remove padding: 20px; - this was causing inner padding per column; better managed by gap or container padding */
+    flex-direction: column;
+    gap: 1rem; /* Space between form fields within a column */
     box-sizing: border-box;
 }
 
-/* Field and Input Styling (assuming these are shared via Login.css or a global style) */
-/* If not, uncomment and adapt these: */
-/*
+/* Field and Input Styling */
 .field {
     display: flex;
     flex-direction: column;
+    width: 100%; /* Ensure fields take full width of their column */
 }
 
 .field label {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    color: var(--light-text-color); /* Lighter label text */
     font-weight: 600;
+    text-align: left; /* Align labels to the left */
 }
 
 .field__input {
-    padding: 0.9rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     border: 1px solid var(--input-border-color);
     border-radius: 8px;
     font-size: 1rem;
     background-color: var(--input-bg-color);
     color: var(--text-color);
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-    width: 100%;
-    box-sizing: border-box;
+    width: 100%; /* Important for responsiveness inside flex column */
+    box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
 .field__input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    border-color: var(--button-primary-bg); /* Highlight with primary color on focus */
+    box-shadow: 0 0 0 3px rgba(56, 90, 147, 0.2); /* Soft blue shadow on focus */
     outline: none;
 }
-*/
 
-/* Specific styling for textarea to ensure appropriate height */
 textarea.field__input {
-    min-height: 100px; /* Slightly taller for better usability */
-    resize: vertical; /* Allow vertical resizing only */
+    min-height: 80px; /* Adjusted min-height for textarea */
+    resize: vertical;
 }
 
 /* Error Message Styling */
 .error-message {
-    color: var(--error-color); /* Use theme variable for error messages */
-    font-size: 0.95rem;
-    margin-top: 1.5rem; /* More space above the error message */
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
     text-align: center;
-    width: 100%; /* Ensure it spans full width below fields */
+    width: 100%;
     font-weight: 500;
 }
 
-/* Button Styling (assuming these are shared via Login.css or a global style) */
-/* If not, uncomment and adapt these: */
-/*
+/* Button Styling - Aligned with Landing Page */
 .button {
-    padding: 1.1rem 2.5rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
+    border-radius: 0.5rem; /* Rounded corners consistent with Landing buttons */
+    display: block;
+    font-size: 1.125rem; /* Consistent with Landing buttons */
+    font-weight: 600; /* Consistent with Landing buttons */
+    line-height: 1.5;
+    outline: none;
+    padding: 0.75rem 1.5rem; /* Consistent with Landing buttons */
+    text-align: center;
+    text-transform: none; /* Remove uppercase if not needed, consistency with Landing buttons */
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s ease-in-out, box-shadow 0.2s;
-    width: 100%;
-    margin-top: 2rem;
+    border: none; /* No border for main buttons */
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s;
+    width: 100%; /* Full width within its container */
+    margin-top: 2rem; /* Space above the button */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow */
 }
 
 .button--yellow {
     background-color: var(--button-yellow-bg);
     color: var(--button-yellow-text);
-    box-shadow: 0 4px 10px rgba(253, 216, 53, 0.3);
 }
 
 .button--yellow:hover {
-    background-color: #fbc02d;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(253, 216, 53, 0.4);
+    background-color: var(--button-yellow-hover-bg);
+    transform: translateY(-2px); /* Lift on hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
 .button--yellow:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(253, 216, 53, 0.2);
+    transform: translateY(0); /* Press down on active */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .button:disabled {
@@ -138,63 +178,86 @@ textarea.field__input {
     box-shadow: none;
     transform: none;
 }
-*/
+
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 992px) { /* Adjust breakpoint for larger tablets */
+@media (max-width: 992px) { /* Larger tablets/small desktops */
     .register_form_container {
-        padding: 2.5rem 2rem;
-        gap: 2rem;
+        padding: 2rem 1.5rem; /* Slightly reduced padding */
+        gap: 1.5rem; /* Reduced gap */
+        max-width: 650px; /* Reduced max-width further */
     }
     .register_form_title {
         font-size: 2.2rem;
     }
+    .field__input {
+        padding: 0.75rem 1rem;
+    }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* Tablets in portrait / large phones */
     .register_form_container {
-        flex-direction: column; /* Stack columns vertically on smaller screens */
-        padding: 2rem 1.5rem;
-        gap: 1.5rem; /* Space between stacked columns */
+        flex-direction: column; /* Stack columns vertically */
+        padding: 1.8rem 1.2rem;
+        gap: 1.2rem; /* Space between stacked columns */
+        max-width: 500px; /* Max-width for single column layout */
     }
 
     .register_form_column {
-        min-width: unset; /* Remove min-width when stacked */
-        width: 100%; /* Ensure they take full width */
-        gap: 1rem; /* Slightly reduced gap between fields when stacked */
+        min-width: unset; /* Remove min-width */
+        width: 100%; /* Take full width */
+        gap: 0.8rem; /* Reduced gap between fields when stacked */
     }
 
     .register_form_title {
         font-size: 2rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.2rem;
     }
 
     .button {
-        margin-top: 1.5rem; /* Adjust button margin for smaller screens */
+        margin-top: 1.5rem; /* Adjust button margin */
+        padding: 0.8rem 1.5rem;
+        font-size: 1.05rem;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) { /* Mobile phones */
     .register-page {
-        padding: 1rem; /* Less padding on very small screens */
+        padding: 1rem;
     }
 
     .register_form_container {
-        padding: 1.5rem 1rem;
+        padding: 1.2rem 0.8rem;
+        gap: 1rem;
+        max-width: 350px; /* Max-width for smaller mobile screens */
     }
 
     .register_form_title {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .field label {
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
     }
 
     .field__input {
-        padding: 0.7rem 1rem; /* Smaller input padding */
+        padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
     }
 
+    textarea.field__input {
+        min-height: 60px; /* Smaller min-height for textarea on mobile */
+    }
+
     .button {
-        padding: 0.9rem 1.5rem;
-        font-size: 1rem;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+        margin-top: 1rem;
+    }
+
+    .error-message {
+        font-size: 0.85rem;
     }
 }

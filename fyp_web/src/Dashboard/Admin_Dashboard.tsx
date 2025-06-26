@@ -262,7 +262,7 @@ export default function AdminDashboard() {
 
   const handleViewDetails = (type: string, id: string) => {
     if (type === 'customer') {
-      navigate(`/admin-approve-account/${id}`);
+      navigate(`/admin-view-account/${id}`);
     } else if (type === 'loan') {
       navigate(`/admin/loan/${id}`);
     } else if (type === 'transfer') {
@@ -292,7 +292,6 @@ export default function AdminDashboard() {
                   className="admin-smt-search-input"
                 />
               </div>
-              <button className="admin-smt-btn admin-smt-btn-primary">New Entry</button>
             </div>
           </div>
         </header>

@@ -1,38 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import supabase from '../supabaseClient.js';
-import '../shared/normalize.css';
-import '../shared/Header.css';
-import './Register.css'; 
-import { ArrowLeft } from "lucide-react";
-
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-
-const Header: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate("/");
-  };
-
-  return (
-    <header className="header">
-      <div className="header__content">
-        <button onClick={handleBack} className="back-button">
-          <ArrowLeft size={24} />
-          <span className="back-button-text">Back</span>
-        </button>
-        <div className="header__title">
-          <p>Eminent Western</p>
-        </div>
-        <DarkModeToggle />
-      </div>
-    </header>
-  );
-};
+import supabase from '../supabaseClient.js'; // Ensure this file exists in shared/
+import '../shared/normalize.css'; // Ensure this file exists in shared/
+import './Register.css'; // Ensure this file exists in the same directory as Register.tsx
 
 // Register Component
-function Register({ onRegisterSuccess }) {
+function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -52,7 +25,7 @@ function Register({ onRegisterSuccess }) {
     console.log('Register component mounted');
   }, []);
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -99,17 +72,12 @@ function Register({ onRegisterSuccess }) {
           console.error('Supabase insert error:', customerError);
         } else {
           console.log('Customer profile created successfully:', customerData);
-          // Assuming user is automatically logged in or redirected to login
-          navigate('/homepage'); // Or /login for manual verification
-          if (onRegisterSuccess) {
-            onRegisterSuccess();
-          }
+          navigate('/homepage');
         }
       } else {
-        // This case handles successful signup but pending email confirmation
         setError('Sign up successful, please check your email for a confirmation link.');
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'An unexpected error occurred during sign up.');
       console.error('Error during sign up:', err);
     } finally {
@@ -119,14 +87,11 @@ function Register({ onRegisterSuccess }) {
 
   return (
     <div className="app">
-      <Header /> {/* Render the Header component */}
       <div className="register-page">
         <form onSubmit={handleSignUp} className="register_form_container">
-          {/* Title and error message are now siblings of the columns
-              to allow them to span full width easily within the flex container */}
           <h1 className="register_form_title">Register</h1>
 
-          {/* This div will be the first column */}
+          {/* First column */}
           <div className="register_form_column">
             <div className="field">
               <label htmlFor="email">Email:</label>
@@ -150,7 +115,7 @@ function Register({ onRegisterSuccess }) {
             </div>
           </div>
 
-          {/* This div will be the second column */}
+          {/* Second column */}
           <div className="register_form_column">
             <div className="field">
               <label htmlFor="lastName">Last Name:</label>
@@ -178,11 +143,15 @@ function Register({ onRegisterSuccess }) {
             </div>
           </div>
 
-          {/* Error message and button are now outside the columns but still within the form container */}
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="button button--yellow" disabled={loading}>
             {loading ? 'Loading...' : 'Sign Up'}
           </button>
+          <div style={{ textAlign: 'center', marginTop: '1rem', width: '100%' }}>
+            <Link to="/login" style={{ color: 'var(--button-primary-bg)', textDecoration: 'none', fontWeight: 'bold' }}>
+              Already have an account? Login
+            </Link>
+          </div>
         </form>
       </div>
     </div>

@@ -278,9 +278,6 @@ export default function CustomerDashboard() {
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-            {/* REMOVED: The Header component is now handled by AppLayout/App.js */}
-            {/* <Header showBackButton={false} backPath="/" showSignOutButton={true} /> */}
-
             <div className="dashboard-container">
                 <div className="dashboard-main container">
                     {/* The dashboard-layout manages the left/right sections */}

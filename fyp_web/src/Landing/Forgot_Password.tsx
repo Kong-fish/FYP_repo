@@ -3,32 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import supabase from '../supabaseClient.js';
 import '../shared/normalize.css';
 import './Login.css';
-import '../shared/Header.css';
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import { ArrowLeft } from "lucide-react";
 
-const Header: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate("/");
-  };
-
-  return (
-    <header className="header">
-      <div className="header__content">
-        <button onClick={handleBack} className="back-button">
-          <ArrowLeft size={24} />
-          <span className="back-button-text">Back</span>
-        </button>
-        <div className="header__title">
-          <p>Eminent Western</p>
-        </div>
-        <DarkModeToggle />
-      </div>
-    </header>
-  );
-};
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -58,7 +33,6 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <div className="landing-page-wrapper">
-      <Header />
       <div className="landing-content-area">
         <div className="form-login-card"> {/* Reusing the card structure from your login page */}
           <div className="form-login__form button-group">
