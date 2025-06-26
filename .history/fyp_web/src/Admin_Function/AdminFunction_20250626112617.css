@@ -1,0 +1,546 @@
+/* AdminFunction.css */
+
+/* Define CSS Variables for Light Mode */
+:root {
+    --bg-color-light: #f4f6f9;
+    --text-color-light: #333;
+    --card-bg-light: #ffffff;
+    --border-color-light: #e0e0e0;
+    --primary-color-light: #4f46e5; /* Indigo-600 */
+    --primary-hover-light: #4338ca; /* Indigo-700 */
+    --badge-success-bg-light: #d1fae5; /* Green-100 */
+    --badge-success-text-light: #065f46; /* Green-800 */
+    --badge-warning-bg-light: #fffbeb; /* Amber-100 */
+    --badge-warning-text-light: #b45309; /* Amber-800 */
+    --badge-error-bg-light: #fee2e2; /* Red-100 */
+    --badge-error-text-light: #991b1b; /* Red-800 */
+    --badge-default-bg-light: #e0e7ff; /* Indigo-100 */
+    --badge-default-text-light: #3730a3; /* Indigo-950 */
+    --input-bg-light: #fdfdfd;
+    --input-border-light: #d1d5db; /* Gray-300 */
+    --table-header-bg-light: #f9fafb;
+    --table-row-hover-light: #f3f4f6; /* Gray-100 */
+    --action-icon-color-light: #333; /* Black for light mode */
+    --header-title-color-light: var(--primary-color-light);
+    --button-text-color-light: #ffffff;
+    --sign-out-button-bg-light: #ef4444; /* Red-500 */
+    --sign-out-button-hover-light: #dc2626; /* Red-600 */
+    --default-text-color: #6b7280; /* Consistent gray for descriptions/labels */
+}
+
+/* Define CSS Variables for Dark Mode (applied when body has 'dark-mode' class) */
+body.dark-mode {
+    --bg-color-dark: #1a202c; /* Dark gray/blue */
+    --text-color-dark: #e2e8f0; /* Light gray */
+    --card-bg-dark: #2d3748; /* Slightly lighter dark gray */
+    --border-color-dark: #4a5568; /* Even lighter dark gray */
+    --primary-color-dark: #6366f1; /* Indigo-500 */
+    --primary-hover-dark: #4f46e5; /* Indigo-600 */
+    --badge-success-bg-dark: #10b981; /* Green-500 */
+    --badge-success-text-dark: #ecfdf5; /* Green-50 */
+    --badge-warning-bg-dark: #f59e0b; /* Amber-500 */
+    --badge-warning-text-dark: #fffdf5; /* Amber-50 */
+    --badge-error-bg-dark: #ef4444; /* Red-500 */
+    --badge-error-text-dark: #fef2f2; /* Red-50 */
+    --badge-default-bg-dark: #a5b4fc; /* Indigo-300 */
+    --badge-default-text-dark: #1e1b4b; /* Indigo-950 */
+    --input-bg-dark: #4a5568;
+    --input-border-dark: #64748b; /* Gray-500 */
+    --table-header-bg-dark: #2d3748;
+    --table-row-hover-dark: #4a5568;
+    --action-icon-color-dark: #e2e8f0; /* White for dark mode */
+    --header-title-color-dark: var(--primary-color-dark);
+    --button-text-color-dark: #ffffff;
+    --sign-out-button-bg-dark: #ef4444; /* Red-500 */
+    --sign-out-button-hover-dark: #dc2626; /* Red-600 */
+    --default-text-color-dark: #9ca3af;
+}
+
+/* Base Styles */
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px; /* Base font size for desktop */
+}
+
+body.dark-mode {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* General Header Styles (can be used for main application header) */
+.header {
+    background-color: var(--card-bg-light);
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+body.dark-mode .header {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--header-title-color-light);
+    margin: 0;
+}
+
+body.dark-mode .header__title {
+    color: var(--header-title-color-dark);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Admin Dashboard Specific Header (below the main header) */
+.admin-header {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: var(--card-bg-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .admin-header {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.admin-header .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.brand-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* Search Container and Input */
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color-light);
+}
+
+body.dark-mode .search-icon {
+    color: var(--text-color-dark);
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-light);
+    background-color: var(--input-bg-light);
+    color: var(--text-color-light);
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+body.dark-mode .search-input {
+    border-color: var(--input-border-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-color-dark);
+}
+
+.search-input::placeholder {
+    color: var(--text-color-light);
+    opacity: 0.7;
+}
+
+body.dark-mode .search-input::placeholder {
+    color: var(--text-color-dark);
+    opacity: 0.7;
+}
+
+/* Card Styles (for stats and tables) */
+.card {
+    background-color: var(--card-bg-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dark-mode .card {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Allow wrapping of header content */
+    gap: 10px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: var(--default-text-color);
+}
+
+body.dark-mode .card-description {
+    color: var(--default-text-color-dark);
+}
+
+.card-content {
+    flex-grow: 1;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.btn-primary {
+    background-color: var(--primary-color-light);
+    color: var(--button-text-color-light);
+    border: none;
+}
+
+body.dark-mode .btn-primary {
+    background-color: var(--primary-color-dark);
+    color: var(--button-text-color-dark);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-light);
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: var(--primary-hover-dark);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--text-color-light);
+    border: 1px solid transparent;
+}
+
+body.dark-mode .btn-ghost {
+    color: var(--text-color-dark);
+}
+
+.btn-ghost:hover {
+    background-color: var(--border-color-light);
+}
+
+body.dark-mode .btn-ghost:hover {
+    background-color: var(--border-color-dark);
+}
+
+.sign-out-button {
+    padding: 8px 15px;
+    border-radius: 8px;
+    background-color: var(--sign-out-button-bg-light);
+    color: var(--button-text-color-light);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+body.dark-mode .sign-out-button {
+    background-color: var(--sign-out-button-bg-dark);
+    color: var(--button-text-color-dark);
+}
+
+.sign-out-button:hover {
+    background-color: var(--sign-out-button-hover-light);
+}
+
+body.dark-mode .sign-out-button:hover {
+    background-color: var(--sign-out-button-hover-dark);
+}
+
+/* Badges (for status indicators) */
+.badge {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: 9999px; /* Fully rounded */
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Prevent badge text from wrapping */
+}
+
+.badge-success {
+    background-color: var(--badge-success-bg-light);
+    color: var(--badge-success-text-light);
+}
+
+body.dark-mode .badge-success {
+    background-color: var(--badge-success-bg-dark);
+    color: var(--badge-success-text-dark);
+}
+
+.badge-warning {
+    background-color: var(--badge-warning-bg-light);
+    color: var(--badge-warning-text-light);
+}
+
+body.dark-mode .badge-warning {
+    background-color: var(--badge-warning-bg-dark);
+    color: var(--badge-warning-text-dark);
+}
+
+.badge-error {
+    background-color: var(--badge-error-bg-light);
+    color: var(--badge-error-text-light);
+}
+
+body.dark-mode .badge-error {
+    background-color: var(--badge-error-bg-dark);
+    color: var(--badge-error-text-dark);
+}
+
+.badge-default {
+    background-color: var(--badge-default-bg-light);
+    color: var(--badge-default-text-light);
+}
+
+body.dark-mode .badge-default {
+    background-color: var(--badge-default-bg-dark);
+    color: var(--badge-default-text-dark);
+}
+
+/* Action Buttons (e.g., in tables) */
+.action-button {
+    padding: 8px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+}
+
+.action-button:hover {
+    background-color: var(--border-color-light);
+}
+
+body.dark-mode .action-button:hover {
+    background-color: var(--border-color-dark);
+}
+
+.action-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--action-icon-color-light);
+}
+
+body.dark-mode .action-icon {
+    color: var(--action-icon-color-dark);
+}
+
+/* Loading and error messages */
+.loading-message,
+.error-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    color: var(--text-color-light);
+}
+
+body.dark-mode .loading-message,
+body.dark-mode .error-message {
+    color: var(--text-color-dark);
+}
+
+.error-message {
+    color: var(--badge-error-text-light);
+    font-weight: 600;
+}
+
+body.dark-mode .error-message {
+    color: var(--badge-error-bg-dark);
+}
+
+
+/* ================== Responsive Design (Media Queries) ================== */
+
+/* Laptop/Desktop (large screens: 1024px and up) */
+@media (min-width: 1024px) {
+    body {
+        font-size: 16px; /* Base font size */
+    }
+    .main-content {
+        padding: 40px;
+    }
+    .brand-title {
+        font-size: 2.5rem;
+    }
+    .card-title {
+        font-size: 1.2rem;
+    }
+    .card-description {
+        font-size: 0.9rem;
+    }
+    .search-input {
+        font-size: 1rem;
+    }
+    .btn {
+        font-size: 1rem;
+    }
+    .badge {
+        font-size: 0.75rem;
+    }
+    .stat-number {
+        font-size: 3.5rem;
+    }
+    .stat-description {
+        font-size: 0.9rem;
+    }
+    .action-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Tablet (medium screens: 768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    body {
+        font-size: 15px; /* Slightly smaller font for tablets */
+    }
+    .main-content {
+        padding: 30px;
+    }
+    .brand-title {
+        font-size: 2.2rem;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    .card-description {
+        font-size: 0.85rem;
+    }
+    .search-input {
+        font-size: 0.95rem;
+    }
+    .btn {
+        font-size: 0.95rem;
+    }
+    .badge {
+        font-size: 0.7rem;
+    }
+    .stat-number {
+        font-size: 3rem;
+    }
+    .stat-description {
+        font-size: 0.85rem;
+    }
+    .action-icon {
+        width: 17px;
+        height: 17px;
+    }
+}
+
+/* Mobile (small screens: up to 767px) */
+@media (max-width: 767px) {
+    body {
+        font-size: 14px; /* Even smaller font for mobile */
+    }
+    .main-content {
+        padding: 15px;
+    }
+    .brand-title {
+        font-size: 1.8rem;
+    }
+    .card-title {
+        font-size: 1rem;
+    }
+    .card-description {
+        font-size: 0.8rem;
+    }
+    .search-input {
+        font-size: 0.9rem;
+    }
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 15px; /* Adjust padding for smaller buttons */
+    }
+    .badge {
+        font-size: 0.65rem;
+        padding: 3px 8px; /* Adjust padding for smaller badges */
+    }
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    .stat-description {
+        font-size: 0.8rem;
+    }
+    .action-icon {
+        width: 16px;
+        height: 16px;
+    }
+    .header__title {
+        font-size: 1.3rem; /* Adjust header title for mobile */
+    }
+}

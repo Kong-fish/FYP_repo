@@ -1,0 +1,189 @@
+/* shared/Header.css */
+
+/* --- CSS Variables for Header Theming (STATIC - will not change with dark mode) --- */
+:root {
+    --header-bg: #385A93;
+    --header-text: #fff;
+    --back-button-color: #fff;
+    --sign-out-bg: #FBB03B;
+    --sign-out-text: #385A93;
+    --sign-out-hover-bg: #FFAA00;
+    --sign-out-active-bg: #E69D00;
+    --header-shadow: rgba(0, 0, 0, 0.08);
+}
+
+/*
+    The 'body.dark-mode' block for header-specific variables is REMOVED.
+    This ensures header elements ONLY use the :root values, keeping them static.
+*/
+
+
+.header {
+    height: 100px;
+    box-shadow: 0 1px 6px 0 var(--header-shadow); /* Uses static header shadow */
+    width: 100%;
+    background-color: var(--header-bg); /* Uses static header background */
+    display: flex;
+    justify-content: center;
+    position: sticky; /* Make the header stick to the top when scrolled */
+    top: 0; /* Stick to the top edge */
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.header__content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 20px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text {
+    font-family: 'Trebuchet MS', sans-serif;
+    color: var(--header-text); /* Uses static header text color */
+    font-size: 30px;
+    white-space: nowrap;
+    margin: 0; /* Remove default margin */
+}
+
+.header-actions {
+    display: flex;
+    align-items: center; /* Vertically align items in the middle */
+    gap: 15px; /* Space between toggle and sign out button */
+}
+
+/* Back button styling */
+.back-button {
+    color: var(--back-button-color); /* Uses static back button color */
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.back-button-text {
+    margin-left: 8px;
+    color: var(--back-button-color); /* Uses static back button text color */
+}
+
+.back-button svg {
+    fill: currentColor; /* Use currentColor to inherit from parent */
+}
+
+/* Sign out button styling */
+.sign-out-button {
+    background-color: var(--sign-out-bg); /* Uses static sign out button background */
+    color: var(--sign-out-text); /* Uses static sign out button text color */
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sign-out-button:hover {
+    background-color: var(--sign-out-hover-bg); /* Uses static hover background */
+    transform: translateY(-1px);
+}
+
+.sign-out-button:active {
+    background-color: var(--sign-out-active-bg); /* Uses static active background */
+    transform: translateY(0);
+}
+
+/* Dark Mode Toggle Button Styling */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--header-text); /* Icon color inherits from static header text */
+    transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    opacity: 0.8;
+}
+
+
+/* Media Queries for Responsiveness */
+
+/* Tablet (e.g., max-width: 768px - common breakpoint for tablets in portrait) */
+@media (max-width: 768px) {
+    .header {
+        height: 80px; /* Slightly smaller header for tablets */
+    }
+
+    .header__content {
+        padding: 0 15px; /* Reduce horizontal padding */
+    }
+
+    .logo-text {
+        font-size: 24px; /* Smaller font for tablet */
+    }
+
+    .back-button {
+        font-size: 16px; /* Adjust font size for tablet */
+    }
+
+    .sign-out-button {
+        font-size: 14px;
+        padding: 7px 12px;
+    }
+
+    .dark-mode-toggle svg {
+        size: 18px; /* Slightly smaller icon */
+    }
+}
+
+/* Mobile (e.g., max-width: 480px - common breakpoint for phones) */
+@media (max-width: 480px) {
+    .header {
+        height: 60px; /* Even smaller header for mobile */
+    }
+
+    .header__content {
+        padding: 0 10px; /* Further reduce horizontal padding */
+        justify-content: space-between; /* Keep space-between for back button and toggle */
+    }
+
+    .logo-section {
+        /* On mobile, hide the logo-text and potentially show a smaller icon or just remove it */
+        display: none; /* Hide the logo text on mobile */
+    }
+
+    .back-button {
+        font-size: 14px; /* Adjust font size for even smaller screens */
+    }
+
+    .sign-out-button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .dark-mode-toggle svg {
+        size: 16px; /* Even smaller icon */
+    }
+}

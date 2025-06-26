@@ -1,0 +1,675 @@
+/* AdminDashboard.css */
+
+/* Root variables for light mode (default) */
+:root {
+    --admin-smt-bg-color-light: #f4f6f9;
+    --admin-smt-text-color-light: #333;
+    --admin-smt-card-bg-light: #ffffff;
+    --admin-smt-border-color-light: #e0e0e0;
+    --admin-smt-primary-color-light: #4f8af5;
+    --admin-smt-primary-hover-light: #3a75e3;
+    --admin-smt-badge-success-bg-light: #d1fae5;
+    --admin-smt-badge-success-text-light: #065f46;
+    --admin-smt-badge-warning-bg-light: #fffbeb;
+    --admin-smt-badge-warning-text-light: #b45309;
+    --admin-smt-badge-error-bg-light: #fee2e2;
+    --admin-smt-badge-error-text-light: #991b1b;
+    --admin-smt-header-bg-light: #5a7edc; /* Adjusted header background for light mode */
+    --admin-smt-header-text-light: #ffffff; /* Header text color */
+    --admin-smt-input-bg-light: #ffffff;
+    --admin-smt-input-border-light: #ccc;
+    --admin-smt-icon-color-light: #666;
+    --admin-smt-table-header-bg-light: #f0f2f5;
+    --admin-smt-table-border-light: #e0e0e0;
+    --admin-smt-hover-bg-light: #f9f9f9;
+    --admin-smt-active-tab-border-light: #4f8af5;
+}
+
+/* Dark mode variables */
+body.dark-mode { /* Assuming a 'dark-mode' class is added to the body */
+    --admin-smt-bg-color-dark: #1a202c;
+    --admin-smt-text-color-dark: #e2e8f0;
+    --admin-smt-card-bg-dark: #2d3748;
+    --admin-smt-border-color-dark: #4a5568;
+    --admin-smt-primary-color-dark: #63b3ed;
+    --admin-smt-primary-hover-dark: #4299e1;
+    --admin-smt-badge-success-bg-dark: #2f855a;
+    --admin-smt-badge-success-text-dark: #e6fffa;
+    --admin-smt-badge-warning-bg-dark: #d69e2e;
+    --admin-smt-badge-warning-text-dark: #fefcbf;
+    --admin-smt-badge-error-bg-dark: #c53030;
+    --admin-smt-badge-error-text-dark: #fed7d7;
+    --admin-smt-header-bg-dark: #2d3748; /* Darker header for dark mode */
+    --admin-smt-header-text-dark: #e2e8f0;
+    --admin-smt-input-bg-dark: #4a5568;
+    --admin-smt-input-border-dark: #666;
+    --admin-smt-icon-color-dark: #cbd5e0;
+    --admin-smt-table-header-bg-dark: #4a5568;
+    --admin-smt-table-border-dark: #666;
+    --admin-smt-hover-bg-dark: #4a5568;
+    --admin-smt-active-tab-border-dark: #63b3ed;
+}
+
+
+/* General Body Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: var(--admin-smt-bg-color-light); /* Use light mode variable by default */
+    color: var(--admin-smt-text-color-light); /* Use light mode variable by default */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Apply dark mode variables when 'dark-mode' class is active */
+body.dark-mode {
+    background-color: var(--admin-smt-bg-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+/* Admin Container */
+.admin-smt-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main Content Area */
+.admin-smt-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: var(--admin-smt-bg-color-light); /* Ensure main content respects light/dark mode */
+    color: var(--admin-smt-text-color-light); /* Ensure main content respects light/dark mode */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .admin-smt-main-content {
+    background-color: var(--admin-smt-bg-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+/* Admin Header */
+/* Note: The 'admin-header' and 'header-content' classes were in your AdminDashboard.tsx
+   but not explicitly in your previous CSS. I'm adding basic styles here assuming
+   they are part of the admin layout. If they are inherited from shared/Header.css,
+   please adjust accordingly. */
+.admin-header {
+    background-color: var(--admin-smt-header-bg-light); /* Use light mode variable */
+    color: var(--admin-smt-header-text-light); /* Use light mode variable */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .admin-header {
+    background-color: var(--admin-smt-header-bg-dark);
+    color: var(--admin-smt-header-text-dark);
+}
+
+.header-content { /* Assuming this class is still needed for overall header content */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-smt-header-layout { /* New class for specific layout adjustment */
+    display: flex;
+    justify-content: space-between; /* Pushes brand section to left, search/new entry to right */
+    align-items: center;
+    gap: 20px; /* Adjust gap as needed */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+
+.admin-smt-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.admin-smt-brand-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-smt-brand-logo {
+    width: 40px;
+    height: 40px;
+    background-color: var(--admin-smt-primary-color-light); /* Adjust as needed */
+    border-radius: 8px;
+}
+
+body.dark-mode .admin-smt-brand-logo {
+    background-color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-brand-title {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--admin-smt-header-text-light); /* Inherit from header text */
+}
+
+body.dark-mode .admin-smt-brand-title {
+    color: var(--admin-smt-header-text-dark);
+}
+
+.admin-smt-header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+    justify-content: flex-end; /* Align items to the end within the right section */
+}
+
+.admin-smt-search-container {
+    position: relative;
+    flex-grow: 0;
+    max-width: 300px;
+    width: 100%;
+}
+
+.admin-smt-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--admin-smt-icon-color-light); /* Use light mode variable */
+}
+
+body.dark-mode .admin-smt-search-icon {
+    color: var(--admin-smt-icon-color-dark);
+}
+
+.admin-smt-search-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px; /* Adjust padding for icon */
+    border: 1px solid var(--admin-smt-input-border-light); /* Use light mode variable */
+    border-radius: 6px;
+    background-color: var(--admin-smt-input-bg-light); /* Use light mode variable */
+    color: var(--admin-smt-text-color-light); /* Use light mode variable */
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .admin-smt-search-input {
+    border-color: var(--admin-smt-input-border-dark);
+    background-color: var(--admin-smt-input-bg-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-search-input:focus {
+    outline: none;
+    border-color: var(--admin-smt-primary-color-light);
+    box-shadow: 0 0 0 2px rgba(79, 138, 245, 0.2);
+}
+
+body.dark-mode .admin-smt-search-input:focus {
+    border-color: var(--admin-smt-primary-color-dark);
+    box-shadow: 0 0 0 2px rgba(99, 179, 237, 0.2);
+}
+
+
+/* Stats Grid */
+.admin-smt-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Card Styles */
+.admin-smt-card {
+    background-color: var(--admin-smt-card-bg-light); /* Use light mode variable */
+    border: 1px solid var(--admin-smt-border-color-light); /* Use light mode variable */
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .admin-smt-card {
+    background-color: var(--admin-smt-card-bg-dark);
+    border-color: var(--admin-smt-border-color-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.admin-smt-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.admin-smt-card-title {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--admin-smt-text-color-light); /* Inherit from general text */
+}
+
+body.dark-mode .admin-smt-card-title {
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-stat-icon {
+    color: var(--admin-smt-primary-color-light); /* Use primary color for icons */
+    font-size: 1.5em;
+}
+
+body.dark-mode .admin-smt-stat-icon {
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-stat-number {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--admin-smt-text-color-light); /* Inherit from general text */
+}
+
+body.dark-mode .admin-smt-stat-number {
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-stat-description {
+    font-size: 0.9em;
+    color: #777; /* Specific grey for description */
+}
+
+body.dark-mode .admin-smt-stat-description {
+    color: #a0aec0; /* Lighter grey for description in dark mode */
+}
+
+/* Tabs */
+.admin-smt-tabs-container {
+    margin-bottom: 20px;
+}
+
+.admin-smt-tabs-list {
+    display: flex;
+    width: 100%; /* Make tabs list span full width */
+    border-bottom: 1px solid var(--admin-smt-border-color-light); /* Use light mode variable */
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    transition: border-color 0.3s ease;
+}
+
+body.dark-mode .admin-smt-tabs-list {
+    border-color: var(--admin-smt-border-color-dark);
+}
+
+.admin-smt-tab-trigger {
+    padding: 12px 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    color: #888; /* Default tab color */
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+body.dark-mode .admin-smt-tab-trigger {
+    color: #a0aec0; /* Dark mode default tab color */
+}
+
+.admin-smt-tab-trigger:hover {
+    color: var(--admin-smt-primary-color-light);
+}
+
+body.dark-mode .admin-smt-tab-trigger:hover {
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-tab-trigger.active {
+    color: var(--admin-smt-primary-color-light);
+    border-bottom-color: var(--admin-smt-primary-color-light);
+    font-weight: 600;
+}
+
+body.dark-mode .admin-smt-tab-trigger.active {
+    color: var(--admin-smt-primary-color-dark);
+    border-bottom-color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-tab-content {
+    width: 100%;
+}
+
+
+/* Table Styles */
+.admin-smt-table-container {
+    overflow-x: auto;
+    border: 1px solid var(--admin-smt-border-color-light); /* Use light mode variable */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: var(--admin-smt-card-bg-light); /* Table background same as card */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .admin-smt-table-container {
+    border-color: var(--admin-smt-border-color-dark);
+    background-color: var(--admin-smt-card-bg-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-smt-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Ensure table doesn't get too cramped */
+}
+
+.admin-smt-table-header {
+    background-color: var(--admin-smt-table-header-bg-light); /* Use light mode variable */
+    border-bottom: 1px solid var(--admin-smt-border-color-light); /* Use light mode variable */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .admin-smt-table-header {
+    background-color: var(--admin-smt-table-header-bg-dark);
+    border-color: var(--admin-smt-border-color-dark);
+}
+
+.admin-smt-table-head {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #555; /* Header text color */
+    text-transform: uppercase;
+}
+
+body.dark-mode .admin-smt-table-head {
+    color: #cbd5e0; /* Dark mode header text color */
+}
+
+.admin-smt-table-body .admin-smt-table-row:nth-child(even) {
+    background-color: var(--admin-smt-hover-bg-light); /* Light alternate row background */
+}
+
+body.dark-mode .admin-smt-table-body .admin-smt-table-row:nth-child(even) {
+    background-color: var(--admin-smt-hover-bg-dark); /* Dark alternate row background */
+}
+
+.admin-smt-table-row:hover {
+    background-color: var(--admin-smt-hover-bg-light); /* Hover background */
+}
+
+body.dark-mode .admin-smt-table-row:hover {
+    background-color: var(--admin-smt-hover-bg-dark);
+}
+
+.admin-smt-table-cell {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--admin-smt-border-color-light); /* Use light mode variable */
+    color: var(--admin-smt-text-color-light); /* Inherit from general text */
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .admin-smt-table-cell {
+    border-color: var(--admin-smt-border-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-table-cell-bold {
+    font-weight: 500;
+}
+
+/* Badges (Status Indicators) */
+.admin-smt-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.admin-smt-badge-success {
+    background-color: var(--admin-smt-badge-success-bg-light);
+    color: var(--admin-smt-badge-success-text-light);
+}
+
+body.dark-mode .admin-smt-badge-success {
+    background-color: var(--admin-smt-badge-success-bg-dark);
+    color: var(--admin-smt-badge-success-text-dark);
+}
+
+.admin-smt-badge-warning {
+    background-color: var(--admin-smt-badge-warning-bg-light);
+    color: var(--admin-smt-badge-warning-text-light);
+}
+
+body.dark-mode .admin-smt-badge-warning {
+    background-color: var(--admin-smt-badge-warning-bg-dark);
+    color: var(--admin-smt-badge-warning-text-dark);
+}
+
+.admin-smt-badge-error {
+    background-color: var(--admin-smt-badge-error-bg-light);
+    color: var(--admin-smt-badge-error-text-light);
+}
+
+body.dark-mode .admin-smt-badge-error {
+    background-color: var(--admin-smt-badge-error-bg-dark);
+    color: var(--admin-smt-badge-error-text-dark);
+}
+
+.admin-smt-badge-default {
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+body.dark-mode .admin-smt-badge-default {
+    background-color: #666;
+    color: #e0e0e0;
+}
+
+/* Buttons */
+.admin-smt-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.admin-smt-btn-primary {
+    background-color: var(--admin-smt-primary-color-light);
+    color: #ffffff;
+}
+
+body.dark-mode .admin-smt-btn-primary {
+    background-color: var(--admin-smt-primary-color-dark);
+    color: var(--admin-smt-text-color-dark); /* Ensure text is visible on dark primary */
+}
+
+.admin-smt-btn-primary:hover {
+    background-color: var(--admin-smt-primary-hover-light);
+    transform: translateY(-1px);
+}
+
+body.dark-mode .admin-smt-btn-primary:hover {
+    background-color: var(--admin-smt-primary-hover-dark);
+}
+
+.admin-smt-btn-ghost {
+    background-color: transparent;
+    color: var(--admin-smt-primary-color-light);
+    padding: 5px 10px;
+}
+
+body.dark-mode .admin-smt-btn-ghost {
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-btn-ghost:hover {
+    background-color: rgba(79, 138, 245, 0.1);
+}
+
+body.dark-mode .admin-smt-btn-ghost:hover {
+    background-color: rgba(99, 179, 237, 0.1);
+}
+
+
+.admin-smt-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px; /* Compact padding */
+    border-radius: 50%; /* Make it round */
+    width: 36px; /* Fixed size */
+    height: 36px; /* Fixed size */
+    box-shadow: none; /* Remove shadow */
+    color: #666; /* Icon color */
+}
+
+body.dark-mode .admin-smt-action-button {
+    color: #cbd5e0;
+}
+
+.admin-smt-action-button:hover {
+    background-color: var(--admin-smt-hover-bg-light);
+    color: var(--admin-smt-primary-color-light);
+}
+
+body.dark-mode .admin-smt-action-button:hover {
+    background-color: var(--admin-smt-hover-bg-dark);
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-action-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Specific styling for the sign out button from shared Header.css if needed */
+/* Assuming header styles are mostly in shared/Header.css, but this specific button might be overridden */
+.admin-smt-sign-out-button {
+    background-color: #ef4444; /* A distinct red for sign out */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.admin-smt-sign-out-button:hover {
+    background-color: #dc2626;
+}
+
+/* ================== Responsive Design (Media Queries) ================== */
+
+/* Tablet (medium screens: 768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .admin-smt-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .admin-smt-header-right {
+        flex-grow: 0;
+        flex-direction: row; 
+    }
+}
+
+/* Mobile (small screens: up to 767px) */
+@media (max-width: 767px) {
+    .admin-smt-main-content {
+        padding: 15px;
+    }
+
+    .admin-smt-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-smt-card {
+        padding: 20px;
+    }
+
+    .admin-smt-brand-title {
+        font-size: 1.5em;
+    }
+
+    .admin-smt-search-input {
+        padding: 10px 10px 10px 40px;
+    }
+
+    .admin-smt-search-icon {
+        left: 10px;
+    }
+
+    .admin-smt-tabs-list {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-smt-tab-trigger {
+        width: 100%;
+        text-align: left;
+        padding: 10px 15px;
+        border-bottom: none; /* Remove individual tab borders if stacked */
+    }
+
+    .admin-smt-tab-trigger.active {
+        border-bottom: 2px solid var(--admin-smt-primary-color-light); /* Keep active indicator */
+    }
+
+    body.dark-mode .admin-smt-tab-trigger.active {
+        border-bottom-color: var(--admin-smt-primary-color-dark);
+    }
+
+    .admin-smt-table {
+        min-width: 600px; /* Allow horizontal scroll for smaller screens */
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .admin-smt-header-right {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-smt-search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .admin-smt-btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,757 @@
+/* AdminDashboard.css */
+
+/* Define CSS Variables for Light Mode */
+:root {
+  --bg-color-light: #f4f6f9;
+  --text-color-light: #333;
+  --card-bg-light: #ffffff;
+  --border-color-light: #e0e0e0;
+  --primary-color-light: #4f46e5; /* Indigo-600 */
+  --primary-hover-light: #4338ca; /* Indigo-700 */
+  --badge-success-bg-light: #d1fae5; /* Green-100 */
+  --badge-success-text-light: #065f46; /* Green-800 */
+  --badge-warning-bg-light: #fffbeb; /* Amber-100 */
+  --badge-warning-text-light: #b45309; /* Amber-800 */
+  --badge-error-bg-light: #fee2e2; /* Red-100 */
+  --badge-error-text-light: #991b1b; /* Red-800 */
+  --badge-default-bg-light: #e0e7ff; /* Indigo-100 */
+  --badge-default-text-light: #3730a3; /* Indigo-950 */
+  --input-bg-light: #fdfdfd;
+  --input-border-light: #d1d5db; /* Gray-300 */
+  --tab-bg-light: #f0f0f0;
+  --tab-text-light: #555;
+  --tab-active-bg-light: #ffffff;
+  --tab-active-text-light: var(--primary-color-light);
+  --table-row-hover-light: #f3f4f6; /* Gray-100 */
+  --action-icon-color-light: #333; /* Black for light mode */
+}
+
+/* Define CSS Variables for Dark Mode (applied when body has 'dark-mode' class) */
+body.dark-mode {
+  --bg-color-dark: #1a202c; /* Dark gray/blue */
+  --text-color-dark: #e2e8f0; /* Light gray */
+  --card-bg-dark: #2d3748; /* Slightly lighter dark gray */
+  --border-color-dark: #4a5568; /* Even lighter dark gray */
+  --primary-color-dark: #6366f1; /* Indigo-500 */
+  --primary-hover-dark: #4f46e5; /* Indigo-600 */
+  --badge-success-bg-dark: #10b981; /* Green-500 */
+  --badge-success-text-dark: #ecfdf5; /* Green-50 */
+  --badge-warning-bg-dark: #f59e0b; /* Amber-500 */
+  --badge-warning-text-dark: #fffdf5; /* Amber-50 */
+  --badge-error-bg-dark: #ef4444; /* Red-500 */
+  --badge-error-text-dark: #fef2f2; /* Red-50 */
+  --badge-default-bg-dark: #a5b4fc; /* Indigo-300 */
+  --badge-default-text-dark: #1e1b4b; /* Indigo-950 */
+  --input-bg-dark: #4a5568;
+  --input-border-dark: #64748b; /* Gray-500 */
+  --tab-bg-dark: #4a5568;
+  --tab-text-dark: #cbd5e0;
+  --tab-active-bg-dark: #2d3748;
+  --tab-active-text-dark: var(--primary-color-dark);
+  --table-header-bg-dark: #2d3748;
+  --table-row-hover-dark: #4a5568;
+  --action-icon-color-dark: #e2e8f0; /* White for dark mode */
+
+  /* Apply dark mode colors */
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+/* Base Styles */
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Admin Dashboard Specific Header (below the main header) */
+.admin-header {
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: var(--card-bg-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .admin-header {
+  background-color: var(--card-bg-dark);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.admin-header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-color-light);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+body.dark-mode .brand-logo {
+  background-color: var(--primary-color-dark);
+}
+
+.brand-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap; /* Prevent title from wrapping */
+}
+
+.search-container {
+  position: relative;
+  flex-grow: 1; /* Allows search bar to take available space */
+  max-width: 300px; /* Limit search bar width for larger screens */
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-light);
+}
+
+body.dark-mode .search-icon {
+  color: var(--text-color-dark);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 10px 10px 40px; /* Left padding for icon */
+  border-radius: 8px;
+  border: 1px solid var(--input-border-light);
+  background-color: var(--input-bg-light);
+  color: var(--text-color-light);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+body.dark-mode .search-input {
+  border-color: var(--input-border-dark);
+  background-color: var(--input-bg-dark);
+  color: var(--text-color-dark);
+}
+
+.search-input::placeholder {
+  color: var(--text-color-light);
+  opacity: 0.7;
+}
+
+body.dark-mode .search-input::placeholder {
+  color: var(--text-color-dark);
+  opacity: 0.7;
+}
+
+/* General Button Styles */
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color-light);
+  color: white;
+  border: none;
+}
+
+body.dark-mode .btn-primary {
+  background-color: var(--primary-color-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover-light);
+}
+
+body.dark-mode .btn-primary:hover {
+  background-color: var(--primary-hover-dark);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-color-light); /* Default for ghost button text, if any */
+  border: 1px solid transparent;
+}
+
+body.dark-mode .btn-ghost {
+  color: var(--text-color-dark); /* Default for ghost button text, if any */
+}
+
+.btn-ghost:hover {
+  background-color: var(--border-color-light);
+}
+
+body.dark-mode .btn-ghost:hover {
+  background-color: var(--border-color-dark);
+}
+
+/* Stats Cards Grid Layout */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background-color: var(--card-bg-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+body.dark-mode .card {
+  background-color: var(--card-bg-dark);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.stat-icon {
+  color: var(--primary-color-light);
+  font-size: 24px;
+}
+
+body.dark-mode .stat-icon {
+  color: var(--primary-color-dark);
+}
+
+.card-content {
+  flex-grow: 1;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-description {
+  font-size: 0.9rem;
+  color: #6b7280; /* Gray-500, fixed for description text for better consistency */
+}
+
+body.dark-mode .stat-description {
+  color: #9ca3af; /* Gray-400 */
+}
+
+/* Tabs Container and List */
+.tabs-container {
+  background-color: var(--card-bg-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px; /* Add margin to separate from content below */
+}
+
+body.dark-mode .tabs-container {
+  background-color: var(--card-bg-dark);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tabs-list {
+  display: flex;
+  width: 100%; /* Make tabs list span full width */
+  border-bottom: 1px solid var(--border-color-light);
+  margin-bottom: 20px;
+}
+
+body.dark-mode .tabs-list {
+  border-color: var(--border-color-dark);
+}
+
+.tab-trigger {
+  padding: 12px 20px;
+  background-color: var(--tab-bg-light);
+  color: var(--tab-text-light);
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  white-space: nowrap; /* Prevent tab text from wrapping */
+}
+
+body.dark-mode .tab-trigger {
+  background-color: var(--tab-bg-dark);
+  color: var(--tab-text-dark);
+}
+
+.tab-trigger:hover {
+  background-color: var(--border-color-light);
+}
+
+body.dark-mode .tab-trigger:hover {
+  background-color: var(--border-color-dark);
+}
+
+.tab-trigger.active {
+  background-color: var(--tab-active-bg-light);
+  color: var(--tab-active-text-light);
+  border-bottom-color: var(--primary-color-light);
+}
+
+body.dark-mode .tab-trigger.active {
+  background-color: var(--tab-active-bg-dark);
+  color: var(--tab-active-text-dark);
+  border-bottom-color: var(--primary-color-dark);
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto; /* Allows horizontal scrolling on small screens */
+  border-radius: 8px;
+  border: 1px solid var(--border-color-light);
+  transition: border-color 0.3s ease;
+}
+
+body.dark-mode .table-container {
+  border-color: var(--border-color-dark);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  background-color: var(--table-header-bg-light);
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .table-header {
+  background-color: var(--table-header-bg-dark);
+}
+
+.table-head {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280; /* Gray-500, fixed for table header for contrast */
+}
+
+body.dark-mode .table-head {
+  color: #9ca3af; /* Gray-400 */
+}
+
+.table-body .table-row {
+  border-bottom: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .table-body .table-row {
+  border-color: var(--border-color-dark);
+}
+
+.table-body .table-row:last-child {
+  border-bottom: none;
+}
+
+.table-body .table-row:hover {
+  background-color: var(--table-row-hover-light);
+}
+
+body.dark-mode .table-body .table-row:hover {
+  background-color: var(--table-row-hover-dark);
+}
+
+.table-cell {
+  padding: 12px 15px;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.table-cell-bold {
+  font-weight: 600;
+}
+
+/* Badge Styling (for status indicators) */
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 9999px; /* Fully rounded */
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-success {
+  background-color: var(--badge-success-bg-light);
+  color: var(--badge-success-text-light);
+}
+
+body.dark-mode .badge-success {
+  background-color: var(--badge-success-bg-dark);
+  color: var(--badge-success-text-dark);
+}
+
+.badge-warning {
+  background-color: var(--badge-warning-bg-light);
+  color: var(--badge-warning-text-light);
+}
+
+body.dark-mode .badge-warning {
+  background-color: var(--badge-warning-bg-dark);
+  color: var(--badge-warning-text-dark);
+}
+
+.badge-error {
+  background-color: var(--badge-error-bg-light);
+  color: var(--badge-error-text-light);
+}
+
+body.dark-mode .badge-error {
+  background-color: var(--badge-error-bg-dark);
+  color: var(--badge-error-text-dark);
+}
+
+.badge-default {
+  background-color: var(--badge-default-bg-light);
+  color: var(--badge-default-text-light);
+}
+
+body.dark-mode .badge-default {
+  background-color: var(--badge-default-bg-dark);
+  color: var(--badge-default-text-dark);
+}
+
+/* Action Buttons within table cells */
+.action-button {
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; /* Ensure no background */
+  border: none; /* Ensure no border */
+}
+
+.action-button:hover {
+  background-color: var(--border-color-light); /* Hover effect */
+}
+
+body.dark-mode .action-button:hover {
+  background-color: var(--border-color-dark); /* Dark mode hover effect */
+}
+
+.action-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--action-icon-color-light); /* Apply light mode icon color */
+}
+
+body.dark-mode .action-icon {
+  color: var(--action-icon-color-dark); /* Apply dark mode icon color */
+}
+
+/* Additional styling for the DarkModeToggle mock */
+.dark-mode-toggle-button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  background-color: var(--card-bg-light);
+  color: var(--text-color-light);
+  border: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-toggle-button {
+  background-color: var(--card-bg-dark);
+  color: var(--text-color-dark);
+  border: 1px solid var(--border-color-dark);
+}
+
+.dark-mode-toggle-button:hover {
+  background-color: var(--table-row-hover-light);
+}
+
+body.dark-mode .dark-mode-toggle-button:hover {
+  background-color: var(--table-row-hover-dark);
+}
+
+/* Styles for the main header (from Header.css, integrated here for compilation) */
+.header {
+  background-color: var(--card-bg-light);
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+body.dark-mode .header {
+  background-color: var(--card-bg-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-color-dark);
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color-light);
+  margin: 0;
+}
+
+body.dark-mode .header__title {
+  color: var(--primary-color-dark);
+}
+
+.header-nav {
+  /* Add navigation styles here if needed */
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sign-out-button {
+  padding: 8px 15px;
+  border-radius: 8px;
+  background-color: #ef4444; /* Red-500 */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.sign-out-button:hover {
+  background-color: #dc2626; /* Red-600 */
+}
+
+/* ================== Responsive Design (Media Queries) ================== */
+
+/* Laptop/Desktop (large screens: 1024px and up) */
+@media (min-width: 1024px) {
+  .main-content {
+    padding: 40px;
+  }
+
+  .brand-title {
+    font-size: 2.5rem; /* Larger on desktop */
+  }
+
+  .search-container {
+    max-width: 400px; /* Slightly wider search bar */
+  }
+
+  .stat-number {
+    font-size: 3.5rem; /* Even larger stat numbers */
+  }
+
+  .table-head,
+  .table-cell {
+    font-size: 1rem; /* Standard font size for tables */
+  }
+}
+
+/* Tablet (medium screens: 768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-content {
+    padding: 30px;
+  }
+
+  .admin-header .header-content {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+  }
+
+  .header-left {
+    flex-grow: 1;
+  }
+
+  .header-right {
+    flex-grow: 0;
+  }
+
+  .brand-title {
+    font-size: 2.2rem; /* Slightly larger on tablet */
+  }
+
+  .search-container {
+    max-width: 350px;
+  }
+
+  .stat-number {
+    font-size: 3rem; /* Slightly larger stat numbers */
+  }
+
+  .table-head,
+  .table-cell {
+    font-size: 0.9rem; /* Slightly smaller table font for tablets */
+  }
+}
+
+/* Mobile (small screens: up to 767px) */
+@media (max-width: 767px) {
+  .admin-header .header-content {
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start for better stacking */
+    gap: 15px;
+  }
+
+  .brand-section {
+    width: 100%; /* Ensure brand section takes full width */
+    justify-content: center;
+  }
+
+  .brand-title {
+    font-size: 1.8rem; /* Smaller for mobile */
+    text-align: center;
+  }
+
+  .search-container {
+    width: 100%; /* Full width search on mobile */
+    max-width: none; /* Remove max-width constraint */
+  }
+
+  .header-right {
+    flex-direction: column; /* Stack search and new entry button */
+    gap: 15px;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%; /* Full width buttons */
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr; /* Stack stat cards vertically */
+  }
+
+  .card-title {
+    font-size: 1rem; /* Smaller card titles */
+  }
+
+  .stat-number {
+    font-size: 2rem; /* Smaller stat numbers */
+  }
+
+  .tabs-list {
+    flex-direction: column; /* Stack tabs vertically */
+    border-bottom: none; /* Remove horizontal border */
+  }
+
+  .tab-trigger {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color-light); /* Separate tabs with a line */
+    border-radius: 8px; /* Rounded corners for individual tabs */
+    margin-bottom: 5px; /* Spacing between stacked tabs */
+  }
+
+  body.dark-mode .tab-trigger {
+    border-color: var(--border-color-dark);
+  }
+
+  .tab-trigger.active {
+    border-bottom: 3px solid var(--primary-color-light); /* Keep active indicator */
+  }
+
+  body.dark-mode .tab-trigger.active {
+    border-bottom-color: var(--primary-color-dark);
+  }
+
+  .table-cell {
+    font-size: 0.8rem; /* Smaller font for table cells */
+    padding: 8px 10px; /* Adjust padding */
+  }
+
+  .table-head {
+    font-size: 0.75rem; /* Smaller font for table headers */
+    padding: 8px 10px;
+  }
+
+  /* Adjust table column widths for better mobile display, especially for IDs */
+  .table-cell:nth-child(1),
+  .table-head:nth-child(1) {
+    min-width: 90px; /* Ensure ID column is wide enough for substring */
+  }
+  .table-cell:last-child,
+  .table-head:last-child {
+    min-width: 60px; /* Ensure action column is wide enough for icon */
+    text-align: center;
+  }
+  .action-button {
+    padding: 4px; /* Smaller padding for action button */
+  }
+}

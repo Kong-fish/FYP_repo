@@ -1,0 +1,664 @@
+/* AdminDashboard.module.css */
+
+/* Root variables for light mode (default) */
+:root {
+    --admin-smt-bg-color-light: #f4f6f9;
+    --admin-smt-text-color-light: #333;
+    --admin-smt-card-bg-light: #ffffff;
+    --admin-smt-border-color-light: #e0e0e0;
+    --admin-smt-primary-color-light: #4f8af5;
+    --admin-smt-primary-hover-light: #3a75e3;
+    --admin-smt-badge-success-bg-light: #d1fae5;
+    --admin-smt-badge-success-text-light: #065f46;
+    --admin-smt-badge-warning-bg-light: #fffbeb;
+    --admin-smt-badge-warning-text-light: #b45309;
+    --admin-smt-badge-error-bg-light: #fee2e2;
+    --admin-smt-badge-error-text-light: #991b1b;
+    --admin-smt-header-bg-light: #5a7edc;
+    --admin-smt-header-text-light: #ffffff;
+    --admin-smt-input-bg-light: #ffffff;
+    --admin-smt-input-border-light: #ccc;
+    --admin-smt-icon-color-light: #666;
+    --admin-smt-table-header-bg-light: #f0f2f5;
+    --admin-smt-table-border-light: #e0e0e0;
+    --admin-smt-hover-bg-light: #f9f9f9;
+    --admin-smt-active-tab-border-light: #4f8af5;
+}
+
+/* Dark mode variables applied when html has 'dark' class */
+html.dark {
+    --admin-smt-bg-color-dark: #1a202c;
+    --admin-smt-text-color-dark: #e2e8f0;
+    --admin-smt-card-bg-dark: #2d3748;
+    --admin-smt-border-color-dark: #4a5568;
+    --admin-smt-primary-color-dark: #63b3ed;
+    --admin-smt-primary-hover-dark: #4299e1;
+    --admin-smt-badge-success-bg-dark: #2f855a;
+    --admin-smt-badge-success-text-dark: #e6fffa;
+    --admin-smt-badge-warning-bg-dark: #d69e2e;
+    --admin-smt-badge-warning-text-dark: #fefcbf;
+    --admin-smt-badge-error-bg-dark: #c53030;
+    --admin-smt-badge-error-text-dark: #fed7d7;
+    --admin-smt-header-bg-dark: #2d3748;
+    --admin-smt-header-text-dark: #e2e8f0;
+    --admin-smt-input-bg-dark: #4a5568;
+    --admin-smt-input-border-dark: #666;
+    --admin-smt-icon-color-dark: #cbd5e0;
+    --admin-smt-table-header-bg-dark: #4a5568;
+    --admin-smt-table-border-dark: #666;
+    --admin-smt-hover-bg-dark: #4a5568;
+    --admin-smt-active-tab-border-dark: #63b3ed;
+}
+
+/* General Body Styles - these will inherit from :root or html.dark */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: var(--admin-smt-bg-color-light); /* Fallback for older browsers / initial load */
+    color: var(--admin-smt-text-color-light); /* Fallback for older browsers / initial load */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Apply dark mode styles when html has 'dark' class */
+html.dark body {
+    background-color: var(--admin-smt-bg-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+/* Admin Container */
+.admin-smt-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main Content Area */
+.admin-smt-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: var(--admin-smt-bg-color-light);
+    color: var(--admin-smt-text-color-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark .admin-smt-main-content {
+    background-color: var(--admin-smt-bg-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+/* Admin Header */
+.admin-header { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-header-bg-light);
+    color: var(--admin-smt-header-text-light);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark .admin-header { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-header-bg-dark);
+    color: var(--admin-smt-header-text-dark);
+}
+
+.header-content { /* This class is now scoped via CSS Modules */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-smt-header-layout { /* This class is now scoped via CSS Modules */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-smt-header-left { /* This class is now scoped via CSS Modules */
+    display: flex;
+    align-items: center;
+}
+
+.admin-smt-brand-section { /* This class is now scoped via CSS Modules */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-smt-brand-logo { /* This class is now scoped via CSS Modules */
+    width: 40px;
+    height: 40px;
+    background-color: var(--admin-smt-primary-color-light);
+    border-radius: 8px;
+}
+
+html.dark .admin-smt-brand-logo { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-brand-title { /* This class is now scoped via CSS Modules */
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--admin-smt-header-text-light);
+}
+
+html.dark .admin-smt-brand-title { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-header-text-dark);
+}
+
+.admin-smt-header-right { /* This class is now scoped via CSS Modules */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.admin-smt-search-container { /* This class is now scoped via CSS Modules */
+    position: relative;
+    flex-grow: 0;
+    max-width: 300px;
+    width: 100%;
+}
+
+.admin-smt-search-icon { /* This class is now scoped via CSS Modules */
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--admin-smt-icon-color-light);
+}
+
+html.dark .admin-smt-search-icon { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-icon-color-dark);
+}
+
+.admin-smt-search-input { /* This class is now scoped via CSS Modules */
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid var(--admin-smt-input-border-light);
+    border-radius: 6px;
+    background-color: var(--admin-smt-input-bg-light);
+    color: var(--admin-smt-text-color-light);
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+html.dark .admin-smt-search-input { /* This class is now scoped via CSS Modules */
+    border-color: var(--admin-smt-input-border-dark);
+    background-color: var(--admin-smt-input-bg-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-search-input:focus { /* This class is now scoped via CSS Modules */
+    outline: none;
+    border-color: var(--admin-smt-primary-color-light);
+    box-shadow: 0 0 0 2px rgba(79, 138, 245, 0.2);
+}
+
+html.dark .admin-smt-search-input:focus { /* This class is now scoped via CSS Modules */
+    border-color: var(--admin-smt-primary-color-dark);
+    box-shadow: 0 0 0 2px rgba(99, 179, 237, 0.2);
+}
+
+/* Stats Grid */
+.admin-smt-stats-grid { /* This class is now scoped via CSS Modules */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Card Styles */
+.admin-smt-card { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-card-bg-light);
+    border: 1px solid var(--admin-smt-border-color-light);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.dark .admin-smt-card { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-card-bg-dark);
+    border-color: var(--admin-smt-border-color-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.admin-smt-card-header { /* This class is now scoped via CSS Modules */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.admin-smt-card-title { /* This class is now scoped via CSS Modules */
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--admin-smt-text-color-light);
+}
+
+html.dark .admin-smt-card-title { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-stat-icon { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-light);
+    font-size: 1.5em;
+}
+
+html.dark .admin-smt-stat-icon { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-stat-number { /* This class is now scoped via CSS Modules */
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--admin-smt-text-color-light);
+}
+
+html.dark .admin-smt-stat-number { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-stat-description { /* This class is now scoped via CSS Modules */
+    font-size: 0.9em;
+    color: #777;
+}
+
+html.dark .admin-smt-stat-description { /* This class is now scoped via CSS Modules */
+    color: #a0aec0;
+}
+
+/* Tabs */
+.admin-smt-tabs-container { /* This class is now scoped via CSS Modules */
+    margin-bottom: 20px;
+}
+
+.admin-smt-tabs-list { /* This class is now scoped via CSS Modules */
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--admin-smt-border-color-light);
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    transition: border-color 0.3s ease;
+}
+
+html.dark .admin-smt-tabs-list { /* This class is now scoped via CSS Modules */
+    border-color: var(--admin-smt-border-color-dark);
+}
+
+.admin-smt-tab-trigger { /* This class is now scoped via CSS Modules */
+    padding: 12px 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    color: #888;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+html.dark .admin-smt-tab-trigger { /* This class is now scoped via CSS Modules */
+    color: #a0aec0;
+}
+
+.admin-smt-tab-trigger:hover { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-light);
+}
+
+html.dark .admin-smt-tab-trigger:hover { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-tab-trigger.active { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-light);
+    border-bottom-color: var(--admin-smt-primary-color-light);
+    font-weight: 600;
+}
+
+html.dark .admin-smt-tab-trigger.active { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-dark);
+    border-bottom-color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-tab-content { /* This class is now scoped via CSS Modules */
+    width: 100%;
+}
+
+/* Table Styles */
+.admin-smt-table-container { /* This class is now scoped via CSS Modules */
+    overflow-x: auto;
+    border: 1px solid var(--admin-smt-border-color-light);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: var(--admin-smt-card-bg-light);
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.dark .admin-smt-table-container { /* This class is now scoped via CSS Modules */
+    border-color: var(--admin-smt-border-color-dark);
+    background-color: var(--admin-smt-card-bg-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-smt-table { /* This class is now scoped via CSS Modules */
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.admin-smt-table-header { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-table-header-bg-light);
+    border-bottom: 1px solid var(--admin-smt-border-color-light);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark .admin-smt-table-header { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-table-header-bg-dark);
+    border-color: var(--admin-smt-border-color-dark);
+}
+
+.admin-smt-table-head { /* This class is now scoped via CSS Modules */
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #555;
+    text-transform: uppercase;
+}
+
+html.dark .admin-smt-table-head { /* This class is now scoped via CSS Modules */
+    color: #cbd5e0;
+}
+
+.admin-smt-table-body .admin-smt-table-row:nth-child(even) { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-light);
+}
+
+html.dark .admin-smt-table-body .admin-smt-table-row:nth-child(even) { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-dark);
+}
+
+.admin-smt-table-row:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-light);
+}
+
+html.dark .admin-smt-table-row:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-dark);
+}
+
+.admin-smt-table-cell { /* This class is now scoped via CSS Modules */
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--admin-smt-border-color-light);
+    color: var(--admin-smt-text-color-light);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark .admin-smt-table-cell { /* This class is now scoped via CSS Modules */
+    border-color: var(--admin-smt-border-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-table-cell-bold { /* This class is now scoped via CSS Modules */
+    font-weight: 500;
+}
+
+/* Badges (Status Indicators) */
+.admin-smt-badge { /* This class is now scoped via CSS Modules */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.admin-smt-badge-success { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-success-bg-light);
+    color: var(--admin-smt-badge-success-text-light);
+}
+
+html.dark .admin-smt-badge-success { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-success-bg-dark);
+    color: var(--admin-smt-badge-success-text-dark);
+}
+
+.admin-smt-badge-warning { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-warning-bg-light);
+    color: var(--admin-smt-badge-warning-text-light);
+}
+
+html.dark .admin-smt-badge-warning { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-warning-bg-dark);
+    color: var(--admin-smt-badge-warning-text-dark);
+}
+
+.admin-smt-badge-error { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-error-bg-light);
+    color: var(--admin-smt-badge-error-text-light);
+}
+
+html.dark .admin-smt-badge-error { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-badge-error-bg-dark);
+    color: var(--admin-smt-badge-error-text-dark);
+}
+
+.admin-smt-badge-default { /* This class is now scoped via CSS Modules */
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+html.dark .admin-smt-badge-default { /* This class is now scoped via CSS Modules */
+    background-color: #666;
+    color: #e0e0e0;
+}
+
+/* Buttons */
+.admin-smt-btn { /* This class is now scoped via CSS Modules */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.admin-smt-btn-primary { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-primary-color-light);
+    color: #ffffff;
+}
+
+html.dark .admin-smt-btn-primary { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-primary-color-dark);
+    color: var(--admin-smt-text-color-dark);
+}
+
+.admin-smt-btn-primary:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-primary-hover-light);
+    transform: translateY(-1px);
+}
+
+html.dark .admin-smt-btn-primary:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-primary-hover-dark);
+}
+
+.admin-smt-btn-ghost { /* This class is now scoped via CSS Modules */
+    background-color: transparent;
+    color: var(--admin-smt-primary-color-light);
+    padding: 5px 10px;
+}
+
+html.dark .admin-smt-btn-ghost { /* This class is now scoped via CSS Modules */
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-btn-ghost:hover { /* This class is now scoped via CSS Modules */
+    background-color: rgba(79, 138, 245, 0.1);
+}
+
+html.dark .admin-smt-btn-ghost:hover { /* This class is now scoped via CSS Modules */
+    background-color: rgba(99, 179, 237, 0.1);
+}
+
+.admin-smt-action-button { /* This class is now scoped via CSS Modules */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    box-shadow: none;
+    color: #666;
+}
+
+html.dark .admin-smt-action-button { /* This class is now scoped via CSS Modules */
+    color: #cbd5e0;
+}
+
+.admin-smt-action-button:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-light);
+    color: var(--admin-smt-primary-color-light);
+}
+
+html.dark .admin-smt-action-button:hover { /* This class is now scoped via CSS Modules */
+    background-color: var(--admin-smt-hover-bg-dark);
+    color: var(--admin-smt-primary-color-dark);
+}
+
+.admin-smt-action-icon { /* This class is now scoped via CSS Modules */
+    width: 18px;
+    height: 18px;
+}
+
+.sr-only { /* This is a common utility class, often left global or pulled from a utility library */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.admin-smt-sign-out-button { /* This class is now scoped via CSS Modules */
+    background-color: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.admin-smt-sign-out-button:hover { /* This class is now scoped via CSS Modules */
+    background-color: #dc2626;
+}
+
+/* ================== Responsive Design (Media Queries) ================== */
+
+/* Tablet (medium screens: 768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .admin-smt-stats-grid { /* This class is now scoped via CSS Modules */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .header-content { /* This class is now scoped via CSS Modules */
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .admin-smt-header-right { /* This class is now scoped via CSS Modules */
+        flex-grow: 0;
+        flex-direction: row;
+    }
+}
+
+/* Mobile (small screens: up to 767px) */
+@media (max-width: 767px) {
+    .admin-smt-main-content { /* This class is now scoped via CSS Modules */
+        padding: 15px;
+    }
+
+    .admin-smt-stats-grid { /* This class is now scoped via CSS Modules */
+        grid-template-columns: 1fr;
+    }
+
+    .admin-smt-card { /* This class is now scoped via CSS Modules */
+        padding: 20px;
+    }
+
+    .admin-smt-brand-title { /* This class is now scoped via CSS Modules */
+        font-size: 1.5em;
+    }
+
+    .admin-smt-search-input { /* This class is now scoped via CSS Modules */
+        padding: 10px 10px 10px 40px;
+    }
+
+    .admin-smt-search-icon { /* This class is now scoped via CSS Modules */
+        left: 10px;
+    }
+
+    .admin-smt-tabs-list { /* This class is now scoped via CSS Modules */
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-smt-tab-trigger { /* This class is now scoped via CSS Modules */
+        width: 100%;
+        text-align: left;
+        padding: 10px 15px;
+        border-bottom: none;
+    }
+
+    .admin-smt-tab-trigger.active { /* This class is now scoped via CSS Modules */
+        border-bottom: 2px solid var(--admin-smt-primary-color-light);
+    }
+
+    html.dark .admin-smt-tab-trigger.active { /* This class is now scoped via CSS Modules */
+        border-bottom-color: var(--admin-smt-primary-color-dark);
+    }
+
+    .admin-smt-table { /* This class is now scoped via CSS Modules */
+        min-width: 600px;
+    }
+
+    .header-content { /* This class is now scoped via CSS Modules */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .admin-smt-header-right { /* This class is now scoped via CSS Modules */
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-smt-search-container { /* This class is now scoped via CSS Modules */
+        width: 100%;
+        max-width: none;
+    }
+
+    .admin-smt-btn { /* This class is now scoped via CSS Modules */
+        width: 100%;
+    }
+}
