@@ -1,0 +1,719 @@
+/* src/Cust_Function/CustFunction.css */
+
+/* --- CSS Variables for Theming (consistent with CustomerDashboard.css) --- */
+/* These variables are included here for standalone functionality of customer functions. */
+/* Ideally, for a larger application, these would be in a single global file. */
+:root {
+    /* Light Mode Colors */
+    --cf-bg-primary: #f8f9fa; /* Light background for forms/inputs within cards */
+    --cf-bg-secondary: #fff;  /* White background for the main card container */
+    --cf-text-primary: #333;  /* Dark text for headings and primary content */
+    --cf-text-secondary: #666; /* Medium text for labels, descriptions */
+    --cf-text-light: #888;    /* Lighter text (less used here) */
+    --cf-card-border: #e0e0e0; /* Border color for inputs and confirmation sections */
+    --cf-box-shadow-light: rgba(0, 0, 0, 0.05); /* Subtle shadow for elements */
+    --cf-box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+
+    /* Accent Colors */
+    --cf-blue-accent: #007bff; /* Primary blue for buttons, focus states */
+    --cf-blue-accent-hover: #0056b3; /* Darker blue on hover */
+    --cf-blue-accent-rgb: 0, 123, 255; /* RGB for rgba() usage */
+
+    --cf-green-success: #28a745; /* Green for success messages */
+    --cf-green-success-rgb: 40, 167, 69;
+
+    --cf-red-error: #dc3545; /* Red for error messages */
+    --cf-red-error-rgb: 220, 53, 69;
+
+    --cf-disabled-input-bg: #e9ecef; /* Specific color for disabled inputs */
+
+    /* Modal Specific Colors (using existing theme variables where possible) */
+    --cf-modal-overlay-bg: rgba(0, 0, 0, 0.6); /* Semi-transparent black for overlay */
+    --cf-modal-bg: var(--cf-bg-secondary); /* Modal background same as secondary background */
+    --cf-modal-border: var(--cf-card-border); /* Modal border same as card border */
+    --cf-modal-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for modal */
+    --cf-modal-text: var(--cf-text-primary);
+    --cf-modal-text-secondary: var(--cf-text-secondary);
+}
+
+body.dark-mode {
+    /* Dark Mode Overrides for Customer Function specific elements */
+    --cf-bg-primary: #2d2d2d;
+    --cf-bg-secondary: #1a1a1a;
+    --cf-text-primary: #e0e0e0;
+    --cf-text-secondary: #b0b0b0;
+    --cf-text-light: #999;
+    --cf-card-border: #444;
+    --cf-box-shadow-light: rgba(255, 255, 255, 0.05);
+    --cf-box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    --cf-blue-accent: #5b9bd5;
+    --cf-blue-accent-hover: #3a7bbd;
+    --cf-blue-accent-rgb: 91, 155, 213;
+
+    --cf-green-success: #4CAF50;
+    --cf-green-success-rgb: 76, 175, 80;
+
+    --cf-red-error: #EF5350;
+    --cf-red-error-rgb: 239, 83, 80;
+
+    --cf-disabled-input-bg: #3c3c3c;
+
+    /* Dark Mode Modal Specific Colors */
+    --cf-modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --cf-modal-bg: var(--cf-bg-secondary);
+    --cf-modal-border: var(--cf-card-border);
+    --cf-modal-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+    --cf-modal-text: var(--cf-text-primary);
+    --cf-modal-text-secondary: var(--cf-text-secondary);
+}
+
+/* Ensure html and body take full height and inherit theme colors */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cf-bg-primary); /* Apply themed background to body */
+    color: var(--cf-text-primary); /* Apply themed text color to body */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+}
+
+/* --- General App Wrapper (if it encapsulates everything, including Header, Main, Footer) --- */
+.cf-main-app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    background-color: var(--cf-bg-primary); /* Ensure app wrapper uses primary background */
+    color: var(--cf-text-primary); /* Ensure app wrapper uses primary text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- General Container for Customer Function Pages (e.g., Transfer, Loan, New Account) --- */
+.cf-cust-func-container {
+    flex-grow: 1; /* Allows it to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center;
+    padding: 20px;
+    background-color: var(--cf-bg-primary); /* Uses themed primary background */
+    color: var(--cf-text-primary); /* Uses themed primary text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.cf-cust-func-content {
+    width: 100%;
+    max-width: 800px; /* Increased max-width to allow cust-func-card to be wider */
+    margin: 0 auto;
+    padding-top: 20px; /* Space from header */
+    display: flex; /* Flex container for card */
+    justify-content: center; /* Center the cust-func-card horizontally */
+    align-items: flex-start; /* Align the cust-func-card to the top */
+    flex-direction: column; /* Allows content to stack if needed, though primarily holds one card */
+}
+
+/* --- Reusable Card Style for Customer Function Forms --- */
+.cf-cust-func-card {
+    background-color: var(--cf-bg-secondary); /* Uses themed secondary background (white/darker gray) */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--cf-box-shadow-medium); /* Uses themed shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure the card takes full width of its content container */
+    max-width: 750px; /* Increased max-width for the customer card itself */
+    margin-bottom: 30px; /* Space below the card before any potential footer/next section */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.cf-cust-func-card-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.cf-cust-func-card-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--cf-text-primary); /* Uses themed text color */
+    margin: 0;
+}
+
+/* --- Form Specific Styles (Applies to forms inside .cf-cust-func-card) --- */
+.cf-cust-func-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between form groups */
+    padding-top: 10px;
+}
+
+.cf-cust-func-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Added spacing between form fields */
+}
+
+.cf-cust-func-form-group:last-of-type {
+    margin-bottom: 0; /* Remove margin from the last form group */
+}
+
+.cf-cust-func-form-label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cf-text-secondary); /* Uses themed text color */
+    font-size: 1em;
+}
+
+.cf-cust-func-form-input {
+    padding: 12px;
+    border: 1px solid var(--cf-card-border); /* Uses themed border color */
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--cf-text-primary); /* Uses themed text color */
+    background-color: var(--cf-bg-primary); /* Uses themed primary background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure inputs take full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.cf-cust-func-form-input:focus {
+    border-color: var(--cf-blue-accent); /* Uses themed accent color */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.2); /* Uses themed RGB for glow */
+}
+
+.cf-cust-func-form-input:disabled {
+    background-color: var(--cf-disabled-input-bg) !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* --- Buttons --- */
+.cf-cust-func-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: 25px; /* Space above button group */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.cf-cust-func-primary-button,
+.cf-cust-func-secondary-button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    min-width: 150px; /* Ensure buttons have a minimum width */
+    text-align: center;
+}
+
+.cf-cust-func-primary-button {
+    background-color: var(--cf-blue-accent); /* Uses themed accent color */
+    color: white;
+    box-shadow: 0 4px 10px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-cust-func-primary-button:hover {
+    background-color: var(--cf-blue-accent-hover); /* Uses themed hover color */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(var(--cf-blue-accent-rgb), 0.3);
+}
+
+.cf-cust-func-primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-cust-func-primary-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
+.cf-cust-func-secondary-button {
+    background-color: transparent;
+    color: var(--cf-blue-accent); /* Uses themed accent color for text */
+    border: 1px solid var(--cf-blue-accent); /* Uses themed accent color for border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cf-cust-func-secondary-button:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.05); /* Light transparent background */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cf-cust-func-secondary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Messages (Loading, Error, Success) --- */
+.cf-cust-func-loading-message,
+.cf-cust-func-error-message,
+.cf-cust-func-success-message {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95em;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.cf-cust-func-loading-message {
+    color: var(--cf-text-primary);
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.1);
+    border: 1px solid var(--cf-blue-accent);
+}
+
+.cf-cust-func-error-message {
+    color: var(--cf-red-error); /* Uses themed error color */
+    background-color: rgba(var(--cf-red-error-rgb), 0.1);
+    border: 1px solid var(--cf-red-error);
+}
+
+.cf-cust-func-success-message {
+    color: var(--cf-green-success); /* Uses themed success color */
+    background-color: rgba(var(--cf-green-success-rgb), 0.1);
+    border: 1px solid var(--cf-green-success);
+}
+
+/* --- Confirmation Section --- */
+.cf-cust-func-confirmation-details { /* Used for both confirmation and account details display */
+    padding: 20px;
+    border: 1px solid var(--cf-card-border);
+    border-radius: 12px;
+    background-color: var(--cf-bg-primary); /* Slightly different background for confirmation pop-up */
+    text-align: center; /* Centered */
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    margin-top: 20px; /* Space from title if not part of main card */
+    box-sizing: border-box;
+}
+
+.cf-cust-func-confirmation-details h3 {
+    font-size: 1.5em;
+    color: var(--cf-text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cf-cust-func-confirmation-details p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: var(--cf-text-secondary);
+    display: flex; /* Use flex for label-value alignment */
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+}
+
+.cf-cust-func-confirmation-details strong {
+    color: var(--cf-text-primary);
+}
+
+.cf-cust-func-warning-text {
+    color: var(--cf-red-error);
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+/* --- Account Details Section (specific to Cust_Account_Details.tsx) --- */
+.cf-account-details-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--cf-card-border);
+    text-align: center; /* Center text within this section */
+}
+
+.cf-account-details-section p {
+    justify-content: center; /* Center flex items horizontally */
+    text-align: center; /* Fallback for older browsers */
+}
+
+
+/* --- Transaction History Section (specific to Cust_Account_Details.tsx) --- */
+.cf-transaction-history-section {
+    margin-top: 20px;
+}
+
+.cf-transactions-history-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cf-no-transactions-message {
+    text-align: center;
+    color: var(--cf-text-secondary);
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed var(--cf-card-border);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.cf-transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between transaction items */
+}
+
+.cf-transaction-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--cf-bg-primary); /* Lighter background for each item */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    transition: all 0.2s ease;
+    border: 1px solid var(--cf-card-border);
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center; /* Center content horizontally */
+}
+
+.cf-transaction-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.cf-transaction-icon {
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px; /* Slightly larger icon container */
+    height: 35px; /* Slightly larger icon container */
+    border-radius: 50%; /* Make it circular */
+}
+
+.cf-transaction-type-debit .cf-transaction-icon {
+    color: white;
+    background-color: var(--cf-red-error);
+}
+
+.cf-transaction-type-credit .cf-transaction-icon {
+    color: white;
+    background-color: var(--cf-green-success);
+}
+
+.cf-transaction-details {
+    flex-grow: 1; /* Take up available space */
+    display: flex;
+    flex-direction: column; /* Stack amount, info, purpose */
+    text-align: center; /* Center text within details */
+    align-items: center; /* Center items within the column */
+}
+
+.cf-transaction-amount {
+    font-size: 1.2em; /* Slightly larger amount */
+    font-weight: 700;
+    color: var(--cf-text-primary);
+    margin-bottom: 5px; /* Space below amount */
+}
+
+.cf-transaction-info {
+    font-size: 0.95em; /* Slightly larger info */
+    color: var(--cf-text-secondary);
+    margin-bottom: 3px; /* Space below info */
+}
+
+.cf-transaction-purpose {
+    font-size: 0.85em;
+    color: var(--cf-text-light);
+    font-style: italic;
+    margin-top: 0; /* No top margin */
+}
+
+.cf-transaction-meta {
+    flex-shrink: 0; /* Prevent meta info from shrinking */
+    text-align: center; /* Center text within meta */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items */
+    margin-left: 15px;
+}
+
+.cf-transaction-date {
+    font-size: 0.85em;
+    color: var(--cf-text-secondary);
+    margin-bottom: 5px; /* Space below date */
+}
+
+.cf-transaction-type {
+    font-size: 0.8em;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--cf-blue-accent); /* General type background */
+}
+
+/* Specific styling for the status on the transaction history (using same classes as debit/credit) */
+.cf-transaction-item.cf-transaction-type-debit .cf-transaction-type { /* Target the inner span for background */
+    background-color: var(--cf-red-error); /* Use red for debits */
+}
+
+.cf-transaction-item.cf-transaction-type-credit .cf-transaction-type { /* Target the inner span for background */
+    background-color: var(--cf-green-success); /* Use green for credits */
+}
+
+
+/* --- Responsive Adjustments --- */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .cf-cust-func-container {
+        padding: 15px;
+    }
+
+    .cf-cust-func-card {
+        padding: 20px;
+    }
+
+    .cf-cust-func-card-title {
+        font-size: 1.8em;
+    }
+
+    .cf-cust-func-form-input,
+    .cf-cust-func-primary-button,
+    .cf-cust-func-secondary-button {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    .cf-cust-func-button-group {
+        flex-direction: column; /* Stack buttons on small screens */
+        gap: 10px;
+    }
+
+    .cf-cust-func-primary-button,
+    .cf-cust-func-secondary-button {
+        width: 100%; /* Full width when stacked */
+    }
+
+    .cf-cust-func-confirmation-details {
+        padding: 15px;
+    }
+
+    .cf-transaction-item {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align contents */
+        text-align: center;
+    }
+    .cf-transaction-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .cf-transaction-details {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .cf-transaction-meta {
+        width: 100%;
+        margin-left: 0;
+        align-items: center; /* Center align meta items */
+        padding-top: 10px;
+        border-top: 1px dashed var(--cf-card-border);
+    }
+    .cf-transaction-amount, .cf-transaction-info, .cf-transaction-purpose, .cf-transaction-date, .cf-transaction-type {
+        text-align: center; /* Ensure text alignment is consistent */
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .cf-cust-func-container {
+        padding: 10px;
+    }
+
+    .cf-cust-func-card {
+        padding: 15px;
+    }
+
+    .cf-cust-func-card-title {
+        font-size: 1.5em;
+    }
+
+    .cf-cust-func-form-input {
+        font-size: 0.9em;
+    }
+
+    .cf-cust-func-loading-message,
+    .cf-cust-func-error-message,
+    .cf-cust-func-success-message {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+}
+
+/* --- Modal Styles (for Cust_Pass_Ver) --- */
+.cf-modal-overlay {
+    position: fixed; /* Stays in place even when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--cf-modal-overlay-bg); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other content */
+    backdrop-filter: blur(5px); /* Optional: blur background for better focus */
+}
+
+.cf-modal-content {
+    background-color: var(--cf-modal-bg);
+    padding: 2.5rem; /* Adjusted from 30px */
+    border-radius: 12px;
+    box-shadow: var(--cf-modal-shadow); /* Uses modal-shadow variable */
+    width: 90%; /* Responsive width */
+    max-width: 450px; /* Max width for larger screens */
+    text-align: center;
+    position: relative; /* For positioning close button */
+    box-sizing: border-box; /* Include padding in width */
+    color: var(--cf-modal-text);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    animation: fadeInScale 0.3s ease-out forwards; /* Added animation */
+}
+
+/* Keyframes for modal animation remain the same as they are generic */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.cf-modal-title {
+    font-size: 1.8rem; /* Adjusted from 1.8em */
+    font-weight: bold;
+    margin-bottom: 1rem; /* Adjusted from 15px */
+    color: var(--cf-modal-text);
+}
+
+.cf-modal-description {
+    font-size: 1rem; /* Adjusted from 1em */
+    color: var(--cf-modal-text-secondary);
+    margin-bottom: 1.5rem; /* Adjusted from 20px */
+}
+
+/* Specific styling for form elements within the modal */
+.cf-modal-content .cf-form-group { /* Target form-group inside modal-content */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem; /* Adjusted from 15px */
+    text-align: left; /* Aligns content to left within form group */
+}
+
+.cf-modal-content .cf-form-group label { /* Target label inside modal's form-group */
+    display: block; /* Ensure label takes full width */
+    margin-bottom: 0.6rem; /* Adjusted from 8px */
+    font-weight: 600;
+    color: var(--cf-modal-text-secondary); /* Use modal-specific text color */
+}
+
+.cf-modal-input {
+    width: 100%; /* Full width */
+    padding: 0.8rem 1rem; /* Adjusted from 12px */
+    border: 1px solid var(--cf-modal-border);
+    border-radius: 8px;
+    font-size: 1rem; /* Adjusted from 1em */
+    color: var(--cf-modal-text);
+    background-color: var(--cf-bg-primary); /* Use primary background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Crucial for width: 100% with padding */
+}
+
+.cf-modal-input:focus {
+    border-color: var(--cf-blue-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-modal-error {
+    color: var(--cf-red-error); /* Using --cf-red-error from root */
+    font-size: 0.9rem; /* Adjusted from 0.9em */
+    margin-top: 1rem; /* Adjusted from -0.8rem and 10px */
+    margin-bottom: 1rem; /* Added margin-bottom for consistency */
+    text-align: center; /* Ensure error message is centered */
+}
+
+
+.cf-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Space between buttons, adjusted from 15px */
+    margin-top: 2rem; /* Adjusted from 20px */
+}
+
+.cf-modal-button {
+    padding: 0.8rem 1.8rem; /* Adjusted from 12px 25px */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem; /* Adjusted from 1.05em */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    min-width: 100px;
+}
+
+.cf-modal-button.primary {
+    background-color: var(--cf-blue-accent);
+    color: white;
+}
+
+.cf-modal-button.primary:hover {
+    background-color: var(--cf-blue-accent-hover);
+    transform: translateY(-1px);
+}
+
+.cf-modal-button.secondary {
+    background-color: transparent;
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
+}
+
+.cf-modal-button.secondary:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.1); /* Adjusted from 0.05 */
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 600px) {
+    .cf-modal-content {
+        padding: 1.5rem;
+    }
+    .cf-modal-title {
+        font-size: 1.5rem;
+    }
+    .cf-modal-description {
+        font-size: 0.9rem;
+    }
+    .cf-modal-button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+    }
+    .cf-modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .cf-modal-button {
+        width: 100%;
+    }
+}
