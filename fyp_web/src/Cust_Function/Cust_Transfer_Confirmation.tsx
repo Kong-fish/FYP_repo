@@ -1,60 +1,9 @@
-// Cust_Function/Cust_Transfer.tsx
-"use client"
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
-import { ArrowLeft } from 'lucide-react';
-
-import '../shared/Header.css';
+import supabase from '../supabaseClient.js';
 import '../shared/normalize.css';
-import './CustFunction.css'; // General styles for customer functions, now with unique class names
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; // Import the password verification modal
-
-// Re-use the Header component for consistency across pages
-const Header = () => {
-    const navigate = useNavigate();
-
-    const handleSignOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error('Error signing out:', error.message);
-        } else {
-            navigate('/customer-landing');
-        }
-    };
-
-    // Function to navigate back to the customer dashboard
-    const handleBack = () => {
-        navigate("/customer-dashboard");
-    };
-
-    return (
-        <header className="header">
-            <div className="header__content">
-                {/* Back Button with text */}
-                <button onClick={handleBack} className="back-button">
-                    <ArrowLeft size={24} />
-                    <span className="back-button-text">Back</span>
-                </button>
-
-                <div className="logo-section">
-                    {/* Using an emoji as a simple icon. Consider using Lucide for consistency or SVG if more complex. */}
-                    <span className="logo-icon">🏦</span>
-                    <h1 className="logo-text">Eminent Western</h1>
-                </div>
-                <nav className="header-nav"></nav>
-                <div className="header-actions">
-                    <DarkModeToggle />
-                    <button onClick={handleSignOut} className="sign-out-button header-sign-out-btn">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-        </header>
-    );
-};
+import './CustFunction.css'; 
+import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; 
 
 // Interface for account information
 interface AccountInfo {
@@ -162,19 +111,13 @@ export default function Cust_Transfer() { // Renamed from Cust_Tran_Confirmation
     }, [state]);
 
 
-    // Redirect if critical state is missing (e.g., direct navigation to confirmation)
-    // This check is now adapted for the main transfer page
     if (!loading && !showConfirmation && accounts.length === 0 && !error) {
-        // If accounts failed to load and no other error, could be a navigation issue or no accounts
-        // We'll show an error message and allow user to reload.
-        // Or if it's the confirmation path, and details are missing, redirect.
-        if (location.pathname.includes('transfer-confirmation') && !confirmationDetails) {
+        if (location.pathname.includes('customer-transfer-confirmation') && !confirmationDetails) {
             console.warn("Missing transfer details. Redirecting to transfer initiation.")
             navigate("/customer-transfer") // Redirect back to the transfer form
             return null
         }
     }
-
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Allow only numbers and a single decimal point
@@ -397,7 +340,7 @@ export default function Cust_Transfer() { // Renamed from Cust_Tran_Confirmation
             setShowConfirmation(false); // Hide confirmation on error
             setConfirmationDetails(null); // Clear confirmation details
             // Navigate to failure page with error message
-            navigate("/transfer-complete", {
+            navigate("/customer-transfer-complete", {
                 state: {
                     status: "failure",
                     message: err.message,
@@ -426,7 +369,6 @@ export default function Cust_Transfer() { // Renamed from Cust_Tran_Confirmation
     if (loading && !showConfirmation) {
         return (
             <div className="main-app-wrapper">
-                <Header />
                 <div className="customer-function-container">
                     <div className="customer-function-content" style={{ padding: '2rem', textAlign: 'center' }}>
                         <p className="customer-loading-message">Loading accounts...</p>
@@ -439,7 +381,6 @@ export default function Cust_Transfer() { // Renamed from Cust_Tran_Confirmation
     return (
         <div className="main-app-wrapper">
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <Header />
             <div className="customer-function-container">
                 <div className="customer-function-content">
                     <div className="customer-card">

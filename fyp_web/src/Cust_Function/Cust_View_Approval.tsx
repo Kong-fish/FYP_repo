@@ -1,41 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
-import '../shared/Header.css'; // Assuming Header.css is available
-import DarkModeToggle from '../shared/DarkModeToggle.tsx'; // Assuming DarkModeToggle is a separate component
-import { Loader2, CheckCircle, XCircle, FileText } from 'lucide-react';
-
-// Define the Header component if not already defined globally or in a shared file
-// It's good practice to have this in a separate file, e.g., src/components/Header.tsx
-const Header = () => {
-    const navigate = useNavigate();
-
-    const handleSignOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error('Error signing out:', error.message);
-        } else {
-            // Navigate to the correct landing page after sign out
-            navigate('/customer-landing');
-        }
-    };
-
-    return (
-        <header className="header">
-            <div className="header__content">
-                <h1 className="header__title">Eminent Western</h1>
-                <nav className="header-nav">
-                </nav>
-                <div className="header-actions">
-                    <DarkModeToggle />
-                    <button onClick={handleSignOut} className="sign-out-button">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-        </header>
-    );
-};
+import supabase from '../supabaseClient.js';
+import { Loader2, CheckCircle, XCircle, FileText, Banknote } from 'lucide-react'; // Added Banknote icon
 
 // Interface for Loan Application data, matching Supabase schema fields for Loan table
 interface LoanApplication {
@@ -45,6 +11,14 @@ interface LoanApplication {
     final_approval: boolean | null; // From Loan table (boolean, null for pending)
     application_date: string; // From Loan table (timestamp with time zone)
     customer_name: string; // Derived from Customer table join
+}
+
+// Interface for Bank Account Application (Placeholder structure for now)
+interface BankAccountApplication {
+    account_id: string; // Unique ID for the account application
+    account_type: string; // e.g., "Savings", "Checking"
+    application_date: string;
+    status: 'Pending' | 'Approved' | 'Rejected'; // Simplified status
 }
 
 // Interface for Customer Information (minimal for this page's needs)
@@ -57,6 +31,8 @@ interface CustomerInfo {
 const Cust_View_Approval: React.FC = () => {
     const navigate = useNavigate();
     const [loanApplications, setLoanApplications] = useState<LoanApplication[]>([]);
+    // Placeholder state for bank account applications
+    const [bankAccountApplications, setBankAccountApplications] = useState<BankAccountApplication[]>([]);
     const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
         customer_id: null,
         first_name: '',
@@ -67,7 +43,7 @@ const Cust_View_Approval: React.FC = () => {
 
     // useEffect hook to fetch user session and customer profile on component mount
     useEffect(() => {
-        const fetchCustomerAndLoans = async () => {
+        const fetchCustomerAndApplications = async () => {
             setLoading(true);
             setError(null);
 
@@ -97,7 +73,7 @@ const Cust_View_Approval: React.FC = () => {
                     throw new Error(`Error fetching customer profile: ${customerError.message}`);
                 }
                 if (!customerData) {
-                    setError('Customer profile not found.');
+                    setError('Customer profile not found. Please ensure your profile is complete.');
                     setLoading(false);
                     return;
                 }
@@ -127,7 +103,7 @@ const Cust_View_Approval: React.FC = () => {
                 }
 
                 const formattedLoans: LoanApplication[] = (loansData || []).map((loan: any) => ({
-                    loan_id: loan.loan_id,
+                    loan_id: String(loan.loan_id),
                     loan_amount: loan.loan_amount,
                     loan_intent: loan.loan_intent,
                     final_approval: loan.final_approval,
@@ -137,6 +113,30 @@ const Cust_View_Approval: React.FC = () => {
 
                 setLoanApplications(formattedLoans);
 
+                // 4. Fetch bank account applications (Placeholder - replace with actual fetch if table exists)
+                // For demonstration, simulating some data
+                const mockBankAccountApps: BankAccountApplication[] = [
+                    {
+                        account_id: 'BAC-001',
+                        account_type: 'Savings Account',
+                        application_date: 'Oct 26, 2024',
+                        status: 'Approved',
+                    },
+                    {
+                        account_id: 'BAC-002',
+                        account_type: 'Checking Account',
+                        application_date: 'Nov 15, 2024',
+                        status: 'Pending',
+                    },
+                    {
+                        account_id: 'BAC-003',
+                        account_type: 'Joint Savings',
+                        application_date: 'Dec 01, 2024',
+                        status: 'Rejected',
+                    },
+                ];
+                setBankAccountApplications(mockBankAccountApps); // Replace with actual Supabase fetch if applicable
+
             } catch (err: any) {
                 console.error("Initialization error:", err.message);
                 setError(err.message || "An unexpected error occurred.");
@@ -145,18 +145,16 @@ const Cust_View_Approval: React.FC = () => {
             }
         };
 
-        fetchCustomerAndLoans();
+        fetchCustomerAndApplications();
 
-        // Optional: Listen for auth state changes if needed to re-fetch or redirect
         const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
             if (!session) {
-                // If user logs out, clear data and redirect
                 setCustomerInfo({ customer_id: null, first_name: '', last_name: '' });
                 setLoanApplications([]);
+                setBankAccountApplications([]); // Clear bank account data on logout
                 navigate('/customer-landing');
             } else {
-                // If session changes (e.g., token refresh), re-fetch data
-                fetchCustomerAndLoans();
+                fetchCustomerAndApplications();
             }
         });
 
@@ -164,22 +162,28 @@ const Cust_View_Approval: React.FC = () => {
             authListener.subscription.unsubscribe();
         };
 
-    }, [navigate]); // Add navigate to dependency array
+    }, [navigate]);
 
-    // Helper function to determine the CSS class for status badges
-    const getStatusClass = (status: boolean | null) => {
-        if (status === true) return "badge-success";
-        if (status === false) return "badge-error";
-        return "badge-warning"; // For null (pending)
+    // Helper function to determine the CSS class for status badges for loans
+    const getLoanStatusClass = (status: boolean | null) => {
+        if (status === true) return "cf-badge-success";
+        if (status === false) return "cf-badge-error";
+        return "cf-badge-warning"; // For null (pending)
+    };
+
+    // Helper function to determine the CSS class for status badges for bank accounts
+    const getBankAccountStatusClass = (status: 'Pending' | 'Approved' | 'Rejected') => {
+        if (status === 'Approved') return "cf-badge-success";
+        if (status === 'Rejected') return "cf-badge-error";
+        return "cf-badge-warning"; // For pending
     };
 
     if (loading) {
         return (
-            <div className="main-app-wrapper">
-                <Header />
-                <div className="dashboard-container flex items-center justify-center min-h-[calc(100vh-4rem)]">
-                    <Loader2 className="animate-spin text-primary" size={32} />
-                    <p className="ml-2 text-text">Loading loan applications...</p>
+            <div className="cf-main-app-wrapper">
+                <div className="cf-cust-func-container flex items-center justify-center min-h-[calc(100vh-4rem)]">
+                    <Loader2 className="animate-spin text-cf-blue-accent" size={32} />
+                    <p className="ml-2 text-cf-text-primary">Loading your applications...</p>
                 </div>
             </div>
         );
@@ -187,13 +191,12 @@ const Cust_View_Approval: React.FC = () => {
 
     if (error) {
         return (
-            <div className="main-app-wrapper">
-                <Header />
-                <div className="dashboard-container">
-                    <div className="card p-6 text-center">
-                        <h2 className="text-xl font-semibold text-error-dark-text">Error</h2>
-                        <p className="text-text-secondary mt-2">{error}</p>
-                        <button onClick={() => window.location.reload()} className="btn btn-primary mt-4">
+            <div className="cf-main-app-wrapper">
+                <div className="cf-cust-func-container">
+                    <div className="cf-cust-func-card p-6 text-center">
+                        <h2 className="cf-cust-func-card-title text-cf-red-error">Error</h2>
+                        <p className="cf-cust-func-text-secondary mt-2">{error}</p>
+                        <button onClick={() => window.location.reload()} className="cf-cust-func-primary-button mt-4">
                             Reload Page
                         </button>
                     </div>
@@ -203,58 +206,98 @@ const Cust_View_Approval: React.FC = () => {
     }
 
     return (
-        <div className="main-app-wrapper">
+        <div className="cf-main-app-wrapper">
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <Header />
-            <div className="dashboard-container">
-                <main className="dashboard-main container p-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold text-text">
-                            Loan Application Status
-                        </h2>
-                        <button
-                            onClick={() => navigate('/customer-dashboard')}
-                            className="btn btn-secondary"
-                        >
-                            Back to Dashboard
-                        </button>
+            <div className="cf-cust-func-container">
+                <main className="cf-cust-func-content p-6">
+                    {/* --- Bank Account Applications Section --- */}
+                    <div className="cf-cust-func-card mb-6">
+                        <div className="cf-cust-func-card-header">
+                            <h3 className="cf-cust-func-card-title flex items-center">
+                                <Banknote className="mr-2" size={24} /> Bank Account Applications
+                            </h3>
+                            <p className="cf-text-secondary">
+                                Review the status of your submitted bank account applications.
+                            </p>
+                        </div>
+                        <div className="cf-cust-func-card-content">
+                            {bankAccountApplications.length > 0 ? (
+                                <div className="cf-table-container">
+                                    <table className="cf-table">
+                                        <thead className="cf-table-header">
+                                            <tr>
+                                                <th className="cf-table-head">Application ID</th>
+                                                <th className="cf-table-head">Account Type</th>
+                                                <th className="cf-table-head">Application Date</th>
+                                                <th className="cf-table-head">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="cf-table-body">
+                                            {bankAccountApplications.map((app) => (
+                                                <tr key={app.account_id} className="cf-table-row">
+                                                    <td className="cf-table-cell cf-table-cell-bold">
+                                                        {app.account_id}
+                                                    </td>
+                                                    <td className="cf-table-cell">{app.account_type}</td>
+                                                    <td className="cf-table-cell">{app.application_date}</td>
+                                                    <td className="cf-table-cell">
+                                                        <span
+                                                            className={`cf-badge ${getBankAccountStatusClass(
+                                                                app.status
+                                                            )}`}
+                                                        >
+                                                            {app.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <p className="cf-text-secondary cf-text-center cf-py-4">
+                                    No bank account applications found.
+                                </p>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title flex items-center">
-                                <FileText className="mr-2" size={20} /> Your Loan Applications
+                    {/* --- Loan Applications Section --- */}
+                    <div className="cf-cust-func-card">
+                        <div className="cf-cust-func-card-header">
+                            <h3 className="cf-cust-func-card-title flex items-center">
+                                <FileText className="mr-2" size={24} /> Loan Applications
                             </h3>
-                            <p className="card-description">
+                            <p className="cf-text-secondary">
                                 Review the status of your submitted loan applications.
                             </p>
                         </div>
-                        <div className="card-content">
+                        <div className="cf-cust-func-card-content">
                             {loanApplications.length > 0 ? (
-                                <div className="table-container">
-                                    <table className="table">
-                                        <thead className="table-header">
+                                <div className="cf-table-container">
+                                    <table className="cf-table">
+                                        <thead className="cf-table-header">
                                             <tr>
-                                                <th className="table-head">Application ID</th>
-                                                <th className="table-head">Loan Amount</th>
-                                                <th className="table-head">Loan Intent</th>
-                                                <th className="table-head">Status</th>
-                                                <th className="table-head">Application Date</th>
+                                                <th className="cf-table-head">Application ID</th>
+                                                <th className="cf-table-head">Loan Amount</th>
+                                                <th className="cf-table-head">Loan Intent</th>
+                                                <th className="cf-table-head">Status</th>
+                                                <th className="cf-table-head">Application Date</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="table-body">
+                                        <tbody className="cf-table-body">
                                             {loanApplications.map((loan) => (
-                                                <tr key={loan.loan_id} className="table-row">
-                                                    <td className="table-cell table-cell-bold">
+                                                <tr key={loan.loan_id} className="cf-table-row">
+                                                    <td className="cf-table-cell cf-table-cell-bold">
                                                         {loan.loan_id.substring(0, 8)}...
                                                     </td>
-                                                    <td className="table-cell table-cell-bold">
+                                                    <td className="cf-table-cell cf-table-cell-bold">
                                                         ${loan.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                     </td>
-                                                    <td className="table-cell">{loan.loan_intent}</td>
-                                                    <td className="table-cell">
+                                                    <td className="cf-table-cell">{loan.loan_intent}</td>
+                                                    <td className="cf-table-cell">
                                                         <span
-                                                            className={`badge ${getStatusClass(
+                                                            className={`cf-badge ${getLoanStatusClass(
                                                                 loan.final_approval
                                                             )}`}
                                                         >
@@ -265,7 +308,7 @@ const Cust_View_Approval: React.FC = () => {
                                                                     : "Pending"}
                                                         </span>
                                                     </td>
-                                                    <td className="table-cell">
+                                                    <td className="cf-table-cell">
                                                         {loan.application_date}
                                                     </td>
                                                 </tr>
@@ -274,7 +317,7 @@ const Cust_View_Approval: React.FC = () => {
                                     </table>
                                 </div>
                             ) : (
-                                <p className="text-text-secondary text-center py-4">
+                                <p className="cf-text-secondary cf-text-center cf-py-4">
                                     No loan applications found.
                                 </p>
                             )}
@@ -282,7 +325,6 @@ const Cust_View_Approval: React.FC = () => {
                     </div>
                 </main>
             </div>
-            {/* You might want a common footer here as well */}
         </div>
     );
 };

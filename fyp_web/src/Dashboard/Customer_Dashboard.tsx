@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 import './CustomerDashboard.css';
 import '../shared/normalize.css';
 import { DollarSign, Banknote, PlusCircle, BarChart, History, Settings, Eye, EyeOff, CreditCard, Landmark, PiggyBank } from 'lucide-react';
@@ -217,7 +217,7 @@ export default function CustomerDashboard() {
     };
 
     const handleLoanApplyClick = () => {
-        openVerificationModal(() => navigate('/customer-loan-apply'));
+        openVerificationModal(() => navigate('/customer-apply-loan'));
     };
 
     const handleCreateAccountClick = () => {

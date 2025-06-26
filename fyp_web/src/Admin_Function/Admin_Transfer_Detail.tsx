@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Changed useParams to useLocation
 import { ArrowLeft, Wallet, Calendar, DollarSign, Info } from "lucide-react";
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 import '../shared/Header.css';
 import DarkModeToggle from '../shared/DarkModeToggle.tsx';
 
@@ -125,7 +125,7 @@ export default function AdminTransferDetail() {
           // Format the fetched data to match the Transfer interface
           const formattedData: Transfer = {
             transaction_id: data.transaction_id,
-            initiator_account_no: data.Account?.account_no || "N/A",
+            initiator_account_no: Array.isArray(data.Account) && data.Account.length > 0 ? data.Account[0].account_no : "N/A",
             receiver_account_no: data.receiver_account_no || "N/A",
             amount: data.amount,
             transfer_datetime: new Date(data.transfer_datetime).toLocaleString(),

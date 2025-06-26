@@ -1,6 +1,6 @@
 // src/Cust_Function/Cust_Pass_Ver.tsx
 import React, { useState } from 'react';
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 
 interface CustPassVerProps {
     isOpen: boolean; // Controls whether the modal is visible

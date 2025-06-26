@@ -1,58 +1,9 @@
-// Cust_Function/Cust_Transfer.tsx
-"use client"
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
-import { ArrowLeft } from 'lucide-react';
-
-import '../shared/Header.css';
+import supabase from '../supabaseClient.js';
 import '../shared/normalize.css';
-import './CustFunction.css'; // General styles for customer functions, now with unique class names
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; // Re-import the password verification modal
-
-// Re-use the Header component for consistency across pages
-const Header = () => {
-    const navigate = useNavigate();
-
-    const handleSignOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error('Error signing out:', error.message);
-        } else {
-            navigate('/customer-landing');
-        }
-    };
-
-    // Function to navigate back to the customer dashboard
-    const handleBack = () => {
-        navigate("/customer-dashboard");
-    };
-
-    return (
-        <header className="header">
-            <div className="header__content">
-                {/* Back Button with text */}
-                <button onClick={handleBack} className="back-button">
-                    <ArrowLeft size={24} />
-                    <span className="back-button-text">Back</span>
-                </button>
-
-                <div className="logo-section">
-                    <h1 className="logo-text">Eminent Western</h1>
-                </div>
-                <nav className="header-nav"></nav>
-                <div className="header-actions">
-                    <DarkModeToggle />
-                    <button onClick={handleSignOut} className="sign-out-button header-sign-out-btn">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-        </header>
-    );
-};
+import './CustFunction.css';
+import Cust_Pass_Ver from '../Cust_Function/Cust_Pass_Ver.tsx'; 
 
 // Interface for account information
 interface AccountInfo {
@@ -424,11 +375,10 @@ export default function Cust_Transfer() {
 
     if (loading && !showConfirmation) {
         return (
-            <div className="main-app-wrapper">
-                <Header />
-                <div className="customer-function-container">
-                    <div className="customer-function-content" style={{ padding: '2rem', textAlign: 'center' }}>
-                        <p className="customer-loading-message">Loading accounts...</p>
+            <div className="cf-main-app-wrapper">
+                <div className="cf-cust-func-container">
+                    <div className="cf-cust-func-content" style={{ padding: '2rem', textAlign: 'center' }}>
+                        <p className="cf-cust-func-loading-message">Loading accounts...</p>
                     </div>
                 </div>
             </div>
@@ -436,38 +386,37 @@ export default function Cust_Transfer() {
     }
 
     return (
-        <div className="main-app-wrapper">
+        <div className="cf-main-app-wrapper">
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <Header />
-            <div className="customer-function-container">
-                <div className="customer-function-content">
-                    <div className="customer-card">
+            <div className="cf-cust-func-container">
+                <div className="cf-cust-func-content">
+                    <div className="cf-cust-func-card">
                         {!showConfirmation ? (
                             <>
-                                <div className="customer-card-header">
-                                    <h2 className="customer-card-title">Money Transfer</h2>
+                                <div className="cf-cust-func-card-header">
+                                    <h2 className="cf-cust-func-card-title">Money Transfer</h2>
                                 </div>
 
                                 {error && (
-                                    <div className="customer-error-message">
+                                    <div className="cf-cust-func-error-message">
                                         {error}
                                     </div>
                                 )}
                                 {successMessage && (
-                                    <div className="customer-success-message">
+                                    <div className="cf-cust-func-success-message">
                                         {successMessage}
                                     </div>
                                 )}
 
-                                <form onSubmit={handleTransferFormSubmit} className="customer-form">
-                                    <div className="customer-form-group">
-                                        <label htmlFor="fromAccount" className="customer-form-label">From Account:</label>
+                                <form onSubmit={handleTransferFormSubmit} className="cf-cust-func-form">
+                                    <div className="cf-cust-func-form-group">
+                                        <label htmlFor="fromAccount" className="cf-cust-func-form-label">From Account:</label>
                                         <select
                                             id="fromAccount"
                                             name="fromAccount"
                                             value={fromAccount}
                                             onChange={(e) => setFromAccount(e.target.value)}
-                                            className="customer-form-input"
+                                            className="cf-cust-func-form-input"
                                             required
                                         >
                                             {accounts.length === 0 && <option value="">No accounts available</option>}
@@ -479,69 +428,69 @@ export default function Cust_Transfer() {
                                         </select>
                                     </div>
 
-                                    <div className="customer-form-group">
-                                        <label htmlFor="toAccountNo" className="customer-form-label">To Account Number:</label>
+                                    <div className="cf-cust-func-form-group">
+                                        <label htmlFor="toAccountNo" className="cf-cust-func-form-label">To Account Number:</label>
                                         <input
                                             type="text"
                                             id="toAccountNo"
                                             name="toAccountNo"
                                             value={toAccountNo}
                                             onChange={(e) => setToAccountNo(e.target.value)}
-                                            className="customer-form-input"
+                                            className="cf-cust-func-form-input"
                                             placeholder="Enter recipient's full account number"
                                             required
                                         />
                                     </div>
 
-                                    <div className="customer-form-group">
-                                        <label htmlFor="amount" className="customer-form-label">Amount:</label>
+                                    <div className="cf-cust-func-form-group">
+                                        <label htmlFor="amount" className="cf-cust-func-form-label">Amount:</label>
                                         <input
                                             type="text"
                                             id="amount"
                                             name="amount"
                                             value={amount}
                                             onChange={handleAmountChange}
-                                            className="customer-form-input"
+                                            className="cf-cust-func-form-input"
                                             placeholder="e.g., 100.00"
                                             required
                                         />
                                     </div>
 
-                                    <div className="customer-form-group">
-                                        <label htmlFor="purpose" className="customer-form-label">Purpose (Optional):</label>
+                                    <div className="cf-cust-func-form-group">
+                                        <label htmlFor="purpose" className="cf-cust-func-form-label">Purpose (Optional):</label>
                                         <input
                                             type="text"
                                             id="purpose"
                                             name="purpose"
                                             value={purpose}
                                             onChange={(e) => setPurpose(e.target.value)}
-                                            className="customer-form-input"
+                                            className="cf-cust-func-form-input"
                                             placeholder="e.g., Monthly Rent"
                                         />
                                     </div>
 
-                                    <div className="customer-button-group">
-                                        <button type="submit" className="customer-primary-button" disabled={loading || processing}>
+                                    <div className="cf-cust-func-button-group">
+                                        <button type="submit" className="cf-cust-func-primary-button" disabled={loading || processing}>
                                             Proceed
                                         </button>
                                     </div>
                                 </form>
                             </>
                         ) : (
-                            <div className="customer-confirmation-section">
+                            <div className="cf-cust-func-confirmation-section">
                                 <h3>Confirm Transfer Details</h3>
-                                <div className="customer-confirmation-details">
+                                <div className="cf-cust-func-confirmation-details">
                                     <p><strong>Transferring From:</strong> {confirmationDetails?.fromAccountDisplay}</p>
                                     <p><strong>Transferring To:</strong> {confirmationDetails?.toAccountDisplay}</p>
                                     <p><strong>Amount:</strong> ${confirmationDetails?.amount?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                     <p><strong>Purpose:</strong> {confirmationDetails?.purpose}</p>
                                     <p><strong>Type of Transfer:</strong> {confirmationDetails?.typeOfTransfer}</p>
                                 </div>
-                                <p className="customer-warning-text">
+                                <p className="cf-cust-func-warning-text">
                                     Please double-check the details above. This action cannot be undone.
                                 </p>
-                                <div className="customer-button-group">
-                                    <button onClick={handleCancel} className="customer-secondary-button" disabled={processing}>
+                                <div className="cf-cust-func-button-group">
+                                    <button onClick={handleCancel} className="cf-cust-func-secondary-button" disabled={processing}>
                                         Cancel
                                     </button>
                                     {/* Trigger the password verification modal */}
@@ -551,7 +500,7 @@ export default function Cust_Transfer() {
                                             return;
                                         }
                                         setShowPasswordModal(true); // This line makes the modal appear
-                                    }} className="customer-primary-button" disabled={processing}>
+                                    }} className="cf-cust-func-primary-button" disabled={processing}>
                                         {processing ? 'Processing...' : 'Confirm & Transfer'}
                                     </button>
                                 </div>
@@ -559,18 +508,6 @@ export default function Cust_Transfer() {
                         )}
                     </div>
                 </div>
-
-                {/* Footer */}
-                <footer className="dashboard-footer">
-                    <div className="footer-content">
-                        <p className="footer-copyright">© {new Date().getFullYear()} Eminent Western. All rights reserved.</p>
-                        <div className="footer-links">
-                            <a href="#" className="footer-link">Privacy</a>
-                            <a href="#" className="footer-link">Terms</a>
-                            <a href="#" className="footer-link">Help</a>
-                        </div>
-                    </div>
-                </footer>
             </div>
 
             {/* Password Verification Modal - Only render if showPasswordModal is true */}

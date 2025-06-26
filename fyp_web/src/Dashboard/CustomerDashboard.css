@@ -24,7 +24,8 @@
     --footer-link: #a0aec0; /* Light mode footer link color */
 }
 
-body.dark-mode {
+/* This is the key change: targeting html.dark */
+html.dark {
     /* Dark Mode Colors */
     --bg-primary: #2d2d2d; /* Dark background for general page/container */
     --bg-secondary: #1a1a1a; /* Darker background for main content/summary card and sidebar */
@@ -74,11 +75,9 @@ body {
 */
 .dashboard-container {
     display: flex;
-    flex-direction: column; /* Stack main content and footer vertically */
-    flex-grow: 1; /* Allows the dashboard container to take all remaining height */
-    /* THIS IS THE CRITICAL ADDITION: Space for the sticky header */
-    padding-top: 100px; /* IMPORTANT: Must match your Header's height from Header.css */
-    background-color: var(--bg-primary); /* Consistent background */
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var(--bg-primary);
     color: var(--text-primary); /* Default text color */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth dark mode transition */
     box-sizing: border-box; /* Crucial for padding-top to behave as expected */
@@ -210,7 +209,7 @@ body {
     align-items: center;
     margin-bottom: 20px;
     flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    gap: 10px;
+    gap: 80px;
 }
 
 .welcome-message {

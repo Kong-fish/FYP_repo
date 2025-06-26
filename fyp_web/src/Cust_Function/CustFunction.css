@@ -1,203 +1,190 @@
-/* src/Cust_Function/CustFunction.css */
-
-/* --- CSS Variables for Theming (consistent with CustomerDashboard.css) --- */
-/* These variables are included here for standalone functionality of customer functions. */
-/* Ideally, for a larger application, these would be in a single global file. */
 :root {
-    /* Light Mode Colors */
-    --bg-primary: #f8f9fa; /* Light background for forms/inputs within cards */
-    --bg-secondary: #fff;  /* White background for the main card container */
-    --text-primary: #333;  /* Dark text for headings and primary content */
-    --text-secondary: #666; /* Medium text for labels, descriptions */
-    --text-light: #888;    /* Lighter text (less used here) */
-    --card-border: #e0e0e0; /* Border color for inputs and confirmation sections */
-    --box-shadow-light: rgba(0, 0, 0, 0.05); /* Subtle shadow for elements */
-    --box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+    --cf-bg-primary: #f8f9fa;
+    --cf-bg-secondary: #fff;
+    --cf-text-primary: #333;
+    --cf-text-secondary: #666;
+    --cf-text-light: #888;
+    --cf-card-border: #e0e0e0;
+    --cf-box-shadow-light: rgba(0, 0, 0, 0.05);
+    --cf-box-shadow-medium: rgba(0, 0, 0, 0.1);
 
-    /* Accent Colors */
-    --blue-accent: #007bff; /* Primary blue for buttons, focus states */
-    --blue-accent-hover: #0056b3; /* Darker blue on hover */
-    --blue-accent-rgb: 0, 123, 255; /* RGB for rgba() usage */
+    --cf-blue-accent: #007bff;
+    --cf-blue-accent-hover: #0056b3;
+    --cf-blue-accent-rgb: 0, 123, 255;
 
-    --green-success: #28a745; /* Green for success messages */
-    --green-success-rgb: 40, 167, 69;
+    --cf-green-success: #28a745;
+    --cf-green-success-rgb: 40, 167, 69;
 
-    --red-error: #dc3545; /* Red for error messages */
-    --red-error-rgb: 220, 53, 69;
+    --cf-red-error: #dc3545;
+    --cf-red-error-rgb: 220, 53, 69;
 
-    --disabled-input-bg: #e9ecef; /* Specific color for disabled inputs */
+    --cf-disabled-input-bg: #e9ecef;
 
-    /* Modal Specific Colors (using existing theme variables where possible) */
-    --modal-overlay-bg: rgba(0, 0, 0, 0.6); /* Semi-transparent black for overlay */
-    --modal-bg: var(--bg-secondary); /* Modal background same as secondary background */
-    --modal-border: var(--card-border); /* Modal border same as card border */
-    --modal-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for modal */
-    --modal-text: var(--text-primary);
-    --modal-text-secondary: var(--text-secondary);
+    --cf-modal-overlay-bg: rgba(0, 0, 0, 0.6);
+    --cf-modal-bg: var(--cf-bg-secondary);
+    --cf-modal-border: var(--cf-card-border);
+    --cf-modal-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    --cf-modal-text: var(--cf-text-primary);
+    --cf-modal-text-secondary: var(--cf-text-secondary);
 }
 
-body.dark-mode {
-    /* Dark Mode Overrides for Customer Function specific elements */
-    --bg-primary: #2d2d2d;
-    --bg-secondary: #1a1a1a;
-    --text-primary: #e0e0e0;
-    --text-secondary: #b0b0b0;
-    --text-light: #999;
-    --card-border: #444;
-    --box-shadow-light: rgba(255, 255, 255, 0.05);
-    --box-shadow-medium: rgba(255, 255, 255, 0.1);
+html.dark {
+    --cf-bg-primary: #2d2d2d;
+    --cf-bg-secondary: #1a1a1a;
+    --cf-text-primary: #e0e0e0;
+    --cf-text-secondary: #b0b0b0;
+    --cf-text-light: #999;
+    --cf-card-border: #444;
+    --cf-box-shadow-light: rgba(255, 255, 255, 0.05);
+    --cf-box-shadow-medium: rgba(255, 255, 255, 0.1);
 
-    --blue-accent: #5b9bd5;
-    --blue-accent-hover: #3a7bbd;
-    --blue-accent-rgb: 91, 155, 213;
+    --cf-blue-accent: #5b9bd5;
+    --cf-blue-accent-hover: #3a7bbd;
+    --cf-blue-accent-rgb: 91, 155, 213;
 
-    --green-success: #4CAF50;
-    --green-success-rgb: 76, 175, 80;
+    --cf-green-success: #4CAF50;
+    --cf-green-success-rgb: 76, 175, 80;
 
-    --red-error: #EF5350;
-    --red-error-rgb: 239, 83, 80;
+    --cf-red-error: #EF5350;
+    --cf-red-error-rgb: 239, 83, 80;
 
-    --disabled-input-bg: #3c3c3c;
+    --cf-disabled-input-bg: #3c3c3c;
 
-    /* Dark Mode Modal Specific Colors */
-    --modal-overlay-bg: rgba(0, 0, 0, 0.7);
-    --modal-bg: var(--bg-secondary);
-    --modal-border: var(--card-border);
-    --modal-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-    --modal-text: var(--text-primary);
-    --modal-text-secondary: var(--text-secondary);
+    --cf-modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --cf-modal-bg: var(--cf-bg-secondary);
+    --cf-modal-border: var(--cf-card-border);
+    --cf-modal-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+    --cf-modal-text: var(--cf-text-primary);
+    --cf-modal-text-secondary: var(--cf-text-secondary);
 }
 
-/* Ensure html and body take full height and inherit theme colors */
+/* Original styles from CustFunction.css */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: var(--bg-primary); /* Apply themed background to body */
-    color: var(--text-primary); /* Apply themed text color to body */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
-}
-
-/* --- General App Wrapper (if it encapsulates everything, including Header, Main, Footer) --- */
-.main-app-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure it takes full viewport height */
-    background-color: var(--bg-primary); /* Ensure app wrapper uses primary background */
-    color: var(--text-primary); /* Ensure app wrapper uses primary text color */
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- General Container for Customer Function Pages (e.g., Transfer, Loan, New Account) --- */
-.cust-func-container {
-    flex-grow: 1; /* Allows it to take available space */
+.cf-main-app-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align content to the top */
+    min-height: 100vh;
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cf-cust-func-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    background-color: var(--bg-primary); /* Uses themed primary background */
-    color: var(--text-primary); /* Uses themed primary text color */
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
-    box-sizing: border-box; /* Include padding in height calculation */
+    box-sizing: border-box;
 }
 
-.cust-func-content {
+.cf-cust-func-content {
     width: 100%;
-    max-width: 800px; /* Increased max-width to allow cust-func-card to be wider */
+    max-width: 100%;
     margin: 0 auto;
-    padding-top: 20px; /* Space from header */
-    display: flex; /* Flex container for card */
-    justify-content: center; /* Center the cust-func-card horizontally */
-    align-items: flex-start; /* Align the cust-func-card to the top */
-    flex-direction: column; /* Allows content to stack if needed, though primarily holds one card */
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-/* --- Reusable Card Style for Customer Function Forms --- */
-.cust-func-card {
-    background-color: var(--bg-secondary); /* Uses themed secondary background (white/darker gray) */
+.cf-cust-func-card {
+    background-color: var(--cf-bg-secondary);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px var(--box-shadow-medium); /* Uses themed shadow */
+    box-shadow: 0 4px 15px var(--cf-box-shadow-medium);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Ensure the card takes full width of its content container */
-    max-width: 750px; /* Increased max-width for the customer card itself */
-    margin-bottom: 30px; /* Space below the card before any potential footer/next section */
-    box-sizing: border-box; /* Include padding in width calculation */
+    width: 100%;
+    max-width: 750px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
 }
 
-.cust-func-card-header {
+.cf-cust-func-card-header {
     margin-bottom: 25px;
+    text-align: center;
+    
+}
+
+.cf-cust-func-card-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin: 0;
     text-align: center;
 }
 
-.cust-func-card-title {
-    font-size: 2.2em;
-    font-weight: bold;
-    color: var(--text-primary); /* Uses themed text color */
-    margin: 0;
-}
-
-/* --- Form Specific Styles (Applies to forms inside .cust-func-card) --- */
-.cust-func-form {
+.cf-cust-func-form {
     display: flex;
+    grid-template-columns: 1fr;
     flex-direction: column;
-    gap: 20px; /* Space between form groups */
+    gap: 20px;
     padding-top: 10px;
 }
 
-.cust-func-form-group {
+.cf-cust-func-form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px; /* Added spacing between form fields */
+    margin-bottom: 15px;
 }
 
-.cust-func-form-group:last-of-type {
-    margin-bottom: 0; /* Remove margin from the last form group */
+.cf-cust-func-form-group:last-of-type {
+    margin-bottom: 0;
 }
 
-.cust-func-form-label {
+.cf-cust-func-form-label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--text-secondary); /* Uses themed text color */
+    color: var(--cf-text-secondary);
     font-size: 1em;
 }
 
-.cust-func-form-input {
+.cf-cust-func-form-input {
     padding: 12px;
-    border: 1px solid var(--card-border); /* Uses themed border color */
+    border: 1px solid var(--cf-card-border);
     border-radius: 8px;
     font-size: 1em;
-    color: var(--text-primary); /* Uses themed text color */
-    background-color: var(--bg-primary); /* Uses themed primary background for inputs */
+    color: var(--cf-text-primary);
+    background-color: var(--cf-bg-primary);
     transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Ensure inputs take full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.cust-func-form-input:focus {
-    border-color: var(--blue-accent); /* Uses themed accent color */
+.cf-cust-func-form-input:focus {
+    border-color: var(--cf-blue-accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--blue-accent-rgb), 0.2); /* Uses themed RGB for glow */
+    box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.2);
 }
 
-.cust-func-form-input:disabled {
-    background-color: var(--disabled-input-bg) !important;
+.cf-cust-func-form-input:disabled {
+    background-color: var(--cf-disabled-input-bg) !important;
     cursor: not-allowed;
     opacity: 0.8;
 }
 
-/* --- Buttons --- */
-.cust-func-button-group {
+.cf-cust-func-button-group {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between buttons */
-    margin-top: 25px; /* Space above button group */
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
 }
 
-.cust-func-primary-button,
-.cust-func-secondary-button {
+.cf-cust-func-primary-button,
+.cf-cust-func-secondary-button {
     padding: 14px 25px;
     border: none;
     border-radius: 8px;
@@ -205,28 +192,28 @@ html, body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-    min-width: 150px; /* Ensure buttons have a minimum width */
+    min-width: 150px;
     text-align: center;
 }
 
-.cust-func-primary-button {
-    background-color: var(--blue-accent); /* Uses themed accent color */
+.cf-cust-func-primary-button {
+    background-color: var(--cf-blue-accent);
     color: white;
-    box-shadow: 0 4px 10px rgba(var(--blue-accent-rgb), 0.2);
+    box-shadow: 0 4px 10px rgba(var(--cf-blue-accent-rgb), 0.2);
 }
 
-.cust-func-primary-button:hover {
-    background-color: var(--blue-accent-hover); /* Uses themed hover color */
+.cf-cust-func-primary-button:hover {
+    background-color: var(--cf-blue-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(var(--blue-accent-rgb), 0.3);
+    box-shadow: 0 6px 12px rgba(var(--cf-blue-accent-rgb), 0.3);
 }
 
-.cust-func-primary-button:active {
+.cf-cust-func-primary-button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(var(--blue-accent-rgb), 0.2);
+    box-shadow: 0 2px 5px rgba(var(--cf-blue-accent-rgb), 0.2);
 }
 
-.cust-func-primary-button:disabled {
+.cf-cust-func-primary-button:disabled {
     background-color: #cccccc;
     color: #666666;
     cursor: not-allowed;
@@ -234,29 +221,27 @@ html, body {
 }
 
 
-.cust-func-secondary-button {
+.cf-cust-func-secondary-button {
     background-color: transparent;
-    color: var(--blue-accent); /* Uses themed accent color for text */
-    border: 1px solid var(--blue-accent); /* Uses themed accent color for border */
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.cust-func-secondary-button:hover {
-    background-color: rgba(var(--blue-accent-rgb), 0.05); /* Light transparent background */
+.cf-cust-func-secondary-button:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.05);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.cust-func-secondary-button:active {
+.cf-cust-func-secondary-button:active {
     transform: translateY(0);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-
-/* --- Messages (Loading, Error, Success) --- */
-.cust-func-loading-message,
-.cust-func-error-message,
-.cust-func-success-message {
+.cf-cust-func-loading-message,
+.cf-cust-func-error-message,
+.cf-cust-func-success-message {
     text-align: center;
     padding: 12px;
     margin-bottom: 20px;
@@ -264,327 +249,317 @@ html, body {
     font-weight: bold;
     font-size: 0.95em;
     width: 100%;
-    box-sizing: border-box; /* Ensures padding and border are included in width */
-}
-
-.cust-func-loading-message {
-    color: var(--text-primary);
-    background-color: rgba(var(--blue-accent-rgb), 0.1);
-    border: 1px solid var(--blue-accent);
-}
-
-.cust-func-error-message {
-    color: var(--red-error); /* Uses themed error color */
-    background-color: rgba(var(--red-error-rgb), 0.1);
-    border: 1px solid var(--red-error);
-}
-
-.cust-func-success-message {
-    color: var(--green-success); /* Uses themed success color */
-    background-color: rgba(var(--green-success-rgb), 0.1);
-    border: 1px solid var(--green-success);
-}
-
-/* --- Confirmation Section --- */
-.cust-func-confirmation-details { /* Used for both confirmation and account details display */
-    padding: 20px;
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    background-color: var(--bg-primary); /* Slightly different background for confirmation pop-up */
-    text-align: center; /* Centered */
-    box-shadow: 0 2px 8px var(--box-shadow-light);
-    margin-top: 20px; /* Space from title if not part of main card */
     box-sizing: border-box;
 }
 
-.cust-func-confirmation-details h3 {
+.cf-cust-func-loading-message {
+    color: var(--cf-text-primary);
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.1);
+    border: 1px solid var(--cf-blue-accent);
+}
+
+.cf-cust-func-error-message {
+    color: var(--cf-red-error);
+    background-color: rgba(var(--cf-red-error-rgb), 0.1);
+    border: 1px solid var(--cf-red-error);
+}
+
+.cf-cust-func-success-message {
+    color: var(--cf-green-success);
+    background-color: rgba(var(--cf-green-success-rgb), 0.1);
+    border: 1px solid var(--cf-green-success);
+}
+
+.cf-cust-func-confirmation-details {
+    padding: 20px;
+    border: 1px solid var(--cf-card-border);
+    border-radius: 12px;
+    background-color: var(--cf-bg-primary);
+    text-align: center;
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-confirmation-details h3 {
     font-size: 1.5em;
-    color: var(--text-primary);
+    color: var(--cf-text-primary);
     margin-bottom: 20px;
     text-align: center;
 }
 
-.cust-func-confirmation-details p {
+.cf-cust-func-confirmation-details p {
     margin-bottom: 10px;
     font-size: 1em;
-    color: var(--text-secondary);
-    display: flex; /* Use flex for label-value alignment */
-    justify-content: center; /* Center horizontally */
+    color: var(--cf-text-secondary);
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.cust-func-confirmation-details strong {
-    color: var(--text-primary);
+.cf-cust-func-confirmation-details strong {
+    color: var(--cf-text-primary);
 }
 
-.cust-func-warning-text {
-    color: var(--red-error);
+.cf-cust-func-warning-text {
+    color: var(--cf-red-error);
     font-weight: 500;
     margin-top: 20px;
     margin-bottom: 25px;
     font-size: 0.95em;
+    text-align: center;
 }
 
-/* --- Account Details Section (specific to Cust_Account_Details.tsx) --- */
-.account-details-section {
+.cf-account-details-section {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--card-border);
-    text-align: center; /* Center text within this section */
+    border-bottom: 1px solid var(--cf-card-border);
+    text-align: center;
 }
 
-.account-details-section p {
-    justify-content: center; /* Center flex items horizontally */
-    text-align: center; /* Fallback for older browsers */
+.cf-account-details-section p {
+    justify-content: center;
+    text-align: center;
 }
 
-
-/* --- Transaction History Section (specific to Cust_Account_Details.tsx) --- */
-.transaction-history-section {
+.cf-transaction-history-section {
     margin-top: 20px;
 }
 
-.transactions-history-title {
+.cf-transactions-history-title {
     font-size: 1.8em;
     font-weight: bold;
-    color: var(--text-primary);
+    color: var(--cf-text-primary);
     margin-bottom: 20px;
     text-align: center;
 }
 
-.no-transactions-message {
+.cf-no-transactions-message {
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--cf-text-secondary);
     font-style: italic;
     padding: 20px;
-    border: 1px dashed var(--card-border);
+    border: 1px dashed var(--cf-card-border);
     border-radius: 8px;
     margin-top: 20px;
 }
 
-.transactions-list {
+.cf-transactions-list {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between transaction items */
+    gap: 15px;
 }
 
-.transaction-item {
+.cf-transaction-item {
     display: flex;
     align-items: center;
-    background-color: var(--bg-primary); /* Lighter background for each item */
+    background-color: var(--cf-bg-primary);
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px var(--box-shadow-light);
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
     transition: all 0.2s ease;
-    border: 1px solid var(--card-border);
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    justify-content: center; /* Center content horizontally */
+    border: 1px solid var(--cf-card-border);
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.transaction-item:hover {
+.cf-transaction-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
-.transaction-icon {
-    flex-shrink: 0; /* Prevent icon from shrinking */
+.cf-transaction-icon {
+    flex-shrink: 0;
     margin-right: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 35px; /* Slightly larger icon container */
-    height: 35px; /* Slightly larger icon container */
-    border-radius: 50%; /* Make it circular */
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
-.transaction-type-debit .transaction-icon {
+.cf-transaction-type-debit .cf-transaction-icon {
     color: white;
-    background-color: var(--red-error);
+    background-color: var(--cf-red-error);
 }
 
-.transaction-type-credit .transaction-icon {
+.cf-transaction-type-credit .cf-transaction-icon {
     color: white;
-    background-color: var(--green-success);
+    background-color: var(--cf-green-success);
 }
 
-.transaction-details {
-    flex-grow: 1; /* Take up available space */
-    display: flex;
-    flex-direction: column; /* Stack amount, info, purpose */
-    text-align: center; /* Center text within details */
-    align-items: center; /* Center items within the column */
-}
-
-.transaction-amount {
-    font-size: 1.2em; /* Slightly larger amount */
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 5px; /* Space below amount */
-}
-
-.transaction-info {
-    font-size: 0.95em; /* Slightly larger info */
-    color: var(--text-secondary);
-    margin-bottom: 3px; /* Space below info */
-}
-
-.transaction-purpose {
-    font-size: 0.85em;
-    color: var(--text-light);
-    font-style: italic;
-    margin-top: 0; /* No top margin */
-}
-
-.transaction-meta {
-    flex-shrink: 0; /* Prevent meta info from shrinking */
-    text-align: center; /* Center text within meta */
+.cf-transaction-details {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align items */
+    text-align: center;
+    align-items: center;
+}
+
+.cf-transaction-amount {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--cf-text-primary);
+    margin-bottom: 5px;
+}
+
+.cf-transaction-info {
+    font-size: 0.95em;
+    color: var(--cf-text-secondary);
+    margin-bottom: 3px;
+}
+
+.cf-transaction-purpose {
+    font-size: 0.85em;
+    color: var(--cf-text-light);
+    font-style: italic;
+    margin-top: 0;
+}
+
+.cf-transaction-meta {
+    flex-shrink: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-left: 15px;
 }
 
-.transaction-date {
+.cf-transaction-date {
     font-size: 0.85em;
-    color: var(--text-secondary);
-    margin-bottom: 5px; /* Space below date */
+    color: var(--cf-text-secondary);
+    margin-bottom: 5px;
 }
 
-.transaction-type {
+.cf-transaction-type {
     font-size: 0.8em;
     padding: 4px 8px;
     border-radius: 5px;
     font-weight: 600;
     color: white;
-    background-color: var(--blue-accent); /* General type background */
+    background-color: var(--cf-blue-accent);
 }
 
-/* Specific styling for the status on the transaction history (using same classes as debit/credit) */
-.transaction-item.transaction-type-debit .transaction-type { /* Target the inner span for background */
-    background-color: var(--red-error); /* Use red for debits */
+.cf-transaction-item.cf-transaction-type-debit .cf-transaction-type {
+    background-color: var(--cf-red-error);
 }
 
-.transaction-item.transaction-type-credit .transaction-type { /* Target the inner span for background */
-    background-color: var(--green-success); /* Use green for credits */
+.cf-transaction-item.cf-transaction-type-credit .cf-transaction-type {
+    background-color: var(--cf-green-success);
 }
 
-
-/* --- Responsive Adjustments --- */
-
-/* Tablet (max-width: 768px) */
 @media (max-width: 768px) {
-    .cust-func-container {
+    .cf-cust-func-container {
         padding: 15px;
     }
 
-    .cust-func-card {
+    .cf-cust-func-card {
         padding: 20px;
     }
 
-    .cust-func-card-title {
+    .cf-cust-func-card-title {
         font-size: 1.8em;
     }
 
-    .cust-func-form-input,
-    .cust-func-primary-button,
-    .cust-func-secondary-button {
+    .cf-cust-func-form-input,
+    .cf-cust-func-primary-button,
+    .cf-cust-func-secondary-button {
         padding: 10px;
         font-size: 0.95em;
     }
 
-    .cust-func-button-group {
-        flex-direction: column; /* Stack buttons on small screens */
+    .cf-cust-func-button-group {
+        flex-direction: column;
         gap: 10px;
     }
 
-    .cust-func-primary-button,
-    .cust-func-secondary-button {
-        width: 100%; /* Full width when stacked */
+    .cf-cust-func-primary-button,
+    .cf-cust-func-secondary-button {
+        width: 100%;
     }
 
-    .cust-func-confirmation-details {
+    .cf-cust-func-confirmation-details {
         padding: 15px;
     }
 
-    .transaction-item {
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center align contents */
+    .cf-transaction-item {
+        flex-direction: column;
+        align-items: center;
         text-align: center;
     }
-    .transaction-icon {
+    .cf-transaction-icon {
         margin-right: 0;
         margin-bottom: 10px;
     }
-    .transaction-details {
+    .cf-transaction-details {
         width: 100%;
         margin-bottom: 10px;
     }
-    .transaction-meta {
+    .cf-transaction-meta {
         width: 100%;
         margin-left: 0;
-        align-items: center; /* Center align meta items */
+        align-items: center;
         padding-top: 10px;
-        border-top: 1px dashed var(--card-border);
+        border-top: 1px dashed var(--cf-card-border);
     }
-    .transaction-amount, .transaction-info, .transaction-purpose, .transaction-date, .transaction-type {
-        text-align: center; /* Ensure text alignment is consistent */
+    .cf-transaction-amount, .cf-transaction-info, .cf-transaction-purpose, .cf-transaction-date, .cf-transaction-type {
+        text-align: center;
     }
 }
 
-/* Mobile (max-width: 480px) */
 @media (max-width: 480px) {
-    .cust-func-container {
+    .cf-cust-func-container {
         padding: 10px;
     }
 
-    .cust-func-card {
+    .cf-cust-func-card {
         padding: 15px;
     }
 
-    .cust-func-card-title {
+    .cf-cust-func-card-title {
         font-size: 1.5em;
     }
 
-    .cust-func-form-input {
+    .cf-cust-func-form-input {
         font-size: 0.9em;
     }
 
-    .cust-func-loading-message,
-    .cust-func-error-message,
-    .cust-func-success-message {
+    .cf-cust-func-loading-message,
+    .cf-cust-func-error-message,
+    .cf-cust-func-success-message {
         padding: 8px;
         font-size: 0.85em;
     }
 }
 
-/* --- Modal Styles (for Cust_Pass_Ver) --- */
-.modal-overlay {
-    position: fixed; /* Stays in place even when scrolling */
+.cf-modal-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--modal-overlay-bg); /* Semi-transparent background */
+    background-color: var(--cf-modal-overlay-bg);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure it's on top of other content */
-    backdrop-filter: blur(5px); /* Optional: blur background for better focus */
+    z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
-.modal-content {
-    background-color: var(--modal-bg);
-    padding: 2.5rem; /* Adjusted from 30px */
+.cf-modal-content {
+    background-color: var(--cf-modal-bg);
+    padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: var(--modal-shadow); /* Uses modal-shadow variable */
-    width: 90%; /* Responsive width */
-    max-width: 450px; /* Max width for larger screens */
+    box-shadow: var(--cf-modal-shadow);
+    width: 90%;
+    max-width: 450px;
     text-align: center;
-    position: relative; /* For positioning close button */
-    box-sizing: border-box; /* Include padding in width */
-    color: var(--modal-text);
+    position: relative;
+    box-sizing: border-box;
+    color: var(--cf-modal-text);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-    animation: fadeInScale 0.3s ease-out forwards; /* Added animation */
+    animation: fadeInScale 0.3s ease-out forwards;
 }
 
 @keyframes fadeInScale {
@@ -598,120 +573,1539 @@ html, body {
     }
 }
 
-.modal-title {
-    font-size: 1.8rem; /* Adjusted from 1.8em */
+.cf-modal-title {
+    font-size: 1.8rem;
     font-weight: bold;
-    margin-bottom: 1rem; /* Adjusted from 15px */
-    color: var(--modal-text);
+    margin-bottom: 1rem;
+    color: var(--cf-modal-text);
 }
 
-.modal-description {
-    font-size: 1rem; /* Adjusted from 1em */
-    color: var(--modal-text-secondary);
-    margin-bottom: 1.5rem; /* Adjusted from 20px */
+.cf-modal-description {
+    font-size: 1rem;
+    color: var(--cf-modal-text-secondary);
+    margin-bottom: 1.5rem;
 }
 
-/* Specific styling for form elements within the modal */
-.modal-content .form-group { /* Target form-group inside modal-content */
+.cf-modal-content .cf-form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5rem; /* Adjusted from 15px */
-    text-align: left; /* Aligns content to left within form group */
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
-.modal-content .form-group label { /* Target label inside modal's form-group */
-    display: block; /* Ensure label takes full width */
-    margin-bottom: 0.6rem; /* Adjusted from 8px */
+.cf-modal-content .cf-form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
     font-weight: 600;
-    color: var(--modal-text-secondary); /* Use modal-specific text color */
+    color: var(--cf-modal-text-secondary);
 }
 
-.modal-input {
-    width: 100%; /* Full width */
-    padding: 0.8rem 1rem; /* Adjusted from 12px */
-    border: 1px solid var(--modal-border);
+.cf-modal-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--cf-modal-border);
     border-radius: 8px;
-    font-size: 1rem; /* Adjusted from 1em */
-    color: var(--modal-text);
-    background-color: var(--bg-primary); /* Use primary background for inputs */
+    font-size: 1rem;
+    color: var(--cf-modal-text);
+    background-color: var(--cf-bg-primary);
     transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Crucial for width: 100% with padding */
+    box-sizing: border-box;
 }
 
-.modal-input:focus {
-    border-color: var(--blue-accent);
+.cf-modal-input:focus {
+    border-color: var(--cf-blue-accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--blue-accent-rgb), 0.2);
+    box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.2);
 }
 
-.modal-error {
-    color: var(--red-error); /* Using --red-error from root, which maps to --red-debit in user's previous code */
-    font-size: 0.9rem; /* Adjusted from 0.9em */
-    margin-top: 1rem; /* Adjusted from -0.8rem and 10px */
-    margin-bottom: 1rem; /* Added margin-bottom for consistency */
-    text-align: center; /* Ensure error message is centered */
+.cf-modal-error {
+    color: var(--cf-red-error);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 
-.modal-actions {
+.cf-modal-actions {
     display: flex;
     justify-content: center;
-    gap: 1rem; /* Space between buttons, adjusted from 15px */
-    margin-top: 2rem; /* Adjusted from 20px */
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
-.modal-button {
-    padding: 0.8rem 1.8rem; /* Adjusted from 12px 25px */
+.cf-modal-button {
+    padding: 0.8rem 1.8rem;
     border: none;
     border-radius: 8px;
-    font-size: 1.05rem; /* Adjusted from 1.05em */
+    font-size: 1.05rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
     min-width: 100px;
 }
 
-.modal-button.primary {
-    background-color: var(--blue-accent);
+.cf-modal-button.primary {
+    background-color: var(--cf-blue-accent);
     color: white;
 }
 
-.modal-button.primary:hover {
-    background-color: var(--blue-accent-hover);
+.cf-modal-button.primary:hover {
+    background-color: var(--cf-blue-accent-hover);
     transform: translateY(-1px);
 }
 
-.modal-button.secondary {
+.cf-modal-button.secondary {
     background-color: transparent;
-    color: var(--blue-accent);
-    border: 1px solid var(--blue-accent);
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
 }
 
-.modal-button.secondary:hover {
-    background-color: rgba(var(--blue-accent-rgb), 0.1); /* Adjusted from 0.05 */
+.cf-modal-button.secondary:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.1);
     transform: translateY(-1px);
 }
 
-/* Responsive adjustments for modal */
 @media (max-width: 600px) {
-    .modal-content {
+    .cf-modal-content {
         padding: 1.5rem;
     }
-    .modal-title {
+    .cf-modal-title {
         font-size: 1.5rem;
     }
-    .modal-description {
+    .cf-modal-description {
         font-size: 0.9rem;
     }
-    .modal-button {
+    .cf-modal-button {
         padding: 0.7rem 1.2rem;
         font-size: 0.95rem;
     }
-    .modal-actions {
+    .cf-modal-actions {
         flex-direction: column;
         gap: 10px;
     }
-    .modal-button {
+    .cf-modal-button {
         width: 100%;
+    }
+}
+
+/* NEW STYLES FROM Cust_Loan_Apply.tsx */
+
+/* General Body and Container Styles */
+.loan-application-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+.loan-header {
+  background-color: #004085; /* Dark blue */
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 2.5em;
+}
+
+.logo-text {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.header-title {
+  text-align: right;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+
+.header-title p {
+  margin: 5px 0 0;
+  font-size: 1em;
+  opacity: 0.9;
+}
+
+/* Main Application Layout */
+.application-layout {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column on small screens */
+  gap: 30px;
+}
+
+@media (min-width: 768px) {
+  .application-layout {
+    grid-template-columns: 300px 1fr; /* Two columns on larger screens */
+  }
+}
+
+/* Progress and Calculator Card Styles */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.progress-card,
+.calculator-card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.progress-card h3,
+.calculator-card h3 {
+  color: #004085;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.1em;
+  color: #888;
+}
+
+.step.active {
+  font-weight: bold;
+  color: #007bff; /* Blue for active step */
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.step.active .step-number {
+  background-color: #007bff;
+  color: white;
+}
+
+.calculator-card .calc-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.05em;
+}
+
+.calculator-card .calc-row.total {
+  font-weight: bold;
+  font-size: 1.15em;
+  color: #004085;
+  border-top: 1px dashed #eee;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+/* Form Section Styles */
+.form-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.loan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-section-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fdfdfd;
+}
+
+.section-title {
+  color: #004085;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 600px) {
+  .form-row {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 12px;
+  color: #666;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  padding-left: 35px; /* For prefix */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Include padding in width */
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #dc3545; /* Red for error */
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
+.field-hint {
+  font-size: 0.8em;
+  color: #777;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+/* Submit Section Styles */
+.submit-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.terms-notice {
+  font-size: 0.9em;
+  text-align: center;
+  color: #666;
+}
+
+.terms-notice .link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-notice .link:hover {
+  text-decoration: underline;
+}
+
+.btn-submit {
+  background-color: #28a745; /* Green */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.submit-error-message {
+  background-color: #ffebe8; /* Light red background */
+  color: #dc3545; /* Dark red text */
+  border: 1px solid #dc3545;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Success Message Styles */
+.success-message {
+  background-color: #e6ffe6; /* Light green */
+  border: 1px solid #28a745;
+  color: #28a745;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.success-icon {
+  font-size: 4em;
+  color: #28a745;
+}
+
+.success-message h2 {
+  color: #28a745;
+  margin: 0;
+  font-size: 2em;
+}
+
+.success-message p {
+  margin: 0;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header-title {
+    text-align: center;
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+
+  .form-section-card {
+    padding: 15px;
+  }
+
+  .form-row {
+    gap: 15px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1em;
+  }
+
+  .success-message {
+    padding: 30px;
+  }
+}
+
+/* In CustFunction.css */
+.logo-section {
+  display: flex; /* Align items horizontally */
+  align-items: center; /* Vertically center items */
+}
+
+.logo-image {
+  height: 90px; /* Reduced height for a smaller logo */
+  width: auto; /* Maintain aspect ratio */
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.5em; /* Adjust text size if needed */
+}
+
+.cf-table-container {
+    width: 100%;
+    overflow-x: auto; /* Ensures table is scrollable on small screens if it overflows */
+    margin-top: 20px;
+    border: 1px solid var(--cf-card-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+}
+
+.cf-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between table cells */
+    text-align: left;
+}
+
+.cf-table-header {
+    background-color: var(--cf-bg-primary); /* Use primary background for header */
+    border-bottom: 1px solid var(--cf-card-border);
+}
+
+.cf-table-head {
+    padding: 15px 20px;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: var(--cf-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cf-table-body .cf-table-row {
+    border-bottom: 1px solid var(--cf-card-border);
+    transition: background-color 0.2s ease;
+}
+
+.cf-table-body .cf-table-row:last-child {
+    border-bottom: none; /* No border for the last row */
+}
+
+.cf-table-body .cf-table-row:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.05); /* Subtle hover effect */
+}
+
+.cf-table-cell {
+    padding: 15px 20px;
+    font-size: 0.95em;
+    color: var(--cf-text-primary);
+    vertical-align: middle; /* Align content nicely */
+}
+
+.cf-table-cell-bold {
+    font-weight: 600;
+    color: var(--cf-text-primary);
+}
+
+
+/* --- Badge Styling for Status (as suggested in previous response) --- */
+.cf-badge {
+    padding: 6px 12px;
+    border-radius: 20px; /* Pill shape */
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cf-badge-success {
+    background-color: rgba(var(--cf-green-success-rgb), 0.15);
+    color: var(--cf-green-success);
+    border: 1px solid var(--cf-green-success);
+}
+
+.cf-badge-error {
+    background-color: rgba(var(--cf-red-error-rgb), 0.15);
+    color: var(--cf-red-error);
+    border: 1px solid var(--cf-red-error);
+}
+
+.cf-badge-warning {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.15); /* Using blue accent for warning/pending */
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
+}
+
+/* --- General Layout and Text Alignment Fixes --- */
+
+.cf-text-center {
+    text-align: center;
+}
+
+.cf-py-4 {
+    padding-top: 1rem; /* Adjust as needed, 1rem = 16px */
+    padding-bottom: 1rem;
+}
+
+/* Ensure icons and text are aligned in headers */
+.flex.items-center {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjust card content padding for better consistency */
+.cf-cust-func-card-content {
+    padding: 10px 0; /* Adjust vertical padding to integrate with table margins */
+}
+
+/* Ensure buttons use the predefined styles consistently */
+.btn.btn-secondary {
+    /* Existing button styles from your LoanSubmissionComplete or similar components */
+    background-color: transparent;
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.btn.btn-secondary:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.05);
+    transform: translateY(-2px);
+}
+
+
+/* Adjustments for the main dashboard container/content */
+.cf-cust-func-container {
+    padding: 20px; /* Consistent padding around main content */
+    align-items: flex-start; /* Align content to the top */
+}
+
+.cf-cust-func-content {
+    margin-top: 20px; /* Space from header to first card */
+}
+
+/* Adjustments for headers within the component to match card titles */
+.cf-cust-func-card-title.flex.items-center {
+    font-size: 1.8em; /* Slightly smaller than main title but prominent */
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin-bottom: 15px; /* Space between title and description */
+    border-bottom: 1px solid var(--cf-card-border); /* Subtle line below header */
+    padding-bottom: 10px;
+    justify-content: center;
+    gap:20px;
+}
+
+/* Ensure the main h2 header has proper styling */
+.cf-cust-func-card-title {
+    font-size: 2.2em; /* Main page title, as per your root styles */
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin: 0; /* Reset margins */
+}
+
+/* Minor margin adjustments for description under card titles */
+.cf-text-secondary {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* For the loading and error messages */
+.cf-cust-func-container.flex.items-center.justify-center.min-h-\[calc\(100vh-4rem\)\] {
+    min-height: calc(100vh - 4rem); /* To center content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.cf-cust-func-card.p-6.text-center {
+    padding: 2.5rem; /* Larger padding for errors */
+    text-align: center;
+}
+
+
+/* -------------------------------------------
+    DARK MODE STYLES
+    ------------------------------------------- */
+html.dark {
+    /* Main Dark Mode Variables (from your previous feedback) */
+    --cf-bg-primary: #2d2d2d;
+    --cf-bg-secondary: #1a1a1a;
+    --cf-text-primary: #e0e0e0;
+    --cf-text-secondary: #b0b0b0;
+    --cf-text-light: #999;
+    --cf-card-border: #444;
+    --cf-box-shadow-light: rgba(255, 255, 255, 0.05);
+    --cf-box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    --cf-blue-accent: #5b9bd5;
+    --cf-blue-accent-hover: #3a7bbd;
+    --cf-blue-accent-rgb: 91, 155, 213;
+
+    --cf-green-success: #4CAF50;
+    --cf-green-success-rgb: 76, 175, 80;
+
+    --cf-red-error: #EF5350;
+    --cf-red-error-rgb: 239, 83, 80;
+
+    --cf-disabled-input-bg: #3c3c3c;
+
+    --cf-modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --cf-modal-bg: var(--cf-bg-secondary);
+    --cf-modal-border: var(--cf-card-border);
+    --cf-modal-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+    --cf-modal-text: var(--cf-text-primary);
+    --cf-modal-text-secondary: var(--cf-text-secondary);
+
+    /* User-provided dark mode styles, adapted to body.dark-mode for consistency */
+    background-color: #1a202c; /* Overriding --cf-bg-primary slightly for body */
+    color: white; /* Overriding --cf-text-primary slightly for body */
+
+    /* If these classes are used in your HTML, they will be styled.
+       They are not present in the Cust_Edit_Profile or Cust_Transfer_History components by default. */
+    .header { background-color: #1e3a8a; }
+    .logoText { color: white; }
+    .navLink { color: #cbd5e0; }
+    .navLink:hover { color: white; }
+    .signInButton { background-color: #385A93; color: white; border-color: #385A93; }
+    .signInButton:hover { background-color: #2b4a7d; border-color: #2b4a7d; }
+    .openAccountButton { background-color: #ed8936; color: white; }
+    .openAccountButton:hover { background-color: #dd6b20; }
+    .hero { background-color: #2c5282; color: white; }
+    .heroTitle { color: white; }
+    .heroTitleAccent { color: #f6ad55; }
+    .badge { background-color: rgba(255, 255, 255, 0.2); color: white; }
+    .primaryButton { background-color: #f6ad55; color: #1a202c; }
+    .primaryButton:hover { background-color: #ed8936; }
+    .secondaryButton { background-color: transparent; border-color: #cbd5e0; color: #cbd5e0; }
+    .secondaryButton:hover { background-color: rgba(255, 255, 255, 0.05); }
+    .heroDescription { color: #a0aec0; }
+    .statLabel { color: #cbd5e0; }
+    .imageContainer { background-color: #2d3748; }
+    .features { background-color: #1a202c; }
+    .sectionTitle, .featureTitle { color: white; }
+    .sectionDescription, .featureDescription { color: #a0aec0; }
+    .featureCard { background-color: #2d3748; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+    .services { background-color: #252f3f; }
+    .serviceIcon { background-color: #1e3a8a; }
+    .serviceTitle { color: white; }
+    .serviceDescription { color: #a0aec0; }
+    .footer { background-color: #1a202c; }
+    .footerDescription, .footerContact, .footerLink, .footerCopyright, .footerBottomLink { color: #a0aec0; }
+    .footerLink:hover, .footerBottomLink:hover { color: white; }
+
+    /* Dark Mode specifics for existing cf- classes */
+    .cf-cust-func-container {
+        background-color: var(--cf-bg-primary);
+    }
+    .cf-cust-func-content {
+        background-color: var(--cf-bg-primary);
+    }
+    .cf-cust-func-card {
+        background-color: var(--cf-bg-secondary);
+        box-shadow: 0 4px 15px var(--cf-box-shadow-medium);
+    }
+    .cf-cust-func-card-title,
+    .cf-transactions-history-title {
+        color: var(--cf-text-primary);
+    }
+    .cf-text-secondary {
+        color: var(--cf-text-secondary);
+    }
+    .cf-cust-func-form-label {
+        color: var(--cf-text-secondary);
+    }
+    .cf-cust-func-form-input {
+        color: var(--cf-text-primary);
+        background-color: var(--cf-bg-primary);
+        border-color: var(--cf-card-border);
+    }
+    .cf-cust-func-form-input:focus {
+        border-color: var(--cf-blue-accent);
+        box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.3);
+    }
+    .cf-cust-func-form-input:disabled {
+        background-color: var(--cf-disabled-input-bg) !important;
+    }
+    .cf-cust-func-primary-button {
+        background-color: var(--cf-blue-accent);
+        box-shadow: 0 4px 10px rgba(var(--cf-blue-accent-rgb), 0.2);
+    }
+    .cf-cust-func-primary-button:hover {
+        background-color: var(--cf-blue-accent-hover);
+        box-shadow: 0 6px 12px rgba(var(--cf-blue-accent-rgb), 0.3);
+    }
+    .cf-cust-func-secondary-button {
+        color: var(--cf-blue-accent);
+        border-color: var(--cf-blue-accent);
+    }
+    .cf-cust-func-secondary-button:hover {
+        background-color: rgba(var(--cf-blue-accent-rgb), 0.05);
+    }
+    .cf-cust-func-loading-message {
+        color: var(--cf-text-primary);
+        background-color: rgba(var(--cf-blue-accent-rgb), 0.1);
+        border-color: var(--cf-blue-accent);
+    }
+    .cf-cust-func-error-message {
+        color: var(--cf-red-error);
+        background-color: rgba(var(--cf-red-error-rgb), 0.1);
+        border-color: var(--cf-red-error);
+    }
+    .cf-cust-func-success-message {
+        color: var(--cf-green-success);
+        background-color: rgba(var(--cf-green-success-rgb), 0.1);
+        border-color: var(--cf-green-success);
+    }
+    .cf-transaction-item {
+        background-color: var(--cf-bg-primary);
+        border-color: var(--cf-card-border);
+        box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    }
+    .cf-transaction-amount {
+        color: var(--cf-text-primary);
+    }
+    .cf-transaction-info {
+        color: var(--cf-text-secondary);
+    }
+    .cf-transaction-purpose {
+        color: var(--cf-text-light);
+    }
+    .cf-transaction-type {
+        background-color: var(--cf-blue-accent);
+    }
+    .cf-transaction-item.cf-transaction-type-debit .cf-transaction-type {
+        background-color: var(--cf-red-error);
+    }
+    .cf-transaction-item.cf-transaction-type-credit .cf-transaction-type {
+        background-color: var(--cf-green-success);
+    }
+    .cf-no-transactions-message {
+        color: var(--cf-text-secondary);
+        border-color: var(--cf-card-border);
+    }
+}
+
+
+/* -------------------------------------------
+    BASE STYLES (Desktop First)
+    ------------------------------------------- */
+html, body {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: var(--cf-font-size-base); /* Base font size */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+.cf-main-app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cf-cust-func-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--cf-bg-primary);
+    color: var(--cf-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-content {
+    width: 100%;
+    max-width: 950px; /* Wider for desktop */
+    margin: 20px auto; /* Explicit margin-top and auto for left/right to center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cf-cust-func-card {
+    background-color: var(--cf-bg-secondary);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--cf-box-shadow-medium);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 900px; /* Wider for desktop */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-card-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.cf-cust-func-card-title {
+    font-size: var(--cf-font-size-h2); /* Uses variable */
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin: 0;
+    text-align: center;
+}
+
+.cf-cust-func-card-title.flex.items-center {
+    font-size: var(--cf-font-size-h3); /* Uses variable */
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--cf-card-border);
+    padding-bottom: 10px;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Common text styles */
+.cf-text-secondary {
+    color: var(--cf-text-secondary);
+    margin-top: 5px; /* Minor margin adjustment */
+    margin-bottom: 15px; /* Minor margin adjustment */
+}
+.cf-text-center {
+    text-align: center;
+}
+.cf-mb-4 {
+    margin-bottom: 1rem;
+}
+
+/* Form Styles */
+.profile-edit-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px 20px;
+    padding-top: 10px;
+    justify-items: center; /* Center grid items horizontally */
+    width: 100%; /* Ensure form takes full width of its parent */
+}
+
+.cf-cust-func-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%; /* Ensure form group takes full width within its grid cell */
+}
+
+.cf-cust-func-form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.cf-cust-func-form-label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cf-text-secondary);
+    font-size: var(--cf-font-size-label); /* Uses variable */
+}
+
+.cf-cust-func-form-input {
+    padding: 12px;
+    border: 1px solid var(--cf-card-border);
+    border-radius: 8px;
+    font-size: var(--cf-font-size-input); /* Uses variable */
+    color: var(--cf-text-primary);
+    background-color: var(--cf-bg-primary);
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-form-input:focus {
+    border-color: var(--cf-blue-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-cust-func-form-input:disabled {
+    background-color: var(--cf-disabled-input-bg) !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Button Styles */
+.cf-cust-func-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.cf-cust-func-primary-button,
+.cf-cust-func-secondary-button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--cf-font-size-button); /* Uses variable */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    min-width: 150px;
+    text-align: center;
+}
+
+.cf-cust-func-primary-button {
+    background-color: var(--cf-blue-accent);
+    color: white;
+    box-shadow: 0 4px 10px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-cust-func-primary-button:hover {
+    background-color: var(--cf-blue-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(var(--cf-blue-accent-rgb), 0.3);
+}
+
+.cf-cust-func-primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(var(--cf-blue-accent-rgb), 0.2);
+}
+
+.cf-cust-func-primary-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.cf-center-button { /* For centering the single button in profile edit form */
+    margin: 0 auto;
+    display: block;
+    width: fit-content; /* Make button only as wide as its content */
+    max-width: 100%; /* Ensure it doesn't overflow */
+}
+
+
+.cf-cust-func-secondary-button {
+    background-color: transparent;
+    color: var(--cf-blue-accent);
+    border: 1px solid var(--cf-blue-accent);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: var(--cf-font-size-base); /* Uses variable, slightly smaller for secondary */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.cf-cust-func-secondary-button:hover {
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cf-cust-func-secondary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Message Styles */
+.cf-cust-func-loading-message,
+.cf-cust-func-error-message,
+.cf-cust-func-success-message {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: var(--cf-font-size-message); /* Uses variable */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-loading-message {
+    color: var(--cf-text-primary);
+    background-color: rgba(var(--cf-blue-accent-rgb), 0.1);
+    border: 1px solid var(--cf-blue-accent);
+}
+
+.cf-cust-func-error-message {
+    color: var(--cf-red-error);
+    background-color: rgba(var(--cf-red-error-rgb), 0.1);
+    border: 1px solid var(--cf-red-error);
+}
+
+.cf-cust-func-success-message {
+    color: var(--cf-green-success);
+    background-color: rgba(var(--cf-green-success-rgb), 0.1);
+    border: 1px solid var(--cf-green-success);
+}
+
+/* Confirmation and Account Details Sections */
+.cf-cust-func-confirmation-details {
+    padding: 20px;
+    border: 1px solid var(--cf-card-border);
+    border-radius: 12px;
+    background-color: var(--cf-bg-primary);
+    text-align: center;
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.cf-cust-func-confirmation-details h3 {
+    font-size: 1.5em; /* Specific size */
+    color: var(--cf-text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cf-cust-func-confirmation-details p {
+    margin-bottom: 10px;
+    font-size: var(--cf-font-size-base); /* Uses variable */
+    color: var(--cf-text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cf-cust-func-confirmation-details strong {
+    color: var(--cf-text-primary);
+}
+
+.cf-cust-func-warning-text {
+    color: var(--cf-red-error);
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: var(--cf-font-size-message); /* Uses variable */
+    text-align: center;
+}
+
+.cf-account-details-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--cf-card-border);
+    text-align: center;
+}
+
+.cf-account-details-section p {
+    justify-content: center;
+    text-align: center;
+}
+
+/* Transaction History Specifics */
+.cf-transaction-history-section {
+    margin-top: 20px;
+}
+
+.cf-transactions-history-title {
+    font-size: var(--cf-font-size-h3); /* Uses variable */
+    font-weight: bold;
+    color: var(--cf-text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cf-no-transactions-message {
+    text-align: center;
+    color: var(--cf-text-secondary);
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed var(--cf-card-border);
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: var(--cf-font-size-message); /* Uses variable */
+}
+
+.cf-transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cf-transaction-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--cf-bg-primary);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--cf-box-shadow-light);
+    transition: all 0.2s ease;
+    border: 1px solid var(--cf-card-border);
+    flex-wrap: wrap;
+    justify-content: center; /* Ensures content inside is centered horizontally */
+}
+
+.cf-transaction-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.cf-transaction-icon {
+    flex-shrink: 0;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.cf-transaction-type-debit .cf-transaction-icon {
+    color: white;
+    background-color: var(--cf-red-error);
+}
+
+.cf-transaction-type-credit .cf-transaction-icon {
+    color: white;
+    background-color: var(--cf-green-success);
+}
+
+.cf-transaction-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Center text within details */
+    align-items: center; /* Center items within details */
+}
+
+.cf-transaction-amount {
+    font-size: var(--cf-font-size-transaction-amount); /* Uses variable */
+    font-weight: 700;
+    color: var(--cf-text-primary);
+    margin-bottom: 5px;
+}
+
+.cf-transaction-info {
+    font-size: var(--cf-font-size-transaction-info); /* Uses variable */
+    color: var(--cf-text-secondary);
+    margin-bottom: 3px;
+}
+
+.cf-transaction-purpose {
+    font-size: var(--cf-font-size-transaction-purpose); /* Uses variable */
+    color: var(--cf-text-light);
+    font-style: italic;
+    margin-top: 0;
+}
+
+.cf-transaction-meta {
+    flex-shrink: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.cf-transaction-date {
+    font-size: var(--cf-font-size-transaction-meta); /* Uses variable */
+    color: var(--cf-text-secondary);
+    margin-bottom: 5px;
+}
+
+.cf-transaction-type {
+    font-size: var(--cf-font-size-transaction-type); /* Uses variable */
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--cf-blue-accent);
+}
+
+.cf-transaction-item.cf-transaction-type-debit .cf-transaction-type {
+    background-color: var(--cf-red-error);
+}
+
+.cf-transaction-item.cf-transaction-type-credit .cf-transaction-type {
+    background-color: var(--cf-green-success);
+}
+
+/* Carousel Specific Styles */
+.cf-carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.cf-carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.cf-carousel-item {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.cf-carousel-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.cf-carousel-nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.cf-carousel-nav-button:disabled {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+}
+
+.cf-carousel-prev {
+    left: 10px;
+}
+
+.cf-carousel-next {
+    right: 10px;
+}
+
+/* Specific target for individual card margin adjustment outside carousel */
+.cf-cust-func-card.mb-6 {
+    margin-bottom: 20px;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablet (e.g., 641px to 1024px) */
+@media (max-width: 1024px) {
+    :root {
+        --cf-font-size-base: 0.95em; /* ~15.2px */
+        --cf-font-size-h1: 2.2em; /* ~35.2px */
+        --cf-font-size-h2: 2em; /* ~32px */
+        --cf-font-size-h3: 1.6em; /* ~25.6px */
+        --cf-font-size-label: 0.95em;
+        --cf-font-size-input: 0.95em;
+        --cf-font-size-button: 1em;
+        --cf-font-size-message: 0.9em;
+        --cf-font-size-transaction-amount: 1.1em;
+        --cf-font-size-transaction-info: 0.9em;
+        --cf-font-size-transaction-purpose: 0.8em;
+        --cf-font-size-transaction-meta: 0.8em;
+        --cf-font-size-transaction-type: 0.75em;
+    }
+
+    .cf-cust-func-container {
+        padding: 15px;
+    }
+
+    .cf-cust-func-content {
+        max-width: 768px; /* Adjust max-width for tablets */
+        margin: 15px auto;
+    }
+
+    .cf-cust-func-card {
+        padding: 25px;
+        max-width: 720px; /* Adjust max-width for tablets */
+        margin-bottom: 15px;
+    }
+
+    .profile-edit-form {
+        grid-template-columns: 1fr 1fr; /* Two columns on larger tablets */
+        gap: 15px;
+    }
+}
+
+/* Mobile (e.g., up to 640px) */
+@media (max-width: 640px) {
+    :root {
+        --cf-font-size-base: 0.9em; /* ~14.4px */
+        --cf-font-size-h1: 2em; /* ~32px */
+        --cf-font-size-h2: 1.8em; /* ~28.8px */
+        --cf-font-size-h3: 1.5em; /* ~24px */
+        --cf-font-size-label: 0.9em;
+        --cf-font-size-input: 0.9em;
+        --cf-font-size-button: 0.95em;
+        --cf-font-size-message: 0.85em;
+        --cf-font-size-transaction-amount: 1em;
+        --cf-font-size-transaction-info: 0.85em;
+        --cf-font-size-transaction-purpose: 0.75em;
+        --cf-font-size-transaction-meta: 0.75em;
+        --cf-font-size-transaction-type: 0.7em;
+    }
+
+    .cf-cust-func-container {
+        padding: 10px;
+    }
+
+    .cf-cust-func-content {
+        max-width: 100%; /* Full width for mobile */
+        margin: 10px auto;
+        padding-top: 10px; /* Less top padding */
+    }
+
+    .cf-cust-func-card {
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 10px var(--cf-box-shadow-light); /* Lighter shadow for mobile */
+    }
+
+    .cf-cust-func-card-header {
+        margin-bottom: 20px;
+    }
+
+    .profile-edit-form {
+        grid-template-columns: 1fr; /* Single column for mobile */
+        gap: 10px;
+    }
+
+    .cf-cust-func-button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cf-cust-func-primary-button,
+    .cf-cust-func-secondary-button {
+        width: 100%;
+        min-width: unset;
+        padding: 12px 20px;
+    }
+
+    .cf-cust-func-loading-message,
+    .cf-cust-func-error-message,
+    .cf-cust-func-success-message {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .cf-cust-func-confirmation-details {
+        padding: 15px;
+    }
+
+    .cf-transaction-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 12px;
+    }
+    .cf-transaction-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 30px;
+        height: 30px;
+    }
+    .cf-transaction-details {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .cf-transaction-meta {
+        width: 100%;
+        margin-left: 0;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px dashed var(--cf-card-border);
+    }
+    .cf-transaction-amount, .cf-transaction-info, .cf-transaction-purpose, .cf-transaction-date, .cf-transaction-type {
+        text-align: center;
+    }
+    .cf-carousel-nav-button {
+        padding: 8px;
+        font-size: 0.9em;
     }
 }

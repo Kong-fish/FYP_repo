@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 import '../shared/normalize.css';
 import '../shared/Header.css';
 import './Register.css'; 

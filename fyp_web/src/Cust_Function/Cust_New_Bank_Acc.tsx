@@ -1,43 +1,40 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
-import '../Dashboard/CustomerDashboard.css'; 
-import '../shared/normalize.css';
-import '../shared/Header.css';
-import DarkModeToggle from '../shared/DarkModeToggle.tsx';
-import '../shared/Header.css';
+import './CustFunction.css';
+import supabase from '../supabaseClient.js';
 
-function Cust_New_Bank_Acc() {
+function Cust_New_Bank_Account_Application() {
     const navigate = useNavigate();
     const [customer_id, setCustomerId] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [submitError, setSubmitError] = useState<string | null>(null); // State for submission error
+    const [isSuccess, setIsSuccess] = useState<boolean>(false); // State for success message
 
-    // Form data state
+    // Form data state updated for bank account application
     const [formData, setFormData] = useState({
-        cardType: '',
-        income: '',
-        employmentStatus: '',
-        residenceType: '',
-        monthlyExpenses: '',
-        existingDebt: '',
-        creditScore: '',
-        purpose: '',
+        accountType: '',
+        initialBalance: '',
+        nickname: '',
     });
 
     useEffect(() => {
         const getCustomerId = async () => {
+            setLoading(true);
+            setSubmitError(null); // Clear any previous submission errors
+
             const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
             if (sessionError) {
                 console.error('Error fetching session:', sessionError.message);
+                setSubmitError('Failed to retrieve user session. Please try logging in again.');
                 navigate('/customer-login');
                 return;
             }
 
             if (!session) {
+                setSubmitError('You are not logged in. Redirecting to login page.');
                 navigate('/customer-login');
                 return;
             }
@@ -53,12 +50,17 @@ function Cust_New_Bank_Acc() {
 
             if (error) {
                 console.error('Error fetching customer ID:', error.message);
-                navigate('/customer-login'); // Or an error page
+                setSubmitError('Error fetching customer profile. Please ensure your profile is complete.');
+                navigate('/customer-login'); // Or an page for profile completion
                 return;
             }
 
             if (data) {
                 setCustomerId(data.customer_id);
+            } else {
+                setSubmitError('Customer profile not found. Please ensure your profile details are filled out on your dashboard.');
+                // Optionally redirect to profile completion page
+                // navigate('/customer-profile-setup');
             }
             setLoading(false);
         };
@@ -72,52 +74,54 @@ function Cust_New_Bank_Acc() {
         if (formErrors[name]) {
             setFormErrors(prev => ({ ...prev, [name]: '' }));
         }
+        // Clear general submission error when user starts typing
+        if (submitError) {
+            setSubmitError(null);
+        }
     };
 
     const validateForm = () => {
         const errors: { [key: string]: string } = {};
-        if (!formData.cardType) errors.cardType = 'Card Type is required.';
-        if (!formData.income || parseFloat(formData.income) <= 0) errors.income = 'Valid income is required.';
-        if (!formData.employmentStatus) errors.employmentStatus = 'Employment Status is required.';
-        if (!formData.residenceType) errors.residenceType = 'Residence Type is required.';
-        if (!formData.monthlyExpenses || parseFloat(formData.monthlyExpenses) < 0) errors.monthlyExpenses = 'Valid monthly expenses are required.';
-        if (!formData.existingDebt || parseFloat(formData.existingDebt) < 0) errors.existingDebt = 'Valid existing debt is required.';
-        if (!formData.creditScore || !/^\d+$/.test(formData.creditScore) || parseInt(formData.creditScore) < 300 || parseInt(formData.creditScore) > 850) errors.creditScore = 'Valid credit score (300-850) is required.';
-        if (!formData.purpose) errors.purpose = 'Purpose is required.';
+        if (!formData.accountType) errors.accountType = 'Account Type is required.';
+        if (!formData.initialBalance || parseFloat(formData.initialBalance) <= 0) errors.initialBalance = 'Valid initial balance is required.';
+        if (!formData.nickname) errors.nickname = 'Account Nickname is required.';
         setFormErrors(errors);
         return Object.keys(errors).length === 0;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSubmitError(null); // Clear previous submission errors
+        setIsSuccess(false); // Reset success state
+
         if (!validateForm()) {
+            setSubmitError("Please correct the errors in the form before submitting.");
             return;
         }
 
         if (!customer_id) {
-            alert('Customer ID not found. Please log in again.');
-            navigate('/customer-login');
+            setSubmitError('Customer ID not found. Please log in again or complete your profile.');
             return;
         }
 
         setIsSubmitting(true);
 
         try {
+            // Generate a simple unique-ish account_no for demonstration purposes
+            // In a real application, this should be generated by the database or a secure backend service.
+            const newAccountNo = `ACC-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
             const { data, error } = await supabase
-                .from('Credit_Card_Application')
+                .from('Account') // Inserting into the "Account" table
                 .insert([
                     {
                         customer_id: customer_id,
-                        card_type: formData.cardType,
-                        income: parseFloat(formData.income),
-                        employment_status: formData.employmentStatus,
-                        residence_type: formData.residenceType,
-                        monthly_expenses: parseFloat(formData.monthlyExpenses),
-                        existing_debt: parseFloat(formData.existingDebt),
-                        credit_score: parseInt(formData.creditScore),
-                        purpose: formData.purpose,
-                        application_date: new Date().toISOString(),
-                        status: 'Pending', // Initial status
+                        account_no: newAccountNo, // Providing the generated account number
+                        account_type: formData.accountType,
+                        balance: parseFloat(formData.initialBalance),
+                        nickname: formData.nickname,
+                        // account_status, created_at, approved_at, favourite_accounts
+                        // are handled by database defaults or will be set later.
                     },
                 ])
                 .select();
@@ -126,199 +130,132 @@ function Cust_New_Bank_Acc() {
                 throw error;
             }
 
-            console.log('Application submitted:', data);
-            // Navigate to success page
-            navigate('/credit-card-pending-approval');
+            console.log('Account application submitted:', data);
+            setIsSuccess(true);
+            // Navigate to a page showing pending bank account approvals or dashboard
+            navigate('/customer-new-account-success'); // Assuming this page exists
+            
+            // Optionally clear form after successful submission if not navigating immediately
+            // setFormData({
+            //     accountType: '', initialBalance: '', nickname: '',
+            // });
 
         } catch (error: any) {
-            console.error('Error submitting application:', error.message);
-            alert(`Failed to submit application: ${error.message}`);
+            console.error('Error submitting account application:', error.message);
+            setSubmitError(`Failed to submit account application: ${error.message}`);
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    if (loading) {
-        return (
-            <div className="main-app-wrapper">
-                {/* Use the new Header component with a back button */}
-                <div className="header">
-                    <button className="back-button" onClick={() => navigate('/customer-dashboard')}>
-                        Back
-                    </button>
-                    <h1 className="logo-text">Eminent Western</h1>
-                </div>
-                <div className="container" style={{ padding: '2rem', textAlign: 'center' }}>
-                    <p>Loading user data...</p>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className="main-app-wrapper">
-            <div className="header">
-                <button className="back-button" onClick={() => navigate('/customer-dashboard')}>
-                    Back
-                </button>
-                <h1 className="logo-text">Eminent Western</h1>
-            </div>
-
-            <div className="container transactions-card"> {/* Using transactions-card for the main form container */}
-                <div className="transactions-header"> {/* Use common header style */}
-                    <h2 className="transactions-title">Apply for a New Credit Card</h2> {/* Use common title style */}
+        <div className="cf-main-app-wrapper">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <header className="loan-header">
+                <div className="container">
+                    <div className="header-content">
+                        <div className="header-title">
+                            <h1>New Bank Account Application</h1> {/* Specific title for this page */}
+                        </div>
+                        <div className="logo-section">
+                            <img src="/white.png" alt="Eminent Western Logo" className="logo-image" />
+                        </div>
+                    </div>
                 </div>
-                {/* Apply transfer-form and form-group classes */}
-                <form onSubmit={handleSubmit} className="transfer-form">
-                    <div className="form-group">
-                        <label htmlFor="cardType" className="form-label">Preferred Card Type:</label>
-                        <select
-                            id="cardType"
-                            name="cardType"
-                            value={formData.cardType}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.cardType ? 'input-error' : ''}`}
-                            required
-                        >
-                            <option value="">Select a card type</option>
-                            <option value="Platinum Rewards">Platinum Rewards</option>
-                            <option value="Emerald Cashback">Emerald Cashback</option>
-                            <option value="Sapphire Travel">Sapphire Travel</option>
-                        </select>
-                        {formErrors.cardType && <p className="error-message">{formErrors.cardType}</p>}
-                    </div>
+            </header>
 
-                    <div className="form-group">
-                        <label htmlFor="income" className="form-label">Annual Income ($):</label>
-                        <input
-                            type="number"
-                            id="income"
-                            name="income"
-                            value={formData.income}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.income ? 'input-error' : ''}`}
-                            placeholder="e.g., 50000"
-                            min="0"
-                            required
-                        />
-                        {formErrors.income && <p className="error-message">{formErrors.income}</p>}
+            <div className="cf-cust-func-container">
+                {loading ? (
+                    <div className="cf-cust-func-card p-6 cf-text-center">
+                        <p className="cf-text-secondary">Loading user data...</p>
                     </div>
+                ) : (
+                    <div className="form-section">
+                        <div className="form-section-card">
+                            <h2 className="section-title">Apply for a New Bank Account</h2>
 
-                    <div className="form-group">
-                        <label htmlFor="employmentStatus" className="form-label">Employment Status:</label>
-                        <select
-                            id="employmentStatus"
-                            name="employmentStatus"
-                            value={formData.employmentStatus}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.employmentStatus ? 'input-error' : ''}`}
-                            required
-                        >
-                            <option value="">Select status</option>
-                            <option value="Employed">Employed</option>
-                            <option value="Self-Employed">Self-Employed</option>
-                            <option value="Unemployed">Unemployed</option>
-                            <option value="Student">Student</option>
-                            <option value="Retired">Retired</option>
-                        </select>
-                        {formErrors.employmentStatus && <p className="error-message">{formErrors.employmentStatus}</p>}
-                    </div>
+                            {submitError && (
+                                <div className="cf-cust-func-error-message">
+                                    {submitError}
+                                </div>
+                            )}
+                            {isSuccess && (
+                                <div className="cf-cust-func-success-message">
+                                    Your bank account application has been submitted successfully!
+                                </div>
+                            )}
 
-                    <div className="form-group">
-                        <label htmlFor="residenceType" className="form-label">Residence Type:</label>
-                        <select
-                            id="residenceType"
-                            name="residenceType"
-                            value={formData.residenceType}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.residenceType ? 'input-error' : ''}`}
-                            required
-                        >
-                            <option value="">Select type</option>
-                            <option value="Own Home">Own Home</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Live with Parents">Live with Parents</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        {formErrors.residenceType && <p className="error-message">{formErrors.residenceType}</p>}
-                    </div>
+                            <form onSubmit={handleSubmit} className="cf-cust-func-form">
+                                
+                                <div className="cf-cust-func-form-group">
+                                    <label htmlFor="accountType" className="cf-cust-func-form-label">Preferred Account Type:</label>
+                                    <select
+                                        id="accountType"
+                                        name="accountType"
+                                        value={formData.accountType}
+                                        onChange={handleChange}
+                                        className={`cf-cust-func-form-input ${formErrors.accountType ? 'error' : ''}`}
+                                        required
+                                    >
+                                        <option value="">Select an account type</option>
+                                        <option value="Savings">Savings Account</option>
+                                        <option value="Current">Current Account</option>
+                                        <option value="Fixed Deposit">Fixed Deposit Account</option>
+                                    </select>
+                                    {formErrors.accountType && <p className="error-message">{formErrors.accountType}</p>}
+                                </div>
 
-                    <div className="form-group">
-                        <label htmlFor="monthlyExpenses" className="form-label">Monthly Expenses ($):</label>
-                        <input
-                            type="number"
-                            id="monthlyExpenses"
-                            name="monthlyExpenses"
-                            value={formData.monthlyExpenses}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.monthlyExpenses ? 'input-error' : ''}`}
-                            placeholder="e.g., 1500"
-                            min="0"
-                            required
-                        />
-                        {formErrors.monthlyExpenses && <p className="error-message">{formErrors.monthlyExpenses}</p>}
-                    </div>
+                                <div className="cf-cust-func-form-group">
+                                    <label htmlFor="initialBalance" className="cf-cust-func-form-label">Initial Deposit ($):</label>
+                                    <input
+                                        type="number"
+                                        id="initialBalance"
+                                        name="initialBalance"
+                                        value={formData.initialBalance}
+                                        onChange={handleChange}
+                                        className={`cf-cust-func-form-input ${formErrors.initialBalance ? 'error' : ''}`}
+                                        placeholder="e.g., 500.00"
+                                        min="0"
+                                        step="0.01"
+                                        required
+                                    />
+                                    {formErrors.initialBalance && <p className="error-message">{formErrors.initialBalance}</p>}
+                                </div>
 
-                    <div className="form-group">
-                        <label htmlFor="existingDebt" className="form-label">Existing Debt ($):</label>
-                        <input
-                            type="number"
-                            id="existingDebt"
-                            name="existingDebt"
-                            value={formData.existingDebt}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.existingDebt ? 'input-error' : ''}`}
-                            placeholder="e.g., 5000"
-                            min="0"
-                            required
-                        />
-                        {formErrors.existingDebt && <p className="error-message">{formErrors.existingDebt}</p>}
-                    </div>
+                                <div className="cf-cust-func-form-group full-width"> {/* Make nickname full width as there's only one remaining field */}
+                                    <label htmlFor="nickname" className="cf-cust-func-form-label">Account Nickname:</label>
+                                    <input
+                                        type="text"
+                                        id="nickname"
+                                        name="nickname"
+                                        value={formData.nickname}
+                                        onChange={handleChange}
+                                        className={`cf-cust-func-form-input ${formErrors.nickname ? 'error' : ''}`}
+                                        placeholder="e.g., My Personal Savings"
+                                        required
+                                    />
+                                    {formErrors.nickname && <p className="error-message">{formErrors.nickname}</p>}
+                                </div>
 
-                    <div className="form-group">
-                        <label htmlFor="creditScore" className="form-label">Credit Score (300-850):</label>
-                        <input
-                            type="number"
-                            id="creditScore"
-                            name="creditScore"
-                            value={formData.creditScore}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.creditScore ? 'input-error' : ''}`}
-                            placeholder="e.g., 720"
-                            min="300"
-                            max="850"
-                            required
-                        />
-                        {formErrors.creditScore && <p className="error-message">{formErrors.creditScore}</p>}
+                                <div className="cf-cust-func-button-group">
+                                    <button type="submit" className="cf-cust-func-primary-button" disabled={isSubmitting}>
+                                        {isSubmitting ? (
+                                            <>
+                                                <span className="loading-spinner"></span>
+                                                Submitting...
+                                            </>
+                                        ) : (
+                                            'Submit Application'
+                                        )}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <div className="form-group full-width">
-                        <label htmlFor="purpose" className="form-label">Purpose of Credit Card:</label>
-                        <textarea
-                            id="purpose"
-                            name="purpose"
-                            value={formData.purpose}
-                            onChange={handleChange}
-                            className={`form-input ${formErrors.purpose ? 'input-error' : ''}`}
-                            placeholder="e.g., Daily spending, building credit, travel rewards"
-                            rows={3}
-                            required
-                        ></textarea>
-                        {formErrors.purpose && <p className="error-message">{formErrors.purpose}</p>}
-                    </div>
-
-                    <div className="button-group">
-                        <button type="submit" className="primary-button" disabled={isSubmitting}>
-                            {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                        </button>
-                        <button type="button" className="secondary-button" onClick={() => navigate('/customer-dashboard')} disabled={isSubmitting}>
-                            Back to Dashboard
-                        </button>
-                    </div>
-                </form>
+                )}
             </div>
         </div>
     );
 }
 
-export default Cust_New_Bank_Acc;
+export default Cust_New_Bank_Account_Application;

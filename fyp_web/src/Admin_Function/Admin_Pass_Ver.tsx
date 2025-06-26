@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Original Supabase client import - kept as per your request
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 
 interface AdminPassVerProps {
     isOpen: boolean; // Controls whether the modal is visible

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'; 
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom'; 
 import "./shared/Header.css" 
 import Header from './shared/Header.tsx';
 
@@ -20,16 +20,16 @@ import CustomerTransfer from './Cust_Function/Cust_Transfer.tsx';
 import CustomerTransferConfirmation from './Cust_Function/Cust_Transfer_Confirmation.tsx';
 import CustomerTransferComplete from './Cust_Function/Cust_Transfer_Complete.tsx';
 import CustomerNewBankAcc from './Cust_Function/Cust_New_Bank_Acc.tsx';
-import CustomerAccSuccess from './Cust_Function/Cust_New_Acc_Success.tsx';
+import CustomerNewBankAccComplete from './Cust_Function/Cust_Acc_Complete.tsx';
 import CustomerAccDetail from './Cust_Function/Cust_Acc_Detail.tsx';
 import CustomerLoanApply from './Cust_Function/Cust_Apply_Loan.tsx';
 import CustomerViewApproval from './Cust_Function/Cust_View_Approval.tsx';
+import CustomerLoanComplete from './Cust_Function/Cust_Loan_Complete.tsx';
 import CustomerTransactionsHistory from './Cust_Function/Cust_Transfer_History.tsx';
 import CustomerProfileEdit from './Cust_Function/Cust_Profile_Edit.tsx';
 import CustomerPassVer from './Cust_Function/Cust_Pass_Ver.tsx';
 
-// A Layout component to wrap pages that should have the global Header
-const AppLayout = ({ children }) => {
+const AppLayout = () => {
   const location = useLocation();
 
   const showBackButton = ![
@@ -39,7 +39,7 @@ const AppLayout = ({ children }) => {
     '/customer-new-account-success'
   ].includes(location.pathname);
 
-  const backPath = showBackButton ? '/' : ''; // Default to home, refine as needed for specific routes
+  const backPath = showBackButton ? '/' : '';
 
   const showSignOutButton = ![
     '/', // Landing
@@ -48,11 +48,10 @@ const AppLayout = ({ children }) => {
     '/forgot-password',
   ].includes(location.pathname);
 
-
   return (
     <>
-      <Header showBackButton={showBackButton} backPath={backPath} showSignOutButton={showSignOutButton} />
-      {children}
+      <Header showBackButton={showBackButton} showSignOutButton={showSignOutButton} />
+      <Outlet />
     </>
   );
 };
@@ -61,13 +60,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Routes that should NOT have the Header (e.g., pure landing/auth pages) */}
+        {/* Routes that should NOT have the Header */}
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Wrap all other routes with AppLayout to include the global Header */}
         <Route element={<AppLayout />}>
           {/* Admin Routes */}
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -83,15 +81,16 @@ function App() {
           <Route path="/customer-transfer" element={<CustomerTransfer />} />
           <Route path="/customer-transfer-confirmation" element={<CustomerTransferConfirmation />} />
           <Route path="/customer-transfer-complete" element={<CustomerTransferComplete />} />
-          <Route path="/customer-new-bank-account" element={<CustomerNewBankAcc />} />
-          <Route path="/customer-new-account-success" element={<CustomerAccSuccess />} />
+          <Route path="/customer-new-bank-acc" element={<CustomerNewBankAcc />} />
+          <Route path="/customer-new-account-success" element={<CustomerNewBankAccComplete />} />
           <Route path="/customer-account-details/:accountId" element={<CustomerAccDetail />} />
           <Route path="/customer-apply-loan" element={<CustomerLoanApply />} />
+          <Route path="/customer-loan-complete" element={<CustomerLoanComplete />} />
           <Route path="/customer-view-approval" element={<CustomerViewApproval />} />
           <Route path="/customer-transactions-history" element={<CustomerTransactionsHistory />} />
           <Route path="/customer-profile-edit" element={<CustomerProfileEdit />} />
           <Route path="/customer-password-verification" element={<CustomerPassVer />} />
-        </Route> {/* End of AppLayout wrapped routes */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

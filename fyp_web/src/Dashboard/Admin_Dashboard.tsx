@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./AdminDashboard.module.css";
+import "./AdminDashboard.css";
 import { Search, Users, FileText, ArrowRightLeft, Eye } from "lucide-react";
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 
 interface Customer {
   customer_id: string;
@@ -591,4 +591,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-

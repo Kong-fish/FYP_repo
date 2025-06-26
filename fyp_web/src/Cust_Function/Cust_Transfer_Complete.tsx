@@ -1,64 +1,9 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import supabase from '../supbaseClient.js';
+import supabase from '../supabaseClient.js';
 import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react'; // Import CheckCircle for success, XCircle for failure
-
-// Import shared CSS files
-import '../shared/Header.css';
 import '../shared/normalize.css';
 import './CustFunction.css'; // For general customer function styling
-import DarkModeToggle from '../shared/DarkModeToggle.tsx'; // Import DarkModeToggle component
-
-// Re-use the Header component for consistency
-interface HeaderProps {
-    showBackButton?: boolean;
-    backPath?: string;
-    showSignOut?: boolean;
-}
-
-const Header: React.FC<HeaderProps> = ({ showBackButton = false, backPath = '/', showSignOut = true }) => {
-    const navigate = useNavigate();
-
-    const handleSignOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error('Error signing out:', error.message);
-        } else {
-            navigate('/'); // Redirect to customer landing after sign out
-        }
-    };
-
-    const handleBack = () => {
-        navigate(backPath); // Navigate to the specified backPath
-    };
-
-    return (
-        <header className="header">
-            <div className="header__content">
-                {/* Back Button with text */}
-                {showBackButton && (
-                    <button onClick={handleBack} className="back-button">
-                        <ArrowLeft size={24} />
-                        <span className="back-button-text">Back</span>
-                    </button>
-                )}
-
-                <div className="logo-section">
-                    <h1 className="logo-text">Eminent Western</h1>
-                </div>
-                <nav className="header-nav"></nav>
-                <div className="header-actions">
-                    <DarkModeToggle /> {/* Reusing the DarkModeToggle component */}
-                    {showSignOut && (
-                        <button onClick={handleSignOut} className="sign-out-button header-sign-out-btn">
-                            Sign Out
-                        </button>
-                    )}
-                </div>
-            </div>
-        </header>
-    );
-};
 
 export default function Cust_Transfer_Complete() {
     const navigate = useNavigate();
@@ -85,72 +30,68 @@ export default function Cust_Transfer_Complete() {
     };
 
     return (
-        <div className="main-app-wrapper">
+        <div className="cf-main-app-wrapper"> {/* Changed from main-app-wrapper */}
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            {/* Header: Always show back button to dashboard from this page */}
-            <Header showBackButton={true} backPath="/customer-dashboard" showSignOut={true} />
-
-            <div className="customer-function-container"> {/* Reusing customer-function-container */}
-                <div className="customer-function-content"> {/* Reusing customer-function-content */}
-                    <div className={`customer-card ${isSuccess ? 'success-card' : 'failure-card'}`}> {/* Dynamic class for card */}
-                        <div className="customer-card-content" style={{ textAlign: 'center' }}>
+            <div className="cf-cust-func-container"> {/* Changed from customer-function-container */}
+                <div className="cf-cust-func-content"> {/* Changed from customer-function-content */}
+                    <div className={`cf-cust-func-card ${isSuccess ? 'cf-success-card' : 'cf-failure-card'}`}> {/* Changed from customer-card and added cf- prefix to status cards */}
+                        <div className="cf-cust-func-card-content" style={{ textAlign: 'center' }}> {/* Changed from customer-card-content */}
                             {isSuccess ? (
-                                <CheckCircle size={80} className="success-icon" />
+                                <CheckCircle size={80} className="cf-success-icon" /> 
                             ) : (
-                                <XCircle size={80} className="failure-icon" />
+                                <XCircle size={80} className="cf-failure-icon" />
                             )}
-                            <h2 className="customer-card-title" style={{ color: isSuccess ? 'var(--green-success)' : 'var(--red-error)', marginBottom: '15px' }}>
+                            <h2 className="cf-cust-func-card-title" style={{ color: isSuccess ? 'var(--cf-green-success)' : 'var(--cf-red-error)', marginBottom: '15px' }}> {/* Changed from customer-card-title and cf- prefix for variables */}
                                 {isSuccess ? 'Transfer Successful!' : 'Transfer Failed!'}
                             </h2>
-                            <p className={isSuccess ? 'customer-success-message' : 'customer-error-message'} style={{ marginBottom: '30px', fontSize: '1.1em' }}>
+                            <p className={isSuccess ? 'cf-cust-func-success-message' : 'cf-cust-func-error-message'} style={{ marginBottom: '30px', fontSize: '1.1em' }}> {/* Changed from customer-success-message / customer-error-message */}
                                 {isSuccess ? 'Your transaction has been processed successfully.' : message}
                             </p>
 
-                            <div className="transaction-details customer-confirmation-details"> {/* Reusing confirmation details styles */}
+                            <div className="cf-cust-func-confirmation-details"> {/* Changed from transaction-details customer-confirmation-details */}
                                 <h3>Transaction Summary</h3>
-                                <div className="detail-item">
+                                <div className="cf-detail-item"> {/* Changed from detail-item */}
                                     <span>Amount:</span>
-                                    <span className="detail-value">$ {parseFloat(amount).toFixed(2)}</span>
+                                    <span className="cf-detail-value">$ {parseFloat(amount).toFixed(2)}</span> {/* Changed from detail-value */}
                                 </div>
-                                <div className="detail-item">
+                                <div className="cf-detail-item"> {/* Changed from detail-item */}
                                     <span>Type of Transfer:</span>
-                                    <span className="detail-value">{typeOfTransfer}</span>
+                                    <span className="cf-detail-value">{typeOfTransfer}</span> {/* Changed from detail-value */}
                                 </div>
                                 {/* Only show these details if the transfer was successful */}
                                 {isSuccess && (
                                     <>
-                                        <div className="detail-item">
+                                        <div className="cf-detail-item"> {/* Changed from detail-item */}
                                             <span>Recipient:</span>
-                                            <span className="detail-value">{recipientName}</span>
+                                            <span className="cf-detail-value">{recipientName}</span> {/* Changed from detail-value */}
                                         </div>
-                                        <div className="detail-item">
+                                        <div className="cf-detail-item"> 
                                             <span>Transaction ID:</span>
-                                            <span className="detail-value">{transactionId}</span>
+                                            <span className="cf-detail-value">{transactionId}</span> 
                                         </div>
-                                        <div className="detail-item">
+                                        <div className="cf-detail-item"> 
                                             <span>Date & Time:</span>
-                                            <span className="detail-value">{timestamp}</span>
+                                            <span className="cf-detail-value">{timestamp}</span>
                                         </div>
                                     </>
                                 )}
-                                <div className="detail-item">
-                                    <span>Status:</span>
-                                    <span className={`detail-value ${isSuccess ? 'status-completed' : 'status-failed'}`}>
+                                <div className="cf-detail-item"> 
+                                    <span className={`cf-detail-value ${isSuccess ? 'cf-status-completed' : 'cf-status-failed'}`}> 
                                         {isSuccess ? 'Completed' : 'Failed'}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="customer-button-group"> {/* Reusing customer-button-group */}
+                            <div className="cf-cust-func-button-group">
                                 <button
                                     onClick={handleGoToDashboard}
-                                    className="customer-primary-button"
+                                    className="cf-cust-func-primary-button" 
                                 >
                                     Go to Dashboard
                                 </button>
                                 <button
                                     onClick={handleAnotherTransfer}
-                                    className="customer-secondary-button"
+                                    className="cf-cust-func-secondary-button" 
                                 >
                                     Make Another Transfer
                                 </button>
@@ -158,18 +99,6 @@ export default function Cust_Transfer_Complete() {
                         </div>
                     </div>
                 </div>
-
-                {/* Footer */}
-                <footer className="dashboard-footer">
-                    <div className="footer-content">
-                        <p className="footer-copyright">© {new Date().getFullYear()} Eminent Western. All rights reserved.</p>
-                        <div className="footer-links">
-                            <a href="#" className="footer-link">Privacy</a>
-                            <a href="#" className="footer-link">Terms</a>
-                            <a href="#" className="footer-link">Help</a>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
     );
