@@ -112,31 +112,6 @@ const Cust_View_Approval: React.FC = () => {
                 }));
 
                 setLoanApplications(formattedLoans);
-
-                // 4. Fetch bank account applications (Placeholder - replace with actual fetch if table exists)
-                // For demonstration, simulating some data
-                const mockBankAccountApps: BankAccountApplication[] = [
-                    {
-                        account_id: 'BAC-001',
-                        account_type: 'Savings Account',
-                        application_date: 'Oct 26, 2024',
-                        status: 'Approved',
-                    },
-                    {
-                        account_id: 'BAC-002',
-                        account_type: 'Checking Account',
-                        application_date: 'Nov 15, 2024',
-                        status: 'Pending',
-                    },
-                    {
-                        account_id: 'BAC-003',
-                        account_type: 'Joint Savings',
-                        application_date: 'Dec 01, 2024',
-                        status: 'Rejected',
-                    },
-                ];
-                setBankAccountApplications(mockBankAccountApps); // Replace with actual Supabase fetch if applicable
-
             } catch (err: any) {
                 console.error("Initialization error:", err.message);
                 setError(err.message || "An unexpected error occurred.");

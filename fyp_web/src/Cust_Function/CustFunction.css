@@ -101,8 +101,8 @@ html, body {
 }
 
 .cf-cust-func-card {
+    padding-top: 50px;
     background-color: var(--cf-bg-secondary);
-    padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px var(--cf-box-shadow-medium);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -1259,7 +1259,7 @@ html, body {
 }
 
 .cf-cust-func-content {
-    margin-top: 20px; /* Space from header to first card */
+    margin-top: 50px; /* Space from header to first card */
 }
 
 /* Adjustments for headers within the component to match card titles */
@@ -1527,7 +1527,6 @@ html, body {
     box-shadow: 0 4px 15px var(--cf-box-shadow-medium);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
-    max-width: 900px; /* Wider for desktop */
     margin-bottom: 20px;
     box-sizing: border-box;
 }

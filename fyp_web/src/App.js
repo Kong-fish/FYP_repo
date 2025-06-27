@@ -58,7 +58,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* All routes are now wrapped by AppLayout to include the Header */}
+     
         <Route element={<AppLayout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />

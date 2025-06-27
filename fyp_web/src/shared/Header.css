@@ -1,5 +1,3 @@
-/* shared/Header.css */
-
 /* --- CSS Variables for Header Theming (STATIC - will not change with dark mode) --- */
 :root {
     --header-bg: #385A93;
@@ -17,6 +15,17 @@
     The 'body.dark-mode' block for header-specific variables is REMOVED.
     This ensures header elements ONLY use the :root values, keeping them static.
 */
+
+/* --- Global styles to prevent content from going under the fixed header --- */
+html {
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+}
+
+body {
+    padding-top: 100px; /* Default header height */
+    /* Other body styles you might have, e.g., margin: 0; */
+    margin: 0;
+}
 
 
 .header {
@@ -144,6 +153,10 @@
     .header {
         height: 80px; /* Slightly smaller header for tablets */
     }
+    /* Adjust body padding for tablet header height */
+    body {
+        padding-top: 80px;
+    }
 
     .header__content {
         padding: 0 15px; /* Reduce horizontal padding */
@@ -171,6 +184,10 @@
 @media (max-width: 480px) {
     .header {
         height: 60px; /* Even smaller header for mobile */
+    }
+    /* Adjust body padding for mobile header height */
+    body {
+        padding-top: 60px;
     }
 
     .header__content {

@@ -74,6 +74,7 @@ body {
   the dashboard-container needs to explicitly account for the header's height.
 */
 .dashboard-container {
+    padding-top: 80px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -81,13 +82,14 @@ body {
     color: var(--text-primary); /* Default text color */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth dark mode transition */
     box-sizing: border-box; /* Crucial for padding-top to behave as expected */
+    max-width: 100%; 
 }
 
 .dashboard-main.container {
     flex: 1; /* Allows the main content area (within dashboard-container) to take up all available space */
     padding: 20px;
-    max-width: 1200px; /* Adjust as needed */
-    margin: 0 auto;
+    max-width: 100%; /* Adjust as needed */
+    margin: 0;
     min-height: 0; /* Allow flex item to shrink below content size if needed */
 }
 
@@ -127,9 +129,13 @@ body {
 }
 
 .quick-actions-grid {
-    display: grid; /* Changed to grid for better control over action buttons */
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive grid */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
     gap: 10px;
+    align-items: center; /* Center the quick action buttons horizontally */
+    margin: 0 auto;
 }
 
 .action-button {
@@ -146,6 +152,7 @@ body {
     cursor: pointer;
     transition: background-color 0.2s ease;
     font-size: 0.9em;
+    width: 100%;
 }
 
 .action-button:hover {
@@ -265,7 +272,8 @@ body {
 
 .accounts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
@@ -524,7 +532,7 @@ body {
 
 /* Responsive Design */
 /* Adjusted breakpoint for dashboard-layout to ensure side-by-side on most laptops */
-@media (max-width: 1200px) { /* Changed from 992px to 1200px */
+@media (max-width: 980x) { /* Changed from 992px to 1200px */
     .dashboard-layout {
         flex-direction: column; /* Stack columns on screens <= 1200px (tablets and smaller laptops) */
         align-items: stretch; /* Ensure stacked items stretch horizontally */
@@ -596,7 +604,7 @@ body {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
     .dashboard-main.container {
         padding: 10px;
     }

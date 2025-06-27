@@ -252,11 +252,6 @@ export default function CustomerDashboard() {
         openVerificationModal(() => navigate('/customer-profile-edit'));
     };
 
-    const handleViewAllAccountsClick = () => {
-        openVerificationModal(() => navigate('/customer-view-all-accounts')); // Assuming a page to view all accounts
-    };
-
-
     if (isLoading) {
         return (
             <div className="dashboard-container loading-state">
@@ -284,7 +279,7 @@ export default function CustomerDashboard() {
                     <div className="dashboard-layout">
                         {/* Sidebar for Quick Actions and Menu (Left Side) */}
                         <div className="sidebar">
-                            <div className="quick-actions-card quick-actions-content">
+                            <div className="quick-actions-card ">
                                 <h2 className="quick-actions-title">Quick Actions</h2>
                                 <div className="quick-actions-grid">
                                     <button onClick={handleTransferClick} className="action-button">
@@ -347,9 +342,6 @@ export default function CustomerDashboard() {
                                                 {showBalances ? <EyeOff size={20} /> : <Eye size={20} />}
                                                 {showBalances ? ' Hide Balances' : ' Show Balances'}
                                             </button>
-                                            <button className="view-all-button" onClick={handleViewAllAccountsClick}>
-                                                View All Accounts
-                                            </button>
                                         </div>
                                     </div>
                                     <div>
@@ -403,17 +395,6 @@ export default function CustomerDashboard() {
                         </div>
                     </div>
                 </div>
-
-                <footer className="dashboard-footer">
-                    <div className="footer-content">
-                        <p className="footer-copyright">© {new Date().getFullYear()} Eminent Western. All rights reserved.</p>
-                        <div className="footer-links">
-                            <a href="#" className="footer-link">Privacy</a>
-                            <a href="#" className="footer-link">Terms</a>
-                            <a href="#" className="footer-link">Help</a>
-                        </div>
-                    </div>
-                </footer>
             </div>
 
             {/* Render the Password Verification Modal */}
