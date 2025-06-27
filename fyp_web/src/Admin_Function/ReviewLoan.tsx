@@ -407,9 +407,6 @@ const ReviewLoan: React.FC = () => {
                     <div className="admin-smt-card-header mb-6">
                         <h2 className="admin-smt-card-title text-2xl font-bold">Loan Application Details (ID: {String(loanDetails?.loan_id || '').substring(0, 8)}...)</h2>
                         <div className="flex gap-2">
-                            <button onClick={handleBackToDashboard} className="admin-smt-btn admin-smt-btn-ghost">
-                                <ArrowLeft size={24} /> Back to Dashboard
-                            </button>
                             <button
                                 onClick={handleGetPrediction}
                                 className="admin-smt-btn admin-smt-btn-primary"

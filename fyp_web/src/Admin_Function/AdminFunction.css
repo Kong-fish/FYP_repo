@@ -62,6 +62,7 @@
 .admin-smt-card {
     background-color: var(--card-bg-color);
     border-radius: var(--border-radius-lg);
+    margin-top: 80px;
     padding: 1.5rem;
     box-shadow: var(--shadow-sm);
     display: flex;

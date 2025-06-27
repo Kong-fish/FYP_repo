@@ -711,6 +711,7 @@ html, body {
   padding: 20px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
+  margin-top:80px
 }
 
 .header-content {
@@ -1116,7 +1117,7 @@ html, body {
 }
 
 .logo-image {
-  height: 90px; /* Reduced height for a smaller logo */
+  height: 80px; /* Reduced height for a smaller logo */
   width: auto; /* Maintain aspect ratio */
   margin-right: 10px;
 }
