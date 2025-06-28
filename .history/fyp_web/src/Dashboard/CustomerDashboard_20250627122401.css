@@ -1,0 +1,639 @@
+/* CustomerDashboard.css */
+
+/* --- CSS Variables for Theming --- */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #f8f9fa; /* Light background for general page/container */
+    --bg-secondary: #fff;  /* White background for main content/summary card and sidebar */
+    --text-primary: #333;  /* Dark text for headings */
+    --text-secondary: #666; /* Medium text for paragraphs, smaller headings */
+    --text-light: #888;    /* Lighter text for details like account numbers, last login */
+    --card-border: #e0e0e0; /* Border color for account cards */
+    --box-shadow-light: rgba(0, 0, 0, 0.05); /* Lighter shadow for general use */
+    --box-shadow-medium: rgba(0, 0, 0, 0.1); /* Medium shadow for cards */
+
+    /* Accent Colors */
+    --blue-accent: #007bff; /* Primary blue for buttons, balances */
+    --blue-accent-hover: #0056b3; /* Darker blue on hover */
+    --green-credit: #28a745; /* Green for credit transactions */
+    --red-debit: #dc3545; /* Red for debit transactions */
+
+    /* Footer Colors (added for completeness as used in the footer section) */
+    --footer-bg: #2d3748; /* Light mode footer background - using a dark shade as often seen */
+    --footer-text: #fff; /* Light mode footer text */
+    --footer-link: #a0aec0; /* Light mode footer link color */
+}
+
+/* This is the key change: targeting html.dark */
+html.dark {
+    /* Dark Mode Colors */
+    --bg-primary: #2d2d2d; /* Dark background for general page/container */
+    --bg-secondary: #1a1a1a; /* Darker background for main content/summary card and sidebar */
+    --text-primary: #e0e0e0; /* Light text for headings */
+    --text-secondary: #b0b0b0; /* Medium light text for paragraphs */
+    --text-light: #999;     /* Lighter text for details */
+    --card-border: #444;    /* Darker border for cards */
+    --box-shadow-light: rgba(255, 255, 255, 0.05); /* Lighter shadow for dark mode */
+    --box-shadow-medium: rgba(255, 255, 255, 0.1);
+
+    /* Accent Colors (adjusted for dark mode visibility) */
+    --blue-accent: #5b9bd5;
+    --blue-accent-hover: #3a7bbd;
+    --green-credit: #4CAF50; /* Slightly different green */
+    --red-debit: #EF5350;   /* Slightly different red */
+
+    /* Footer Colors for dark mode */
+    --footer-bg: #1a202c;
+    --footer-text: #e0e0e0;
+    --footer-link: #a0aec0;
+}
+
+/*
+  GLOBAL LAYOUT FIX FOR STICKY HEADER AND FULL HEIGHT CONTENT
+  These rules are critical for ensuring the content is visible below a sticky header
+  and for pushing the footer to the bottom of the page.
+  These should be placed as early as possible in your CSS cascade.
+*/
+html, body, #root { /* Target html, body, and your React app's root div (usually in index.html) */
+    height: 100%; /* Ensure they take full height of their parent/viewport */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding/border is included in element's total width/height */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Make the body a flex container, stacking its direct children vertically */
+    min-height: 100vh; /* Ensures the body is at least the full viewport height */
+    /* Remove any background-color here if it conflicts with --bg-primary on dashboard-container */
+    /* background-color: var(--bg-primary); */ /* This should be on dashboard-container */
+}
+
+/*
+  Since the Header is sticky and rendered as a direct sibling to the main content in App.js's AppLayout,
+  the dashboard-container needs to explicitly account for the header's height.
+*/
+.dashboard-container {
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var(--bg-primary);
+    color: var(--text-primary); /* Default text color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth dark mode transition */
+    box-sizing: border-box; /* Crucial for padding-top to behave as expected */
+}
+
+.dashboard-main.container {
+    flex: 1; /* Allows the main content area (within dashboard-container) to take up all available space */
+    padding: 20px;
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+    min-height: 0; /* Allow flex item to shrink below content size if needed */
+}
+
+.dashboard-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-grow: 1; /* Allow this layout section to grow and push the footer down */
+    min-height: 0; /* Important for nested flex containers */
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 250px; /* Fixed width sidebar */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--bg-secondary); /* Background for the overall sidebar section */
+    border-radius: 8px; /* Apply border-radius to the whole sidebar */
+    box-shadow: 0 2px 4px var(--box-shadow-light); /* Apply shadow to the whole sidebar */
+    padding: 20px; /* Add padding inside the sidebar */
+    height: auto; /* Allow content to dictate height, but stretches via parent flex */
+    min-height: 0; /* Allow flex item to shrink if needed */
+}
+
+.quick-actions-card {
+    background-color: transparent; /* Make inner cards transparent as sidebar has background */
+    box-shadow: none; /* Remove shadow if applied to sidebar */
+    padding: 0; /* Remove padding if sidebar already has it, or adjust as needed */
+}
+
+.quick-actions-title {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: var(--text-primary); /* Themed text color */
+}
+
+.quick-actions-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-button {
+    background-color: var(--blue-accent); /* Themed accent color */
+    color: white; /* Button text always white for contrast */
+    border: none;
+    border-radius: 5px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.9em;
+}
+
+.action-button:hover {
+    background-color: var(--blue-accent-hover); /* Themed hover color */
+}
+
+.action-icon {
+    margin-bottom: 5px;
+}
+
+.action-label {
+    text-align: center;
+}
+
+.sidebar-menu {
+    background-color: transparent; /* Make inner cards transparent */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove padding or adjust as needed */
+}
+
+.sidebar-menu-item {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: var(--text-primary); /* Themed text color */
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-menu-item:hover {
+    background-color: var(--card-border); /* Slightly lighter/darker on hover, using card-border for subtle contrast */
+}
+
+.sidebar-menu-icon {
+    color: var(--text-secondary); /* Subtle color for icons */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1; /* Takes remaining space beside the sidebar */
+    min-width: 0; /* Allow content to shrink if needed without overflow */
+    min-height: 0; /* Important for nested flex containers to allow shrinking */
+}
+
+.account-summary-card {
+    background-color: var(--bg-secondary); /* Themed background */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px var(--box-shadow-medium); /* Themed shadow */
+}
+
+.account-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 80px;
+}
+
+.welcome-message {
+    font-size: 1.1em;
+    color: var(--text-secondary); /* Themed text color */
+    margin-bottom: 5px;
+}
+
+.welcome-name {
+    font-size: 2em;
+    color: var(--text-primary); /* Themed text color */
+    margin: 0;
+}
+
+.last-login {
+    font-size: 0.9em;
+    color: var(--text-light); /* Themed text color */
+    margin-bottom: 20px;
+}
+
+.view-all-button-container {
+    display: flex; /* Arrange buttons side-by-side */
+    gap: 10px; /* Space between buttons */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: flex-end; /* Align to the right */
+}
+
+.view-all-button {
+    background-color: var(--blue-accent); /* Themed accent color */
+    color: white; /* Button text always white for contrast */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.view-all-button:hover {
+    background-color: var(--blue-accent-hover); /* Themed hover color */
+}
+
+.hide-show-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.account-card {
+    border: 1px solid var(--card-border); /* Themed border */
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--bg-primary); /* Themed background, slightly different from summary */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--box-shadow-medium); /* Themed shadow */
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.account-type {
+    font-size: 1.1em;
+    color: var(--text-secondary); /* Themed text color */
+    margin-bottom: 5px;
+}
+
+.account-number {
+    font-size: 0.9em;
+    color: var(--text-light); /* Themed text color */
+}
+
+.account-icon {
+    color: var(--blue-accent); /* Example color for icons, adjust as needed */
+}
+
+.account-balance-section {
+    text-align: right;
+}
+
+.account-balance {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--blue-accent); /* Themed accent color */
+    margin-bottom: 5px;
+}
+
+/* Recent Transactions Card */
+.transactions-card {
+    background-color: var(--bg-secondary); /* Themed background */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px var(--box-shadow-medium); /* Themed shadow */
+    margin-top: 20px; /* Space from account summary card */
+}
+
+.transactions-content {
+    /* flex, padding etc. */
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.transactions-title {
+    font-size: 1.2em;
+    color: var(--text-primary); /* Themed text color */
+    margin: 0;
+}
+
+.view-all-transactions {
+    background-color: var(--blue-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.9em;
+    /* Hidden by default on larger screens, shown on mobile */
+    display: none; /* This will be overridden by media query for mobile */
+}
+
+.view-all-transactions:hover {
+    background-color: var(--blue-accent-hover);
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--card-border); /* Subtle separator */
+}
+
+.transaction-item:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Allows it to take available space */
+}
+
+/* Styling for transaction type indicator (+/- circle) */
+.transaction-type-indicator {
+    width: 28px; /* Slightly larger size */
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 12px; /* More space */
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
+    color: white; /* Color of the plus/minus sign */
+}
+
+.transaction-type-indicator.debit {
+    background-color: var(--red-debit); /* Red from themed variables */
+}
+.transaction-type-indicator.debit::before {
+    content: '-';
+}
+
+.transaction-type-indicator.credit {
+    background-color: var(--green-credit); /* Green from themed variables */
+}
+.transaction-type-indicator.credit::before {
+    content: '+';
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-description {
+    font-size: 1em;
+    color: var(--text-primary); /* Themed text color */
+    margin: 0;
+}
+
+.transaction-date {
+    font-size: 0.85em;
+    color: var(--text-light); /* Themed text color */
+    margin-top: 5px;
+}
+
+.transaction-amount {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: right;
+    flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+/* Themed colors for transaction amounts */
+.transaction-amount.debit {
+    color: var(--red-debit);
+}
+
+.transaction-amount.credit {
+    color: var(--green-credit);
+}
+
+/* Footer */
+.dashboard-footer {
+    background-color: var(--footer-bg); /* Themed footer background */
+    color: var(--footer-text); /* Themed footer text */
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 10px;
+}
+
+.footer-copyright {
+    font-size: 0.9em;
+    color: var(--footer-link); /* Themed link color */
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-link {
+    color: var(--footer-text); /* Themed text color */
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.2s ease, text-decoration 0.2s ease; /* Transition 'color' instead of 'opacity' */
+}
+
+.footer-link:hover {
+    color: var(--footer-link); /* Slightly different color for hover if desired, or just underline */
+    text-decoration: underline;
+}
+
+
+/* Mobile-specific styles (retained and adjusted for consistency) */
+.action-button.mobile-only {
+    display: none; /* Hide by default on larger screens */
+}
+
+/* Loading and Error States */
+.loading-state, .error-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.2em;
+    color: var(--text-primary);
+}
+.error-state .error-message {
+    color: var(--red-debit); /* Use themed red for error messages */
+}
+.reload-button {
+    background-color: var(--blue-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.reload-button:hover {
+    background-color: var(--blue-accent-hover);
+}
+
+
+/* Responsive Design */
+/* Adjusted breakpoint for dashboard-layout to ensure side-by-side on most laptops */
+@media (max-width: 980x) { /* Changed from 992px to 1200px */
+    .dashboard-layout {
+        flex-direction: column; /* Stack columns on screens <= 1200px (tablets and smaller laptops) */
+        align-items: stretch; /* Ensure stacked items stretch horizontally */
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+        padding: 20px; /* Adjust padding for stacked layout */
+    }
+
+    .quick-actions-card {
+        padding: 0; /* Inner card padding might need adjustment if sidebar has padding */
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .action-button {
+        padding: 12px 5px;
+    }
+
+    .action-button .large-icon {
+        size: 24px;
+    }
+
+    .action-button .action-label {
+        font-size: 0.85em;
+    }
+
+    .sidebar-menu {
+        display: none; /* Hide desktop sidebar menu on tablets and smaller laptops */
+    }
+
+    .action-button.mobile-only {
+        display: flex; /* Show mobile-only buttons on tablets and smaller laptops */
+    }
+
+    .account-summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .view-all-button-container {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .view-all-button {
+        width: auto;
+        flex-grow: 1;
+        justify-content: center;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .view-all-transactions {
+        display: block; /* Show the "View All" button when layout stacks */
+    }
+}
+
+@media (max-width: 380px) {
+    .dashboard-main.container {
+        padding: 10px;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .account-summary-card {
+        padding: 20px;
+    }
+
+    .welcome-name {
+        font-size: 1.5em;
+    }
+
+    .account-balance {
+        font-size: 1.4em;
+    }
+
+    .transactions-card {
+        padding: 20px;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .transaction-amount {
+        width: 100%;
+        text-align: left;
+        padding-left: 40px;
+    }
+}

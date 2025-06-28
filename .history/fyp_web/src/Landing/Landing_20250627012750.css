@@ -1,0 +1,9 @@
+.hero {
+  background-color: #e2e0df; /* Light mode hero background */
+  color: #161616; /* Light mode hero text color */
+  padding-bottom: 4rem;
+  text-align: center;
+  /* --- Added to move hero container upwards --- */
+  margin-top: 0; /* Ensures no top margin pushes it down */
+  padding-top: 0; /* Ensures no internal top padding in the hero section */
+}
