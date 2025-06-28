@@ -1,12 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './CustFunction.css';
 
+// No need for LoanSubmissionCompleteProps anymore as useNavigate handles navigation internally
+export default function LoanSubmissionComplete() {
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-interface LoanSubmissionCompleteProps {
-  onViewApprovalsClick: () => void;
-}
+  const handleViewApprovalsClick = () => {
+    navigate('/customer-view-approval'); // Navigate to the specified route
+  };
 
-export default function LoanSubmissionComplete({ onViewApprovalsClick }: LoanSubmissionCompleteProps) {
   return (
     <div className="loan-application-page"> {/* Reusing the same page styling class */}
       <header className="loan-header">
@@ -30,7 +33,7 @@ export default function LoanSubmissionComplete({ onViewApprovalsClick }: LoanSub
             <p>Thank you for your loan application. We have received your submission and will review it shortly.</p>
             <p>You will receive an email notification regarding the status of your application within 1-2 business days.</p>
             {/* Button to navigate to the Customer View Approval page */}
-            <button onClick={onViewApprovalsClick} className="btn-primary">
+            <button onClick={handleViewApprovalsClick} className="btn-primary">
               View My Loan Approvals
             </button>
           </div>

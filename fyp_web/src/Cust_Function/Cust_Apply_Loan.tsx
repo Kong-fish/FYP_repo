@@ -71,7 +71,6 @@ export default function Cust_Apply_Loan() {
     else if (parseFloat(formData.loan_amount) < 1000 || parseFloat(formData.loan_amount) > 100000) newErrors.loan_amount = "Loan Amount must be between $1,000 and $100,000.";
 
     if (!formData.account_number) newErrors.account_number = "Account Number is required.";
-    else if (!/^\d+$/.test(formData.account_number)) newErrors.account_number = "Account Number must contain only digits.";
 
     if (!formData.customer_credit_score) newErrors.customer_credit_score = "Credit Score is required.";
     else if (parseInt(formData.customer_credit_score) < 300 || parseInt(formData.customer_credit_score) > 850) newErrors.customer_credit_score = "Credit Score must be between 300 and 850.";

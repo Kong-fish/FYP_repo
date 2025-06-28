@@ -72,7 +72,7 @@ function Register() {
           console.error('Supabase insert error:', customerError);
         } else {
           console.log('Customer profile created successfully:', customerData);
-          navigate('/homepage');
+          navigate('/login');
         }
       } else {
         setError('Sign up successful, please check your email for a confirmation link.');
@@ -98,8 +98,16 @@ function Register() {
               <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="field__input" required />
             </div>
             <div className="field">
-              <label htmlFor="password">Password:</label>
-              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="field__input" required />
+              <label htmlFor="firstName">First Name:</label>
+              <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="field__input" required />
+            </div>
+            <div className="field">
+              <label htmlFor="nationality">Nationality:</label>
+              <input type="text" id="nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} className="field__input" />
+            </div>
+            <div className="field">
+              <label htmlFor="icNo">IC Number:</label>
+              <input type="text" id="icNo" value={icNo} onChange={(e) => setIcNo(e.target.value)} className="field__input" />
             </div>
             <div className="field">
               <label htmlFor="username">Username:</label>
@@ -109,14 +117,15 @@ function Register() {
               <label htmlFor="dateOfBirth">Date of Birth:</label>
               <input type="date" id="dateOfBirth" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} className="field__input" />
             </div>
-            <div className="field">
-              <label htmlFor="firstName">First Name:</label>
-              <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="field__input" required />
-            </div>
+            
           </div>
 
           {/* Second column */}
           <div className="register_form_column">
+            <div className="field">
+              <label htmlFor="password">Password:</label>
+              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="field__input" required />
+            </div>
             <div className="field">
               <label htmlFor="lastName">Last Name:</label>
               <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="field__input" required />
@@ -133,19 +142,11 @@ function Register() {
               <label htmlFor="homeAddress">Home Address:</label>
               <textarea id="homeAddress" value={homeAddress} onChange={(e) => setHomeAddress(e.target.value)} className="field__input" />
             </div>
-            <div className="field">
-              <label htmlFor="nationality">Nationality:</label>
-              <input type="text" id="nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} className="field__input" />
-            </div>
-            <div className="field">
-              <label htmlFor="icNo">IC Number:</label>
-              <input type="text" id="icNo" value={icNo} onChange={(e) => setIcNo(e.target.value)} className="field__input" />
-            </div>
           </div>
-
+          
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="button button--yellow" disabled={loading}>
-            {loading ? 'Loading...' : 'Sign Up'}
+            {loading ? 'Loading...' : 'Register'}
           </button>
           <div style={{ textAlign: 'center', marginTop: '1rem', width: '100%' }}>
             <Link to="/login" style={{ color: 'var(--button-primary-bg)', textDecoration: 'none', fontWeight: 'bold' }}>

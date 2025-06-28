@@ -17,8 +17,8 @@ interface LoanApplication {
 interface BankAccountApplication {
     account_id: string; // Unique ID for the account application
     account_type: string; // e.g., "Savings", "Checking"
-    application_date: string;
-    status: 'Pending' | 'Approved' | 'Rejected'; // Simplified status
+    application_date: string; // created_at from Account table
+    status: 'Pending' | 'Approved' | 'Rejected'; // account_status from Account table
 }
 
 // Interface for Customer Information (minimal for this page's needs)
@@ -112,6 +112,32 @@ const Cust_View_Approval: React.FC = () => {
                 }));
 
                 setLoanApplications(formattedLoans);
+
+                // --- NEW: 4. Fetch bank account applications for this customer ---
+                const { data: accountsData, error: accountsError } = await supabase
+                    .from('Account')
+                    .select(`
+                        account_id,
+                        account_type,
+                        account_status,
+                        created_at
+                    `)
+                    .eq('customer_id', customerData.customer_id)
+                    .order('created_at', { ascending: false });
+
+                if (accountsError) {
+                    throw new Error(`Error fetching bank account applications: ${accountsError.message}`);
+                }
+
+                const formattedAccounts: BankAccountApplication[] = (accountsData || []).map((account: any) => ({
+                    account_id: account.account_id,
+                    account_type: account.account_type,
+                    application_date: new Date(account.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+                    status: account.account_status, // This directly maps to your USER-DEFINED type
+                }));
+                
+                setBankAccountApplications(formattedAccounts); // Set the fetched data
+
             } catch (err: any) {
                 console.error("Initialization error:", err.message);
                 setError(err.message || "An unexpected error occurred.");
@@ -211,7 +237,7 @@ const Cust_View_Approval: React.FC = () => {
                                             {bankAccountApplications.map((app) => (
                                                 <tr key={app.account_id} className="cf-table-row">
                                                     <td className="cf-table-cell cf-table-cell-bold">
-                                                        {app.account_id}
+                                                        {app.account_id.substring(0, 8)}... {/* Truncate ID for display */}
                                                     </td>
                                                     <td className="cf-table-cell">{app.account_type}</td>
                                                     <td className="cf-table-cell">{app.application_date}</td>

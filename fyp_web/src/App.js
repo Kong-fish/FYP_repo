@@ -7,6 +7,7 @@ import Landing from './Landing/Landing.tsx';
 import Register from './Landing/Register.tsx';
 import Login from './Landing/Login.tsx';
 import ForgotPassword from './Landing/Forgot_Password.tsx';
+import UpdatePassword from './Landing/Update_Password.tsx';
 
 import AdminDashboard from './Dashboard/Admin_Dashboard.tsx';
 import CustomerDashboard from './Dashboard/Customer_Dashboard.tsx';
@@ -36,7 +37,9 @@ const AppLayout = () => {
     '/', // Landing page
     '/admin-dashboard',
     '/customer-dashboard',
-    '/customer-new-account-success'
+    '/customer-new-account-success',
+    '/update-password',
+
   ].includes(location.pathname);
 
   const showSignOutButton = ![
@@ -44,6 +47,7 @@ const AppLayout = () => {
     '/register',
     '/login',
     '/forgot-password',
+    '/update-password',
   ].includes(location.pathname);
 
   return (
@@ -64,6 +68,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/update-password" element={<UpdatePassword />} />
 
           {/* Admin Routes */}
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
