@@ -260,34 +260,34 @@ const AdminViewCusAcc: React.FC = () => {
           )}
 
           {/* Container for Customer Personal Details Section */}
-          <div className="customer-details-section-wrapper mb-8">
-            <h3 className="admin-smt-card-title text-xl mb-4 flex items-center gap-2 font-semibold">
+          <div className="customer-details-section-wrapper" style={{ marginBottom: "3rem" }}>
+            <h3 className="customer-details-section-title" style={{ gap: '12px' }}>
               <User size={20} /> Personal Information
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-4">
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><User size={16}/> Name:</strong> <span className="font-light text-gray-300">{customer.first_name} {customer.last_name}</span>
+            <div className="customer-details-grid">
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><User size={16} /> Name:</strong> <span className="customer-detail-value">{customer.first_name} {customer.last_name}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><Mail size={16}/> Username:</strong> <span className="font-light text-gray-300">{customer.username}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><Mail size={16} /> Username:</strong> <span className="customer-detail-value">{customer.username}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><Phone size={16}/> Phone:</strong> <span className="font-light text-gray-300">{customer.phone_no}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><Phone size={16} /> Phone:</strong> <span className="customer-detail-value">{customer.phone_no}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><CalendarDays size={16}/> Date of Birth:</strong> <span className="font-light text-gray-300">{formatDate(customer.date_of_birth)}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><CalendarDays size={16} /> Date of Birth:</strong> <span className="customer-detail-value">{formatDate(customer.date_of_birth)}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><Banknote size={16}/> IC No:</strong> <span className="font-light text-gray-300">{customer.ic_no}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><Banknote size={16} /> IC No:</strong> <span className="customer-detail-value">{customer.ic_no}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><Briefcase size={16}/> Passport No:</strong> <span className="font-light text-gray-300">{customer.passport_no || 'N/A'}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><Briefcase size={16} /> Passport No:</strong> <span className="customer-detail-value">{customer.passport_no || 'N/A'}</span>
               </p>
-              <p className="text-lg admin-smt-card-description">
-                <strong className="text-white font-medium flex items-center gap-2"><MapPin size={16}/> Nationality:</strong> <span className="font-light text-gray-300">{customer.nationality}</span>
+              <p className="customer-detail-item">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><MapPin size={16} /> Nationality:</strong> <span className="customer-detail-value">{customer.nationality}</span>
               </p>
-              <p className="text-lg admin-smt-card-description col-span-1 md:col-span-2">
-                <strong className="text-white font-medium flex items-center gap-2"><Home size={16}/> Home Address:</strong> <span className="font-light text-gray-300">{customer.home_address}</span>
+              <p className="customer-detail-item customer-detail-full-width">
+                <strong className="customer-detail-label" style={{ gap: '12px' }}><Home size={16} /> Home Address:</strong> <span className="customer-detail-value">{customer.home_address}</span>
               </p>
             </div>
           </div>

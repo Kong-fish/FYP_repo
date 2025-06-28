@@ -139,10 +139,6 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.admin-smt-table-body {
-    /* No specific styles needed here, children handle rows */
-}
-
 .admin-smt-table-row {
     transition: background-color 0.2s ease-in-out;
 }
@@ -263,9 +259,63 @@
 .customer-details-section-wrapper {
     background-color: var(--input-bg-color); /* A slightly different background */
     border-radius: var(--border-radius);
-    padding: 1.5rem;
-    margin-bottom: 2rem; /* Space below this wrapper */
+    padding: var(--spacing-lg); /* Increased padding for better spacing */
+    margin-bottom: var(--spacing-lg); /* Space below this wrapper */
     border: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.customer-details-section-title {
+    font-size: 1.5rem; /* Larger title */
+    margin-bottom: var(--spacing-md); /* Space below title */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm); /* Gap between icon and text */
+    font-weight: 600; /* Semi-bold */
+    color: var(--highlight-color); /* White color for the title */
+    border-bottom: 1px solid var(--border-color); /* Separator line */
+    padding: 30px;  
+}
+
+/* Grid layout for personal details */
+.customer-details-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default for mobile */
+    gap: 24px 40px;
+    padding:20px;;
+}
+
+@media (min-width: 768px) { /* For medium screens and up */
+    .customer-details-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+    }
+}
+
+.customer-detail-item {
+    font-size: 1rem; /* Base font size for details */
+    color: var(--primary-text-color); /* Light gray for paragraphs */
+    display: flex; /* Make it a flex container to align label and value */
+    flex-wrap: wrap; /* Allow content to wrap if needed */
+}
+
+.customer-detail-label {
+    color: var(--highlight-color); /* White for strong labels */
+    font-weight: 500; /* Medium font weight */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm); /* Gap for icon and text in label */
+    min-width: 120px; /* Give labels a minimum width for alignment */
+}
+
+.customer-detail-value {
+    color: var(--secondary-text-color); /* Slightly darker gray for values */
+    font-weight: 300; /* Lighter font weight for values */
+    flex-grow: 1; /* Allow value to take up remaining space */
+}
+
+/* Specific styling for the full-width address field */
+.customer-detail-full-width {
+    grid-column: 1 / -1; /* Make it span all columns */
 }
 
 /* Styles for the message display */
@@ -334,7 +384,7 @@
 /* Adjustments for table cell font styling */
 .admin-smt-table-cell span {
     font-weight: 400; /* font-normal */
-    color: #d1d5db; /* text-gray-200 */
+    color: black; /* text-gray-200 */
 }
 
 /* Loan Application Specific Styles */
@@ -683,4 +733,38 @@
     .prediction-actions {
         flex-direction: column;
     }
+}
+
+/* New container for customer details within the main card */
+.customer-details-section-wrapper {
+    background-color: var(--input-bg-color); /* A slightly different background */
+    border-radius: var(--border-radius);
+    padding: 30px; 
+    margin-bottom: var(--spacing-lg); /* Space below this wrapper */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Section Titles within details pages */
+.admin-detail-section-title {
+    font-size: 1.6rem; /* text-2xl */
+    /* Removed padding: 30px; from here as it was causing too much space */
+    padding-bottom: 0.75rem; /* Padding below the title before the border */
+    margin-bottom: 1.5rem; /* Space below the title and its border */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    font-weight: 700; /* font-bold */
+    color: var(--highlight-color); /* Set to white/highlight color for contrast */
+    border-bottom: 1px solid var(--border-color-light); /* Separator line */
+    /* Ensure icon is vertically aligned */
+    line-height: 1.2;
+}
+
+/* Grid layout for detail fields */
+.admin-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* md:grid-cols-2 adjusted for min-width */
+    gap: 1.25rem 1.5rem; /* gap-y-5 gap-x-6 */
+    /* No padding directly on grid, as it's handled by its parent container */
 }

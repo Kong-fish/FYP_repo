@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, CheckCircle, XCircle, X } from 'lucide-react';
 import supabase from '../supabaseClient.js';
-import "./AdminFunction.css"; // For all the reusable admin styles
+import "./AdminFunction.css"; 
 
 // Interface definitions
 interface LoanApplication {
@@ -542,39 +542,6 @@ const ReviewLoan: React.FC = () => {
                                         <p className="detail-value">{loanDetails.customer_credit_history_years !== null ? loanDetails.customer_credit_history_years : 'N/A'}</p>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* No longer displaying "View Prediction Details" button here */}
-                            {/* Action buttons for approving/rejecting the loan */}
-                            <div className="action-buttons-container">
-                                <button
-                                    className="prediction-action-btn prediction-approve-btn"
-                                    onClick={() => handleLoanApproval(true)}
-                                    disabled={isUpdatingApproval || loanDetails.final_approval !== null}
-                                >
-                                    {isUpdatingApproval ? (
-                                        <>
-                                            <Loader2 className="prediction-action-spinner" size={18} />
-                                            <span>Approving...</span>
-                                        </>
-                                    ) : (
-                                        <span>Approve Loan</span>
-                                    )}
-                                </button>
-                                <button
-                                    className="prediction-action-btn prediction-reject-btn"
-                                    onClick={() => handleLoanApproval(false)}
-                                    disabled={isUpdatingApproval || loanDetails.final_approval !== null}
-                                >
-                                    {isUpdatingApproval ? (
-                                        <>
-                                            <Loader2 className="prediction-action-spinner" size={18} />
-                                            <span>Rejecting...</span>
-                                        </>
-                                    ) : (
-                                        <span>Reject Loan</span>
-                                    )}
-                                </button>
                             </div>
                         </>
                     )}

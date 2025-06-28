@@ -328,7 +328,7 @@ export default function Cust_Transfer() {
             }
 
             // Optionally, navigate to a success page or show a success toast
-            navigate("/transfer-complete", {
+            navigate("/customer-transfer-complete", {
                 state: {
                     status: "success",
                     typeOfTransfer: typeOfTransfer,
@@ -347,7 +347,7 @@ export default function Cust_Transfer() {
             setShowConfirmation(false); // Hide confirmation on error
             setConfirmationDetails(null); // Clear confirmation details
             // Navigate to failure page with error message
-            navigate("/transfer-complete", {
+            navigate("/customer-transfer-complete", {
                 state: {
                     status: "failure",
                     message: err.message,
